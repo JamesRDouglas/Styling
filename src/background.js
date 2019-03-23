@@ -1,4 +1,4 @@
-let localStorage = browser.storage.local.get(function(item) {
+browser.storage.local.get(function(item) {
   if (item.disabled == "true") {
   	browser.browserAction.setIcon({path: "../images/StylingDisabled.png"});
   } else {

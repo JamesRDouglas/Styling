@@ -4,7 +4,7 @@ function onGot(item) {
   } else { $('img').prop("src", "../images/Styling.png");  $('input[type=checkbox]').prop("checked", false); }
 }
 function onChange() { }
-function onError(error) { console.log(`Error: ${error}`); }
+function onError(error) { console.log(`${error}`); }
 function getDomain(url) { url = url.replace(/(https?:\/\/)?(www.)?/i, ''); if (url.indexOf('/') !== -1) { return url.split('/')[0]; } return url; }
 function sendDisableToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, {message: "all styles disabled"}).then(response => {  }).catch(onError); } }
 function sendEnableToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, {message: "all styles enabled"}).then(response => {  }).catch(onError); } }

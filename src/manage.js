@@ -9,7 +9,7 @@ $(function() {
   if (delete_id) { browser.storage.local.get().then(function(item) { var currentStyle = 'styling_'+delete_id; browser.storage.local.remove(currentStyle).then(onChange, onError); window.location.href = "manage.html"; }); }
   var styles_arr = [];
   loadStyles(styles_arr);
-  $('#write-new').click(function() { for (a = 1; styles_arr.indexOf(a) === -1; a++) { window.location.href = "edit.html?style="+a; } });
+  $('#write-new').click(function() { for (a = 1; a = a; a++) { if (styles_arr.indexOf(a) === -1) { window.location.href = "edit.html?style="+a; break; } } });
   $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });
   $(document).on('click', '.style > input, .url_list', function(e) { e.stopPropagation(); });
   $(document).on('click', '.delete', function(e) { if (confirm("Are you sure you want to delete "+$(this).parent().prop("title")+"?")) { window.location.href = "manage.html?delete="+$(this).parent().data("id"); } $('#content').empty(); loadStyles(); e.stopPropagation(); });

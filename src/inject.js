@@ -1,5 +1,4 @@
 "use strict";
-browser.webRequest.handlerBehaviorChanged().then(function() { console.log("flushed"); });
 function updateStyles() {
   let localStorage = browser.storage.local.get(function(item) {
     if (item.styling_1) {
@@ -26,4 +25,4 @@ function updateStyles() {
 }
 updateStyles();
 browser.runtime.onMessage.addListener(request => { updateStyles(); });
-browser.request
+browser.webRequest.handlerBehaviorChanged().then(function() { apply(); });

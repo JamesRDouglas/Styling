@@ -6,7 +6,7 @@ function updateBlocks() { for (var a = 1; a <= $('.block').length; a++) { $('.bl
 function aceinit(){
   var e = ace.edit(this), t = $(this);
   e.setTheme("ace/theme/crimson_editor");
-  e.setOptions({ maxLines: Infinity, highlightActiveLine: false, tabSize: 8, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15 }); 
+  e.setOptions({ maxLines: Infinity, highlightActiveLine: false, tabSize: 8, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
   e.getSession().setMode("ace/mode/css");
   e.commands.bindKey("Tab", null);
   e.commands.bindKey("Shift-Tab", null);

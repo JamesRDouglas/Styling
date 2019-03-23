@@ -55,7 +55,8 @@ $(function() {
   updateBlocks();
   $('#save').click(function() {
     if ($('#style-name').val()) {
-      browser.storage.local.get().then(function(item) { 
+      browser.storage.local.get().then(function(item) {
+        delete item.styling_1;
         $.extend(true, item, { styling_1: { name: $('#style-name').val() } });
         for (var c = 1; c <= $('div.block').length; c++) {
           var blockName = "block_"+c, urls = $('div.block:nth-of-type('+c+')').children('section').length;
@@ -65,7 +66,6 @@ $(function() {
             $.extend(true, item, { styling_1: { [blockName]: { [objectUrl]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), [objectUrlType]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val() } } });
           }
         }
-        browser.storage.local.clear();
         browser.storage.local.set(item).then(onChange, onError);
       });
       browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);

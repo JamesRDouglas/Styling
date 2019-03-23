@@ -37,7 +37,7 @@
         #sidebar > h3 { display: none; }
         #sidebar > #style_name { width: auto; }
         #sidebar > br:first-of-type { display: none; }
-        #sidebar div.small-screen { width: calc(100vw / 3); float: left; }
+        #sidebar div.small-screen { width: calc(calc(100vw - 2.2em) / 3); float: left; }
         #content { top: 175px; left: 0; width: 100vw; position: fixed; overflow-x: scroll; }
       }
     </style>
@@ -56,8 +56,9 @@
       <button id="save">Save</button>
       <button id="beautify">Beautify</button>
       <button id="back">Back to manage</button>
-      <br><h3>Options</h3>
+      <br>
       <div class="small-screen">
+        <h3>Options</h3>
         Line count: <input type="number" id="line-count" class="options"><br style="margin-bottom: 5px;">
         Tab size: <input type="number" id="tab-size" class="options"><br style="margin-bottom: 5px;">
         Font size: <input type="number" id="font-size" class="options"><br style="margin-bottom: 7px;">

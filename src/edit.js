@@ -5,13 +5,12 @@ function objectLength(object) { var length = 0; for(var key in object) { if( obj
 function updateBlocks() { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); $('.block:nth-of-type('+a+')').find('div.code').prop('id', 'code_'+a); } $('div.code').each(function(){ aceinit.call(this); }); }
 function aceinit() {
   var e = ace.edit(this), t = $(this);
-  ace.require("ace/ext/keybinding_menu", "ace/ext/beautify", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
+  ace.require("ace/ext/keybinding_menu", "ace/ext/beautify", "ace/ext/error_marker", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) { 
       e.setTheme("ace/theme/"+item.styling_1.options.theme);
-      e.setOptions({ maxLines: Infinity, tabSize: Number(item.styling_1.options.tab_size), fontSize: Number(item.styling_1.options.font_size), useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, enableLiveAutocompletion: item.styling_1.options.autocomplete });
+      e.setOptions({ maxLines: Infinity, tabSize: Number(item.styling_1.options.tab_size), fontSize: Number(item.styling_1.options.font_size), useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, enableBasicAutocompletion: item.styling_1.options.autocomplete });
       if (item.styling_1.options.keybinding !== "default") { e.setKeyboardHandler("ace/keyboard/"+item.styling_1.options.keybinding); }
-      if (item.styling_1.options.error_marker == true) { ace.require("ace/ext/error_marker"); }
     } else { 
       e.setTheme("ace/theme/crimson_editor");
       e.setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, enableLiveAutocompletion: true });

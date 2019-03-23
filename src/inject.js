@@ -21,7 +21,7 @@ function updateStyles() {
             styleElement.setAttribute("class", "styling");
             styleElement.setAttribute("type", "text/css");
             styleElement.appendChild(document.createTextNode(item.styling_1["block_"+e].code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
-            document.body.appendChild(styleElement);
+            document.getElementsByTagName('html')[0].appendChild(styleElement);
             break;
           }
         }
@@ -29,5 +29,7 @@ function updateStyles() {
     }
   });
 }
-updateStyles();
+document.addEventListener("DOMContentLoaded", function(event) { 
+  updateStyles();
+});
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "all styles disabled" || message.message === "all styles enabled" || message.message === "styles updated") { updateStyles(); } });

@@ -19,6 +19,7 @@ function updateTextarea() {
     $('.side').empty();
     for (a = 1; a <= lines; a++) { $('.side').append('<span class="line">'+a+'</span>'); }
   }
+  $('.side').css('height', $('textarea').css('height'));
 }
 $(function() {
   browser.storage.local.get().then(function(item) { 

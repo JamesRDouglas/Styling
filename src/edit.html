@@ -14,6 +14,7 @@
       #sidebar { width: 275px; height: 100vh; position: fixed; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 0.8em 1.1em; background-color: white; }
       #sidebar #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; margin-top: 10px; }
       #sidebar #style-name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
+      #sidebar summary { font-size: 1.17em; font-weight: bold; }
       #sidebar h3.placeholder { display: none; }
       #sidebar section.small-screen { display: inline-block; }
 
@@ -31,7 +32,7 @@
       #content input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       @media only screen and (max-width: 840px) {
         #sidebar { height: 165px; width: 100vw; overflow: hidden; positon: fixed; border-right: none; border-bottom: 1px dashed grey; padding: 0.5em 0; }
-        #sidebar summary { margin: 0 0 5px 0; position: absolute; left: 1em; font-size: 1.17em; font-weight: bold; }
+        #sidebar summary { margin: 0 0 5px 0; position: absolute; left: 1em; }
         #sidebar h3.placeholder { display: block; visibility: hidden; margin: 0; }
         #sidebar > h1, #sidebar > br:first-of-type, #sidebar .hide-small-screen { display: none; }
         #sidebar div.small-screen-top { width: calc(100vw - 2.2em); display: flex; flex-wrap: wrap; margin: 0.6em 1.1em; }
@@ -39,9 +40,8 @@
         #sidebar div.small-screen-top > div > #style-name { flex-grow: 1; margin-top: 0; }
         #sidebar div.small-screen-top > #save { margin-left: 10px; }
         #sidebar div.small-screen-top > #enabled { margin-bottom: auto !important }
-        #sidebar section.small-screen:nth-of-type(1) { width: calc(40vw - 2.2em); float: left; margin: 0 1.1em; }
-        #sidebar section.small-screen:nth-of-type(2) { width: calc(20vw - 2.2em); float: left; margin: 0 1.1em; }
-        #sidebar section.small-screen:nth-of-type(3) { width: calc(40vw - 2.2em); float: left; margin: 0 1.1em; }
+        #sidebar section.small-screen:nth-of-type(1), #sidebar section.small-screen:nth-of-type(3) { width: calc(35vw - 2.2em); float: left; margin: 0 1.1em; }
+        #sidebar section.small-screen:nth-of-type(2) { width: calc(30vw - 2.2em); float: left; margin: 0 1.1em; }
         #content { top: 165px; left: 0; width: 100vw; position: fixed; overflow-x: scroll; }
       }
     </style>

@@ -3,7 +3,7 @@ function onError(error) { console.log(`Error: ${error}`); }
 function sendMessageToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, { message: "update scripts" }).then(response => {}).catch(onError); } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function updateTextarea(textarea) {
-  var lines = textarea.value.split(/\r*\n/).length;
+  var lines = textarea.val().split(/\r*\n/).length;
   if (lines != textarea.prev('.side *').length) {
     textarea.prev('.side').empty();
     for (a = 1; a <= lines; a++) { textarea.prev('.side').append('<span class="line">'+a+'</span>'); }
@@ -22,7 +22,7 @@ $(function() {
       if (item.styling_1.block_1.code) { $('textarea.code').text(item.styling_1.block_1.code); }
     }
   });
-  updateTextarea();
+  updateTextarea($('textarea'));
   $('#save').click(function() {
     browser.storage.local.set({ styling_1: { block_1: { code: $('textarea.code').val().replace(/^|\s+$/g, ''), url_1: $('input.url').val(), url_1_type: $('select').val() } } }).then(onChange, onError); 
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);

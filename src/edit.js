@@ -14,6 +14,9 @@ function numOfLines(textArea, lineHeight) {
 }
 $(function() {
   var lines = numOfLines($('textarea.code'), document.querySelector("textarea").style.lineHeight.slice(0, 2));
+  for (a = 1; a <= lines; a++) {
+    $('html').appendChild('<span class="line">'+lines+'</span>');
+  }
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
       if (item.styling_1.block_1.url_1) { $('input.url').val(item.styling_1.block_1.url_1); }

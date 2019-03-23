@@ -9,7 +9,7 @@ function getDomain(url) {
 function updateStyles() {
   let localStorage = browser.storage.local.get(function(item) {
     if (!item.disabled) { browser.storage.local.set({ disabled: "false" }).then(onChange, onError); }
-    if (!item.styling_1) { browser.storage.local.set({ styling_1: { block_1: { code_1: "", url_1: "", url_1_type: "url" } } }).then(onChange, onError); }
+    if (!item.styling_1) { browser.storage.local.set({ styling_1: { block_1: { code: "", url_1: "", url_1_type: "url" } } }).then(onChange, onError); }
     if (item.styling_1) {
       var elements = document.getElementsByClassName('styling');
       for (var i = 0; i < elements.length; i++) { document.getElementsByTagName("html")[0].removeChild(elements[i]); }
@@ -20,7 +20,7 @@ function updateStyles() {
           styleElement.setAttribute("id", "styling-1");
           styleElement.setAttribute("class", "styling");
           styleElement.setAttribute("type", "text/css");
-          styleElement.appendChild(document.createTextNode(item.styling_1.block_1.code_1.replace(/(\r\n\t|\n|\r\t)/gm,"")));
+          styleElement.appendChild(document.createTextNode(item.styling_1.block_1.code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
           document.getElementsByTagName('html')[0].appendChild(styleElement);
         }
       }

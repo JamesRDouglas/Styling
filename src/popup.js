@@ -25,7 +25,7 @@ function loadStyles(currentURL) {
         }
       }
     }
-    for (x = 1; x <= objectLength(active_styles); x++) { $('#active-styles').append('<div><input class="check" type="checkbox" checked="'+styles_status["style_"+x+"_name"]+'"><span>'+active_styles["style_"+x+"_name"]+'</span><a href="edit.html?style='+x+'" class="edit"><i class="far fa-edit"></i></a><a href="#" class="delete" title="Not implemented"><i class="far fa-trash-alt"></i></a></div>'); }
+    for (x = 1; x <= objectLength(active_styles); x++) { $('#active-styles').append('<div data-id="'+x+'"><input class="check" type="checkbox" checked="'+styles_status["style_"+x+"_name"]+'"><span>'+active_styles["style_"+x+"_name"]+'</span><a href="edit.html?style='+x+'" class="edit"><i class="far fa-edit"></i></a><a href="#" class="delete" title="Not implemented"><i class="far fa-trash-alt"></i></a></div>'); }
     if (objectLength(active_styles) === 0) { $('#active-styles').append('<i>No styles for this page</i>'); }
   });
 }
@@ -33,6 +33,13 @@ $.getJSON('../manifest.json', function(data) { $('#version').text(data.version);
 $('#disable').change(function() { if ($(this).is(':checked')) { $('img').prop("src", "../images/StylingDisabled.png"); browser.browserAction.setIcon({path: "../images/StylingDisabled.png"}); browser.storage.local.set({ disabled: "true" }).then(onChange, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"disable"); }).catch(onError); } else { $('img').prop("src", "../images/Styling.png"); browser.browserAction.setIcon({path: "../images/Styling.png"}); browser.storage.local.set({ disabled: "false" }).then(onChange, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"enable"); }).catch(onError); } });
 browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { loadStyles(tabs[0].url); });
 $(function() {
+  $('.check').click(function() { 
+    browser.storage.local.get(function(item) {
+      var code = item, currentStyle = 'styling_'+$(this).parent().data('id');
+      if ($(this).is(':checked')) { $.extend(true, code, { [currentStyle]: { disabled: "false" } }); browser.storage.local.set(code).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
+      } else { $.extend(true, code, { [currentStyle]: { disabled: "true" } }); browser.storage.local.set(code).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } 
+    });
+  });
   $('img, label').click(function() { $('#disable').click(); });
   $('#manage').click(function() { browser.tabs.create({ url: "manage.html" }).then(onChange, onError); window.close(); });
   $('#details').click(function() { chrome.runtime.openOptionsPage(); window.close(); });
@@ -45,7 +52,7 @@ $(function() {
   $(document).on('click', '#domain', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
   $(document).on('click', '#subdomain', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
 });
-browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles enabled" || message.message === "styles enabled") {  } });
+browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled" || message.message === "styles enabled") {  } });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "style updated") { $('#active-styles').empty(); loadStyles(); } });
 
 

@@ -7,19 +7,27 @@ function sendMessageToTabs(tabs) {
   }
 }
 $(function() {
+  var delete_id = new URLSearchParams(window.location.search).get('delete');
+  if (delete_id) {
+    browser.storage.local.get().then(function(item) {
+      var currentStyle = 'styling_'+delete_id;
+      browser.storage.local.remove(currentStyle).then(onChange, onError);
+      window.location.href = "manage.html";
+    });
+  }
+  var styles_arr = [];
   browser.storage.local.get().then(function(item) {
     var styles = objectLength(item) - 1;
-    for (a = 1; a <= styles; a++) {
-      $('#content').append('<div class="style" id="style_'+a+'" data-id="'+a+'"><input type="checkbox"><span class="name" title="'+item["styling_"+a].name+'">'+item["styling_"+a].name+'</span><button class="edit" data-id="'+a+'">Edit</button><button class="delete" data-id="'+a+'">Delete</button><div class="url_list"></div></div>');
+    for (a = 1; a <= styles; a = a) {
+      if (item["styling_"+a]) {
+        styles_arr.push(a);
+        $('#content').append('<div class="style" id="style_'+a+'" data-id="'+a+'"><input type="checkbox"><span class="name" title="'+item["styling_"+a].name+'">'+item["styling_"+a].name+'</span><button class="edit" data-id="'+a+'">Edit</button><button class="delete" data-id="'+a+'">Delete</button><div class="url_list"></div></div>');
+        a++;
+      }
     }
   });
-  $(document).on('click', '.edit', function() {
-    window.location.href = "edit.html?style="+$(this).parent().data("id");
-  });
-  $(document).on('click', '.delete', function() {
-  	var confirmation = confirm("Are you sure you want to delete "+$(this).parent().prop("title")+"?");
-    if (confirmation) { window.location.href = "edit.html?delete="+$(this).parent().data("id"); }
-  });
+  $('#write-new').click(function() { for (a = 1; styles_arr.indexOf(a) === -1; a++) { window.location.href = "edit.html?create="+a; } });
+  $(document).on('click', '.edit', function() { window.location.href = "edit.html?style="+$(this).parent().data("id"); });
+  $(document).on('click', '.delete', function() { if (confirm("Are you sure you want to delete "+$(this).parent().prop("title")+"?")) { window.location.href = "manage.html?delete="+$(this).parent().data("id"); } });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "all styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "all styles enabled") { $('#enabled').prop('disabled', false); } });
-

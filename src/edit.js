@@ -30,12 +30,7 @@ $(function() {
       browser.storage.local.set(item).then(onChange, onError);
       window.location = 'edit.html?style='+style_number; 
     });
-  } else if (delete_id) {
-    browser.storage.local.get().then(function(item) {
-      var currentStyle = 'styling_'+delete_id;
-      browser.storage.local.remove(currentStyle).then(onChange, onError);
-    });
-  } else if (!style_id) { 
+  } else if (!style_id || item["styling_"+style_id] === undefined) { 
     window.location = 'edit.html?style=1'; 
   }
   browser.storage.local.get().then(function(item) { 

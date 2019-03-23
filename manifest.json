@@ -1,9 +1,10 @@
 {
 	"name": "Styling",
 	"short_name": "Styling",
-	"description": "Styling is a simple add-on which lets you add css styles to any webpage!",
+	"author": "James Douglas",
+	"description": "Styling is a simple add-on which lets you add css styles to any webpage.",
 	"manifest_version": 2,
-	"version": "0.4.9.1",
+	"version": "0.4.9.2",
 	"icons": { "128": "Styling.png" },
 	"options_ui": { "page": "options.html" },
 	"applications": { "gecko": { "id": "{4acf1e87-8461-4606-a7c4-d4890aa2147a}" } },
@@ -11,8 +12,10 @@
 		"tabs",
 		"webNavigation",
 		"webRequest",
+		"webRequestBlocking",
 		"contextMenus",
 		"storage",
+		"activeTab",
 		"<all_urls>"
 	],
 	"content_scripts": [
@@ -24,7 +27,7 @@
 			"js": [ "inject.js" ]
 		}
 	],
-	"web_accessible_resources": [ "Styling.png", "inject.js" ],
+	"web_accessible_resources": [ "Styling.png", "inject.js", "options.js", "options.html" ],
 	"browser_action": {
 		"default_icon": { "128": "Styling.png" },
 		"default_title": "Styling",

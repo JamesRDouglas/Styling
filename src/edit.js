@@ -13,7 +13,7 @@ function numOfLines(textArea, lineHeight) {
   return Math.ceil(scrollHeight / lineHeight);
 }
 function updateTextarea() {
-  var lines = document.querySelector("textarea").split(/\r*\n/).length;
+  var lines = document.querySelector("textarea").value.split(/\r*\n/).length;
   if (lines != $('.side *').length) {
     $('.side').empty();
     for (a = 1; a <= lines; a++) { $('.side').append('<span class="line">'+a+'</span>'); }

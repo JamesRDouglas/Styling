@@ -8,16 +8,16 @@ function updateTextarea(textarea) {
     textarea.prev('.side').empty();
     for (a = 1; a <= lines; a++) { textarea.prev('.side').append('<span class="line">'+a+'</span>'); }
   }
-  textarea.prev('.side').css('height', $('textarea').css('height'));
+  textarea.parent('.container').css('height', $('textarea').height());
 }
 $(function() {
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
       var urls = (objectLength(item.styling_1.block_1) - 1) / 2;
       for (a = 1; a <= urls; a++) { 
-        if (eval('item.styling_1.block_1.url_' + urls)) { $('div.controls:nth-of-type(' + urls + ') input.url').val(eval('item.styling_1.block_1.url_' + urls)); }
-        if (eval('item.styling_1.block_1.url_' + urls + '_type')) { $('div.controls:nth-of-type(' + urls + ') select').val(eval('item.styling_1.block_1.url_' + urls + '_type')); }
-        if (eval('item.styling_1.block_1.url_' + urls + '_type') == 'everything') { $('div.controls:nth-of-type(' + urls + ') input.url').hide(); }
+        if (window['item.styling_1.block_1.url_' + urls]) { $('div.controls:nth-of-type(' + urls + ') input.url').val(window['item.styling_1.block_1.url_' + urls]); }
+        if (window['item.styling_1.block_1.url_' + urls + '_type']) { $('div.controls:nth-of-type(' + urls + ') select').val(window['item.styling_1.block_1.url_' + urls + '_type']); }
+        if (window['item.styling_1.block_1.url_' + urls + '_type'] == 'everything') { $('div.controls:nth-of-type(' + urls + ') input.url').hide(); }
       }
       if (item.styling_1.block_1.code) { $('textarea.code').text(item.styling_1.block_1.code); }
     }
@@ -31,7 +31,7 @@ $(function() {
   $('#back').click(function() { window.location.replace("manage.html"); });
   $('select').change(function() { if ($(this).val() == "everything") { $(this).next('input.url').hide(); $(this).parent().addClass('current').parent().children('div.controls:not(.current)').remove(); } else { $(this).next('input.url').show(); } });
   $('textarea').bind('input propertychange', function() { updateTextarea($(this)); });
-  $('textarea').resize(function() { $(this).prev('.side').css('height', $('textarea').css('height')); });
+  $('textarea').resize(function() { $(this).parent('.container').css('height', $(this).height()); });
   $(document).on('click', '.add', function() { $(this).parent().clone().children('select').val('url').parent().find('input').val('').end().insertAfter($(this).parent()); });
   $(document).on('click', '.remove', function() { if ($(this).parent().parent().children('.controls').length > 1) { $(this).parent().remove(); } });
 });

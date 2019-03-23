@@ -2,7 +2,7 @@
 function updateStyles() {
   let localStorage = browser.storage.local.get(function(item) {
     if (item.disabled.value == "false") {
-      styleElement = document.createElement("style");
+      var styleElement = document.createElement("style");
       styleElement.setAttribute("id", "styling-id");
       styleElement.setAttribute("class", "styling");
       styleElement.setAttribute("type", "text/css");

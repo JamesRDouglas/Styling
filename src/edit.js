@@ -16,6 +16,7 @@ function aceinit() {
   e.setTheme("ace/theme/"+$('#theme').val());
   e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, navigateWithinSoftTabs: true, useSoftTabs: $('#soft-tabs').prop('checked'), displayIndentGuides: $('#guide-indent').prop('checked'), showInvisibles: $('#show-invisible').prop('checked'), tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked') });
   if ($('#keybinding').val() !== "default") { e.setKeyboardHandler("ace/keyboard/"+$('#keybinding').val()); }
+  e.getSession().setUseWorker($('#error-marker').prop('checked'));
   e.getSession().setMode("ace/mode/css");
   e.resize();
   return e;

@@ -13,10 +13,10 @@ $(function() {
       $('#content').append('<div class="style" id="style_'+a+'" data-id="'+a+'"><input type="checkbox"><span class="name" title="'+item["styling_"+a].name+'">'+item["styling_"+a].name+'</span><button class="edit" data-id="'+a+'">Edit</button><button class="delete" data-id="'+a+'">Delete</button><div class="url_list"></div></div>');
     }
   });
-  $('.edit').click(function() {
+  $(document).on('click', '.edit', function() {
     window.location.href = "edit.html?style=1"
   });
-  $('.delete').click(function() {
+  $(document).on('click', '.delete', function() {
   	var confirmation = confirm("Are you sure you want to delete "+"?");
     if (confirmation) { alert("Deleted (not really)"); }
     //if (confirmation) { window.location.href = "edit.html?delete=1"; }

@@ -15,6 +15,13 @@ $(function() {
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
       $('#style_name').val(item.styling_1.name);
+      $('#tab-size').val(item.styling_1.options.tab_size);
+      $('#font-size').val(item.styling_1.options.font_size);
+      $('#smart-indent').val(item.styling_1.options.smart_indent);
+      $('#tab-indent').val(item.styling_1.options.tab_indent);
+      $('#auto-close').val(item.styling_1.options.auto_close);
+      $('#theme').val(item.styling_1.options.theme);
+      $('#keybinding').val(item.styling_1.options.keybinding);
       var blocks = objectLength(item.styling_1) - 3;
       for (var e = 1; e <= blocks; e++) {
         if (blocks > 1 && e > 1) { $('#content > .block:last-of-type > .add_block').click(); }
@@ -40,7 +47,7 @@ $(function() {
   $('#save').click(function() {
     if ($('#style_name').val()) {
       browser.storage.local.get().then(function(item) {
-        $.extend(true, item, { styling_1: { name: $('#style_name').val(), options: { tab_size: 2, font_size: 12, smart_indent: true, tab_indent: false, auto_close: true, theme: "theme-crimson_editor.js", keybinding: "default" } } }); 
+        $.extend(true, item, { styling_1: { name: $('#style_name').val(), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), smart_indent: $('#smart-indent').val(), tab_indent: $('#tab-indent').val(), auto_close: $('#auto-close').val(), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
         for (var c = 1; c <= $('div.block').length; c++) {
           var blockName = "block_"+c, urls = $('div.block:nth-of-type('+c+')').children('section').length;
           $.extend(true, item, { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } });

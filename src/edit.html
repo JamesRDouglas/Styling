@@ -22,7 +22,7 @@
       div.code.ace_focus { box-shadow: 0 0 2px 2px lightblue; }
       input.url { padding: 2px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; flex-grow: 1; margin-left: 2px; }
       input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
-      select { margin-left: 5px; width: 175px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: 158px 5px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
+      select { margin-left: 5px; width: 175px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: 158px 6px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
       select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       button { padding: 2px 6px; text-align: center; }
       span.line { display: block; font-family: monospace; font-size: 13px; padding-right: 5px; text-align: right; }
@@ -42,15 +42,15 @@
       <button id="beautify">Beautify</button>
       <button id="back">Back to manage</button>
       <br><h3>Options</h3>
-      Tab size: <input type="number" value="2">
+      Tab size: <input type="number" id="tab-size">
       <br style="margin-bottom: 5px;">
-      Font size: <input type="number" value="12">
+      Font size: <input type="number" id="font-size">
       <br style="margin-bottom: 7px;">
-      <input type="checkbox"> Smart indentation<br>
-      <input type="checkbox"> Indent with tabs<br>
-      <input type="checkbox"> Auto-close brackets and quotes<br style="margin-bottom: 7px;">
+      <input type="checkbox" id="smart-indent"> Smart indentation<br>
+      <input type="checkbox" id="tab-indent"> Indent with tabs<br>
+      <input type="checkbox" id="auto-close"> Auto-close brackets and quotes<br style="margin-bottom: 7px;">
       Theme: 
-      <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 5px;">
+      <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 6px;" id="theme">
         <optgroup label="Light">
           <option value="theme-chrome.js">Chrome</option>
           <option value="theme-clouds.js">Clouds</option>
@@ -95,7 +95,7 @@
       </select>
       <br style="margin-bottom: 5px;">
       Keybinding: 
-      <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 5px;">
+      <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 5px;" id="keybinding">
         <option value="default">Default</option>
         <option value="keybinding-vim.js">Vim</option>
         <option value="keybinding-emacs.js">Emacs</option>

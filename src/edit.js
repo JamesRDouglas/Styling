@@ -17,7 +17,10 @@ $(function() {
     browser.storage.local.set({ styling_1: { block_1: { url_1: $('.url').val(), url_1_type: $('select').val(), code_1: $('.code').val() } } }).then(onChange, onError); 
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });
-  $('#back').click(function() {
-    window.location.replace("manage.html");
+  $('#back').click(function() { window.location.replace("manage.html"); });
+  $('select').onChange(function() {
+    if ($(this).val() == "everything") {
+      $('input').val('').prop('disabled', true);
+    }
   });
 });

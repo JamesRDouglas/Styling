@@ -9,7 +9,10 @@ function aceinit() {
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) { 
       e.setTheme("ace/theme/"+item.styling_1.options.theme);
-      e.setOptions({ maxLines: Infinity, tabSize: Number(item.styling_1.options.tab_size), fontSize: Number(item.styling_1.options.font_size), useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
+      e.setOptions({ maxLines: Infinity, tabSize: Number(item.styling_1.options.tab_size), fontSize: Number(item.styling_1.options.font_size), useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 });
+      if (item.styling_1.options.keybinding !== "default") {
+        e.setKeyboardHandler("ace/keyboard/"+item.styling_1.options.keybinding);
+      }
     } else { 
       e.setTheme("ace/theme/crimson_editor");
       e.setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 });
@@ -24,9 +27,9 @@ $(function() {
       $('#style_name').val(item.styling_1.name);
       $('#tab-size').val(item.styling_1.options.tab_size);
       $('#font-size').val(item.styling_1.options.font_size);
-      if (item.styling_1.options.smart_indent === "true") { $('#smart-indent').prop("checked", true); }
-      if (item.styling_1.options.tab_indent === "true") { $('#tab-indent').prop("checked", true); }
-      if (item.styling_1.options.auto_close === "true") { $('#auto-close').prop("checked", true); }
+      if (item.styling_1.options.smart_indent == true) { $('#smart-indent').prop("checked", true); }
+      if (item.styling_1.options.tab_indent == true) { $('#tab-indent').prop("checked", true); }
+      if (item.styling_1.options.auto_close == true) { $('#auto-close').prop("checked", true); }
       $('#theme').val(item.styling_1.options.theme);
       $('#keybinding').val(item.styling_1.options.keybinding);
       var blocks = objectLength(item.styling_1) - 3;

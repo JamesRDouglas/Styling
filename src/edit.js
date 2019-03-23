@@ -2,17 +2,17 @@ function onChange(item) {}
 function onError(error) { /*console.log(`${error}`);*/ }
 function sendMessageToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, { message: "styles updated" }).then(response => {}).catch(onError); } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
-function updateBlocks(item) { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); $('.block:nth-of-type('+a+')').find('div.code').prop('id', 'code_'+a); } $('div.code').each(function(){ aceinit.call(this, item); }); }
+function updateBlocks(item) { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); $('.block:nth-of-type('+a+')').find('div.code').prop('id', 'code_'+a); } $('div.code').each(function(){ aceinit.call(this); }); }
 function aceinit(item) {
   var e = ace.edit(this), t = $(this);
   ace.require("ace/ext/language_tools", "ace/ext/error_marker", "ace/ext/keybinding_menu", "ace/ext/searchbox");
-  if (item) { 
-    e.setTheme("ace/theme/"+item.styling_1.options.theme);
-    e.setOptions({ maxLines: Infinity, tabSize: item.styling_1.options.tab_size, fontSize: item.styling_1.options.font_size, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
-  } else { 
+  //if (item) { 
+  //  e.setTheme("ace/theme/"+item.styling_1.options.theme);
+  //  e.setOptions({ maxLines: Infinity, tabSize: item.styling_1.options.tab_size, fontSize: item.styling_1.options.font_size, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
+  //} else { 
     e.setTheme("ace/theme/crimson_editor");
     e.setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 });
-  }
+  //}
   e.getSession().setMode("ace/mode/css");
   return e;
 }
@@ -37,20 +37,21 @@ $(function() {
           if (item.styling_1["block_"+e]["url_"+a+"_type"]) { $('body .block:nth-of-type('+e+') section:nth-of-type('+a+') select').val(item.styling_1["block_"+e]["url_"+a+"_type"]); }
           if (item.styling_1["block_"+e]["url_"+a+"_type"] == 'everything') { $('body .block:nth-of-type('+e+') section:nth-of-type('+a+') input.url').hide(); }
         }
-        if (item.styling_1["block_"+e].code) { updateBlocks(item); ace.edit("code_"+e).setValue(item.styling_1["block_"+e].code, -1); }
+        if (item.styling_1["block_"+e].code) { ace.edit("code_"+e).setValue(item.styling_1["block_"+e].code, -1); updateBlocks(); }
         if (item.styling_1.disabled === "true") { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); }
         if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
       }
-    } else { updateBlocks(); }
+    }
     $('#enabled').click(function() { 
       var code = item; 
       if ($('#enabled').is(':checked')) { $.extend(true, code, { styling_1: { disabled: "false" } }); browser.storage.local.set(code).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
       } else { $.extend(true, code, { styling_1: { disabled: "true" } }); browser.storage.local.set(code).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError); } 
     });
   });
+  updateBlocks();
   $('#save').click(function() {
     if ($('#style_name').val()) {
-      browser.storage.local.get().then(function(item) {
+      browser.storage.local.get().then(function(item) { 
         $.extend(true, item, { styling_1: { name: $('#style_name').val(), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), smart_indent: $('#smart-indent').val(), tab_indent: $('#tab-indent').val(), auto_close: $('#auto-close').val(), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
         for (var c = 1; c <= $('div.block').length; c++) {
           var blockName = "block_"+c, urls = $('div.block:nth-of-type('+c+')').children('section').length;

@@ -30,10 +30,9 @@ $(function() {
       browser.storage.local.set(item).then(onChange, onError);
       window.location = 'edit.html?style='+style_number; 
     });
-  } else if (!style_id || item["styling_"+style_id] === undefined) { 
-    window.location = 'edit.html?style=1'; 
-  }
+  } else if (!style_id) { window.location = 'edit.html?style=1'; }
   browser.storage.local.get().then(function(item) { 
+    if (item["styling_"+style_id] === undefined) { window.location = 'edit.html?style=1'; }
     if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     if (item.styling_1 != undefined) {
       $('#style-name').val(item["styling_"+style_id].name);

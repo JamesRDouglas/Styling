@@ -33,8 +33,8 @@ $(function() {
         var objectUrlType = objectUrl+'_type';
         $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $(this).parent().children('section:nth-of-type('+b+') input.url').val(), [objectUrlType]: $(this).parent().children('section:nth-of-type('+b+') select').val() } } });
       }
+      browser.storage.local.set(saved_code).then(onChange, onError);
     });
-    browser.storage.local.set(saved_code).then(onChange, onError);
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });
   $('textarea').on('scroll', function () { $('.side').scrollTop($(this).scrollTop()); });

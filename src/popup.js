@@ -7,5 +7,7 @@ $(function() {
       $('img').prop("src", "../Styling.png");
     }
   });
-  $('img').click(function() { $('#disable').click(); });
+  $('img, label').click(function() { $('#disable').click(); });
+  $('#manage').click(function() { browser.tabs.create({ url:"manage.html" }).then(onCreated, onError); });
+  $('#details').click(function() { browser.tabs.create({ url:"manage.html" }).then(onCreated, onError); });
 });

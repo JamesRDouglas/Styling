@@ -26,7 +26,7 @@ function aceinit() {
       e.setDisplayIndentGuides(false);
     }
   });
-  e.getSession().setMode("ace/mode/css_expression");
+  e.getSession().setMode("ace/mode/css");
   return e;
 }
 $(function() {

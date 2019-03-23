@@ -49,9 +49,10 @@ $(function() {
         var objectUrlType = objectUrl+'_type';
         $.extend(true, saved_code, { styling_1: { [blockName]: { [objectUrl]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), [objectUrlType]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val() } } });
       }
-      var gettingItem = browser.storage.local.get().await(function(item) { return item; });
-      $.extend(true, gettingItem, saved_code);
-      browser.storage.local.set(gettingItem).then(onChange, onError);
+      var gettingItem = browser.storage.local.get().then(function(item) { 
+        $.extend(true, item, saved_code);
+        browser.storage.local.set(item).then(onChange, onError);
+      });
     }
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });

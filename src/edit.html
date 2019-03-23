@@ -42,8 +42,14 @@
       <button id="beautify">Beautify</button>
       <button id="back">Back to manage</button>
       <br><br>
+      Tab size: <input type="number" value="2"><br>
+      <input type="checkbox"> Smart indentation<br>
+      <input type="checkbox"> Indent with tabs<br>
+      <input type="checkbox"> Auto-close brackets and quotes<br>
+      <input type="checkbox"> Autocomplete<br>
+      <br>
       Theme: 
-      <select>
+      <select style="position: absolute; right: 16px;">
         <option value="theme-ambiance.js">Ambiance</option>
         <option value="theme-chaos.js">Chaos</option>
         <option value="theme-chrome.js">Chrome</option>
@@ -81,6 +87,12 @@
         <option value="theme-twilight.js">Twilight</option>
         <option value="theme-vibrant_ink.js">Vibrant Ink</option>
         <option value="theme-xcode.js">XCode</option>
+      </select>
+      Keybindings: 
+      <select style="position: absolute; right: 16px;">
+        <option value="default">Default</option>
+        <option value="keybinding-vim.js">Vim</option>
+        <option value="keybinding-emacs.js">GNU Emacs</option>
       </select>
     </div>
     <div id="content">

@@ -9,7 +9,8 @@
       body { padding: 0; margin: 0; box-sizing: border-box; height: 100%; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; background-color: #EFEFEF; }
       #sidebar { width: 275px; height: 100vh; position: fixed; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 0.8em 1.1em; background-color: white; }
       #content { width: calc(100vw - 275px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1em 2em; }
-      #style_name { width: 100%; box-sizing: border-box; }
+      #style_name { width: 100%; box-sizing: border-box; padding: 2px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; }
+      #style_name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       h1 { padding: 0; margin: 0; font-size: 1.6em; width: 100%; }
       div.block:first-of-type > span:first-of-type { display: none; }
       div.block:only-child .remove_block { display: none; } 
@@ -18,8 +19,8 @@
       div.url-container { flex-grow: 1; display: flex; flex-wrap: wrap; }
       div.code { width: 100%; height: 200px; box-shadow: 0 0 0 1px lightgrey; margin-top: 5px; border-radius: 5px; }
       div.code.ace_focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
-      input[type=text] { padding: 2px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; flex-grow: 1; margin-left: 2px; border-radius: 3px; }
-      input[type=text]:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
+      input.url { padding: 2px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; flex-grow: 1; margin-left: 2px; border-radius: 3px; }
+      input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       select { margin-left: 5px; width: 175px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: 158px 5px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
       select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       button { padding: 2px 6px; text-align: center; }

@@ -24,9 +24,8 @@ function updateStyles() {
             styleElement.setAttribute("class", "styling");
             styleElement.setAttribute("type", "text/css");
             styleElement.appendChild(document.createTextNode(item.styling_1.block_1.code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
-            insertAfter(styleElement, document.getElementsByTagName("body")[0]);
+            document.getElementsByTagName('html')[0].appendChild(styleElement);
             break;
-            //document.getElementsByTagName('html')[0].appendChild(styleElement);
           }
         }
       }

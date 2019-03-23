@@ -14,7 +14,7 @@ $(function() {
     if (item.options.soft_tabs === "true") { $('#soft-tabs').prop("checked", true); }
     if (item.options.guide_indent === "true") { $('#guide-indent').prop("checked", true); }
     if (item.options.show_invisible === "true") { $('#show-invisible').prop("checked", true); }
-    $('#keybinding').val(item["styling_"+style_id].options.keybinding);
+    $('#keybinding').val(item.options.keybinding);
     var styles = objectLength(item) - 2, b = 1; 
     for (a = 1; a <= styles; a = a) { if (a > styles) { break; } if (item["styling_"+b] !== undefined) { a++; } b = checkStyleExists(b, item, styles_arr); }
   });

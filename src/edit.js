@@ -23,7 +23,11 @@ $(function() {
       if (item.styling_1.block_1.code) { $('textarea.code').text(item.styling_1.block_1.code); updateTextarea(); }
       if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     }
-    $('#enabled').click(function() { var code = item; if ($('#enabled').is(':checked')) { $.extend(true, code, { styling_1: { disabled: "false" } }); } else { $.extend(true, code, { styling_1: { disabled: "true" } }); } });
+    $('#enabled').click(function() { var code = item; if ($('#enabled').is(':checked')) { 
+      $.extend(true, code, { styling_1: { disabled: "false" } });
+    } else { 
+      $.extend(true, code, { styling_1: { disabled: "true" } }); 
+    } });
   });
   updateTextarea();
   $('#save').click(function() {

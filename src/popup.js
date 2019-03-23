@@ -11,12 +11,12 @@ $(function() {
       $('img').prop("src", "../images/StylingDisabled.png");
       disabled = { state: true };
       browser.browserAction.setIcon({path: "../images/StylingDisabled.png"});
-      browser.storage.local.set({disabled});
+      browser.storage.local.set({disabled}).then(onCreated, onError);
     } else {
       $('img').prop("src", "../images/Styling.png");
       disabled = { state: false };
       browser.browserAction.setIcon({path: "../images/Styling.png"});
-      browser.storage.local.set({disabled});
+      browser.storage.local.set({disabled}).then(onCreated, onError);
     }
   });
   $('img, label').click(function() { $('#disable').click(); });

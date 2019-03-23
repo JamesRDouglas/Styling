@@ -3,7 +3,7 @@ styleElement.setAttribute("id", "styling-id");
 styleElement.setAttribute("class", "styling");
 styleElement.setAttribute("type", "text/css");
 styleElement.appendChild(document.createTextNode("body { background-color: yellow; }"));
-document.head.appendChild(styleElement);
+document.appendChild(styleElement);
 
 window.onload = function() {
 	styleElement = document.createElement("style");
@@ -11,5 +11,5 @@ window.onload = function() {
 	styleElement.setAttribute("class", "styling");
 	styleElement.setAttribute("type", "text/css");
 	styleElement.appendChild(document.createTextNode("body { background-color: yellow; }"));
-	document.head.appendChild(styleElement);
+	document.appendChild(styleElement);
 };

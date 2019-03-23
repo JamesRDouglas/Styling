@@ -9,7 +9,7 @@ function aceinit() {
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) { 
       e.setTheme("ace/theme/"+item.styling_1.options.theme);
-      e.setOptions({ maxLines: Infinity, tabSize: item.styling_1.options.tab_size, fontSize: item.styling_1.options.font_size, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
+      e.setOptions({ maxLines: Infinity, tabSize: Number(item.styling_1.options.tab_size), fontSize: Number(item.styling_1.options.font_size), useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
     } else { 
       e.setTheme("ace/theme/crimson_editor");
       e.setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 });

@@ -12,7 +12,7 @@ function numOfLines(textArea, lineHeight) {
   return Math.ceil(scrollHeight / lineHeight);
 }
 $(function() {
-  var lines = numOfLines(document.querySelector("textarea"), toString($('textarea').css('line-height')).slice(0, -2));
+  var lines = numOfLines(document.querySelector("textarea"), document.querySelector("textarea").style.lineHeight.slice(0, -2));
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
       if (item.styling_1.block_1.url_1) { $('input.url').val(item.styling_1.block_1.url_1); }

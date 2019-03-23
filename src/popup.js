@@ -52,7 +52,7 @@ $('#subdomain').prop('href', browser.extension.getURL("src/manage.html?create=do
       }
     }
     console.log(active_styles);
-    for (x = 0; x < active_styles.length; x++) {
+    for (x = 0; x < objectLength(active_styles); x++) {
       $('#active-syles').append('<input type="checkbox"><div>'+active_styles[x]+'</div>');
     }
   });

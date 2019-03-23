@@ -9,7 +9,7 @@ function sendMessageToTabs(tabs) {
 $(function() {
   browser.storage.local.get().then(function(item) {
     var styles = objectLength(item) - 1;
-    for (a = 1; a >= styles; a++) {
+    for (a = 1; a <= styles; a++) {
       $('#content').append('<div class="style" id="style_'+a+'" data-id="'+a+'"><span>"'+item["styling_"+a].name+'"</span><input type="checkbox"><button class="edit">Edit</button><button class="delete">Delete</button></div>');
     }
   });

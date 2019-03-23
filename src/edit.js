@@ -26,7 +26,7 @@ $(function() {
     var saved_code = { styling_1: { block_1: { code: $('textarea.code').val().replace(/^|\s+$/g, '') } } }; 
     var urls = $('section').length;
     for (a = 1; a <= urls; a++) { 
-      var objectUrl = 'url_' + urls;
+      var objectUrl = 'url_' + a;
       var objectUrlType = objectUrl + '_type';
       $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $('body section:nth-of-type('+urls+') input.url').val(), [objectUrlType]: $('body section:nth-of-type('+urls+') select').val() } } });
     }

@@ -5,6 +5,7 @@ browser.storage.local.get(function(item) {
 function onChange() { }
 function onError(error) { console.log(`${error}`); }
 function getURL() { browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { return tabs[0].url; }); }
+function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function sendDisableToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, {message: "all styles disabled"}).then(response => {  }).catch(onError); } }
 function sendEnableToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, {message: "all styles enabled"}).then(response => {  }).catch(onError); } }
 function getDomain(url, subdomain) {

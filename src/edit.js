@@ -32,16 +32,16 @@ $(function() {
   });
   updateTextarea();
   $('#save').click(function() {
-    $('textarea.code').each(function() {
-      var saved_code = { styling_1: { block_1: { code: $(this).val().replace(/^|\s+$/g, '') } } }; 
-      var urls = $(this).parent().parent().children('section').length;
+    for (var c = 1; c <= $('div.block').length; c++) {
+      var saved_code = { styling_1: { block_1: { code: $('div.block:nth-of-type('+c+') textarea').val().replace(/^|\s+$/g, '') } } }; 
+      var urls = $('div.block:nth-of-type('+c+')').children('section').length;
       for (var b = 1; b <= urls; b++) { 
         var objectUrl = 'url_'+b;
         var objectUrlType = objectUrl+'_type';
-        $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $(this).parent().parent().children('section:nth-of-type('+b+')').children('input.url').val(), [objectUrlType]: $(this).parent().parent().children('section:nth-of-type('+b+')').children('select').val() } } });
+        $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), [objectUrlType]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val() } } });
       }
       browser.storage.local.set(saved_code).then(onChange, onError);
-    });
+    }
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });
   $('#back').click(function() { window.location.replace("manage.html"); });

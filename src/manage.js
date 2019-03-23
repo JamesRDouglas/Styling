@@ -7,7 +7,7 @@ function checkStyleExists(b, item, styles_arr) {
     styles_arr.push(b); 
     $('#content').append('<div class="style" id="style_'+b+'" data-id="'+b+'"><input type="checkbox"><span class="name" title="'+item["styling_"+b].name+'">'+item["styling_"+b].name+'</span><button class="edit" data-id="'+b+'">Edit</button><button class="delete" data-id="'+b+'">Delete</button><div class="url_list"></div></div>'); b++; 
   } else { 
-    b++; checkStyleExists(b, item, styles_arr); 
+    b++; checkStyleExists(b, item, styles_arr); b++;
   } return b; 
 }
 $(function() {

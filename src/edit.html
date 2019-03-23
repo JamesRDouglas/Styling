@@ -31,15 +31,14 @@
       #content input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       @media only screen and (max-width: 840px) {
         #sidebar { height: 165px; width: 100vw; overflow: hidden; positon: fixed; border-right: none; border-bottom: 1px dashed grey; padding: 0.5em 0; }
-        #sidebar h3 { margin: 0 0 5px 0; }
+        #sidebar h3 { margin: 0 0 5px 0; position: absolute; left: 1em; }
         #sidebar h3.placeholder { display: block; visibility: hidden; margin: 0; }
         #sidebar > h1, #sidebar > br:first-of-type, #sidebar .hide-small-screen { display: none; }
         #sidebar div.small-screen-top { width: calc(100vw - 2.2em); display: flex; flex-wrap: wrap; margin: 0.6em 1.1em; }
-        #sidebar div.small-screen-top > div { display: flex; flex-grow: 1; }
-        #sidebar div.small-screen-top > div > input { flex-grow: 1; }
-        #sidebar div.small-screen-top #save { margin-left: 10px; }
-        #sidebar div.small-screen-top #enabled { margin-bottom: 3px; }
-        #sidebar div.small-screen-top #style-name { flex-grow: 1; margin-top: 0; margin-right: 5px; }
+        #sidebar div.small-screen-top > div { display: flex; flex-grow: 1; margin-right: 5px; }
+        #sidebar div.small-screen-top > div > #style-name { flex-grow: 1; margin-top: 0; }
+        #sidebar div.small-screen-top > #save { margin-left: 10px; }
+        #sidebar div.small-screen-top > #enabled { margin-bottom: auto !important }
         #sidebar div.small-screen { width: calc(calc(100vw - 6.6em) / 3); float: left; }
         #sidebar div.small-screen { margin: 0 1.1em; }
         #content { top: 165px; left: 0; width: 100vw; position: fixed; overflow-x: scroll; }
@@ -63,8 +62,9 @@
         <button id="back">Back to manage</button>
       </div>
       <br>
+      <h3>Options</h3>
       <div class="small-screen">
-        <h3>Options</h3>
+        <h3 class="placeholder" style="margin-bottom: 5px;">Options</h3>
         Line count: <input type="number" id="line-count" class="options"><br style="margin-bottom: 5px;">
         Tab size: <input type="number" id="tab-size" class="options"><br style="margin-bottom: 5px;">
         Font size: <input type="number" id="font-size" class="options"><br style="margin-bottom: 7px;">

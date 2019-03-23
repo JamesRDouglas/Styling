@@ -25,8 +25,8 @@ $(function() {
   browser.storage.local.get().then(function(item) {
     var styles = objectLength(item) - 1, b = 1;
     for (a = 1; a <= styles; a = a) {
-      if (item["styling_"+b] !== undefined) { a++; }
       if (a > styles) { break; }
+      if (item["styling_"+b] !== undefined) { a++; }
       b = checkStyleExists(b, item, styles_arr);
     }
   });

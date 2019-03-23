@@ -31,7 +31,7 @@ $('#disable').change(function() {
 $('#url').prop('href', browser.extension.getURL("src/manage.html?create=url&target="));
 $('#domain').prop('href', browser.extension.getURL("src/manage.html?create=domain&target="));
 $('#subdomain').prop('href', browser.extension.getURL("src/manage.html?create=domain&target="));
-  var active_styles;
+  var active_styles = [];
   browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; });
   browser.storage.local.get(function(item) {
     var styles = objectLength(item) - 1;

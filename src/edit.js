@@ -36,7 +36,7 @@ $(function() {
   });
   updateTextarea();
   $('#save').click(function() {
-    browser.storage.local.set({ styling_1: { block_1: { url_1: $('input.url').val(), url_1_type: $('select').val(), code_1: $('input.code').val() } } }).then(onChange, onError); 
+    browser.storage.local.set({ styling_1: { block_1: { url_1: $('input.url').val(), url_1_type: $('select').val(), code_1: $('textarea.code').val() } } }).then(onChange, onError); 
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });
   $('textarea').on('scroll', function () {

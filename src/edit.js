@@ -31,7 +31,7 @@ $(function() {
       window.location = 'edit.html?style='+style_id;
     }
     if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
-    if (item["styling"+style_id] != undefined) {
+    if (item["styling_"+style_id] != undefined) {
       $('#style-name').val(item["styling_"+style_id].name);
       $('#line-count').val(item["styling_"+style_id].options.line_count);
       $('#tab-size').val(item["styling_"+style_id].options.tab_size);

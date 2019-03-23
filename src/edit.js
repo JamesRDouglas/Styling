@@ -20,7 +20,7 @@ $(function() {
         if (item.styling_1.block_1["url_"+a+"_type"]) { $('section.controls:nth-of-type('+a+') select').val(item.styling_1.block_1["url_"+a+"_type"]); }
         if (item.styling_1.block_1["url_"+a+"_type"] == 'everything') { $('section.controls:nth-of-type('+a+') input.url').hide(); }
       }
-      if (item.styling_1.block_1.code) { $('textarea.code').text(item.styling_1.block_1.code); }
+      if (item.styling_1.block_1.code) { $('textarea.code').text(item.styling_1.block_1.code); updateTextarea(); }
     }
   });
   updateTextarea();

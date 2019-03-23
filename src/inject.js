@@ -18,7 +18,7 @@ function updateStyles() {
       if (item.disabled == "false") {
         var urls = (objectLength(item.styling_1.block_1) - 1) / 2;
         for (var a = 1; a <= urls; a++) { 
-          if (item.styling_1.block_1["url_" + a] != undefined && ((item.styling_1.block_1["url_" + a + "_type"] == "url" && item.styling_1.block_1["url_" + a] == window.location.href) || (item.styling_1.block_1["url_" + a + "_type"] == "starting" && window.location.href.startsWith(item.styling_1.block_1["url_" + a])) || (item.styling_1.block_1["url_" + a + "_type"] == "domain" && item.styling_1.block_1["url_" + a] == getDomain(window.location.href)) || (item.styling_1.block_1["url_" + a + "_type"] == "everything"))) {
+          if (item.styling_1.block_1["url_"+a] != undefined && ((item.styling_1.block_1["url_"+a+"_type"] == "url" && item.styling_1.block_1["url_"+a] == window.location.href) || (item.styling_1.block_1["url_"+a+"_type"] == "starting" && window.location.href.startsWith(item.styling_1.block_1["url_"+a])) || (item.styling_1.block_1["url_"+a+"_type"] == "domain" && item.styling_1.block_1["url_"+a] == getDomain(window.location.href)) || (item.styling_1.block_1["url_"+a+"_type"] == "everything"))) {
             var styleElement = document.createElement("style");
             styleElement.setAttribute("id", "styling-1");
             styleElement.setAttribute("class", "styling");

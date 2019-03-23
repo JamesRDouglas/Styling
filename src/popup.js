@@ -43,7 +43,8 @@ $('#subdomain').prop('href', browser.extension.getURL("src/manage.html?create=do
           var urls = (objectLength(item["styling_"+b]["block_"+c]) - 1) / 2;
           for (var d = 1; d <= urls; d++) { 
             if (item["styling_"+b].block_1["url_"+d] != undefined && ((item["styling_"+b]["block_"+c]["url_"+d+"_type"] == "url" && item["styling_"+b]["block_"+c]["url_"+d] == currentURL) || (item["styling_"+b]["block_"+c]["url_"+d+"_type"] == "starting" && currentURL.startsWith(item["styling_"+b]["block_"+c]["url_"+d])) || (item["styling_"+b]["block_"+c]["url_"+d+"_type"] == "domain" && item["styling_"+b]["block_"+c]["url_"+d] == getDomain(currentURL)) || (item["styling_"+b]["block_"+c]["url_"+d+"_type"] == "everything"))) {
-              $.extend(true, active_styles, { "style_name": item["styling_"+b].name });
+              var styleTitle = "style_"+b+"_name";
+              $.extend(true, active_styles, { [styleTitle]: item["styling_"+b].name });
               break block;
             }
           }
@@ -51,6 +52,9 @@ $('#subdomain').prop('href', browser.extension.getURL("src/manage.html?create=do
       }
     }
     console.log(active_styles);
+    for (x = 0; x < active_styles.length; x++) {
+      $('#active-syles').append('<input type="checkbox"><div>'+active_styles[x]+'</div>');
+    }
   });
 $(function() {
   $('img, label').click(function() { $('#disable').click(); });

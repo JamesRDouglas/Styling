@@ -27,7 +27,7 @@ $(function() {
   $('#save').click(function() {
     $('textarea.code').each(function() {
       var saved_code = { styling_1: { block_1: { code: $(this).val().replace(/^|\s+$/g, '') } } }; 
-      var urls = $(this).parent().children('section').length;
+      var urls = $(this).parent().parent().children('section').length;
       for (var b = 1; b <= urls; b++) { 
         var objectUrl = 'url_'+b;
         var objectUrlType = objectUrl+'_type';

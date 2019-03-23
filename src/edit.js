@@ -5,10 +5,10 @@ function objectLength(object) { var length = 0; for(var key in object) { if( obj
 function updateTextarea(textarea) {
   var lines = textarea.val().split(/\r*\n/).length;
   if (lines != textarea.prev('.side *').length) {
-    textarea.prev('.side').empty();
-    for (a = 1; a <= lines; a++) { textarea.prev('.side').append('<span class="line">'+a+'</span>'); }
+    textarea.prev('div.side').empty();
+    for (a = 1; a <= lines; a++) { textarea.prev('div.side').append('<span class="line">'+a+'</span>'); }
   }
-  textarea.parent('.container').css('height', $('textarea').height());
+  textarea.parent('div.container').css('height', textarea.height());
 }
 $(function() {
   browser.storage.local.get().then(function(item) { 

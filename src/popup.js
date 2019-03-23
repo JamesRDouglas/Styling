@@ -4,6 +4,7 @@ browser.storage.local.get(function(item) {
 });
 function onChange() { }
 function onError(error) { console.log(`${error}`); }
+function getURL() { browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { return tabs[0].url; }); }
 function sendDisableToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, {message: "all styles disabled"}).then(response => {  }).catch(onError); } }
 function sendEnableToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, {message: "all styles enabled"}).then(response => {  }).catch(onError); } }
 function getDomain(url, subdomain) {
@@ -13,7 +14,6 @@ function getDomain(url, subdomain) {
   if (url.indexOf('/') !== -1) { return url.split('/')[0]; }
   return url;
 }
-var getUrl = function() { browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { return tabs[0].url; }); }
 $.getJSON('../manifest.json', function(data) { $('#version').text(data.version); });
 $('#disable').change(function() {
   if ($(this).is(':checked')) {
@@ -28,9 +28,9 @@ $('#disable').change(function() {
     browser.tabs.query({currentWindow: true}).then(sendEnableToTabs).catch(onError);
   }
 });
-$('#url').prop('href', browser.extension.getURL("src/manage.html?action=create&type=url&target='"+getURL+"'"));
-$('#domain').prop('href', browser.extension.getURL("src/manage.html?action=create&type=domain&target='"+getDomain(getURL, false)+"'"));
-$('#subdomain').prop('href', browser.extension.getURL("src/manage.html?action=create&type=domain&target='"+getDomain(getURL, true)+"'"));
+$('#url').prop('href', browser.extension.getURL("src/manage.html?action=create&type=url&target='"+getURL()+"'"));
+$('#domain').prop('href', browser.extension.getURL("src/manage.html?action=create&type=domain&target='"+getDomain(getURL(), false)+"'"));
+$('#subdomain').prop('href', browser.extension.getURL("src/manage.html?action=create&type=domain&target='"+getDomain(getURL(), true)+"'"));
 $(function() {
   $('img, label').click(function() { $('#disable').click(); });
   $('#manage').click(function() { browser.tabs.create({ url: "manage.html" }).then(onChange, onError); window.close(); });

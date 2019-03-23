@@ -46,16 +46,11 @@ $(function() {
   updateBlocks();
   $('#save').click(function() {
     if ($('#style_name').val()) {
-      var saved_code = { styling_1: { name: $('#style_name').val() } }; 
       var extendedItem;
-      browser.storage.local.get().then(function(item) { 
-        $.extend(true, item, saved_code);
-        extendedItem = item;
-      });
+      browser.storage.local.get().then(function(item) { $.extend(true, item, { styling_1: { name: $('#style_name').val() } }); extendedItem = item; });
       browser.storage.local.set(extendedItem).then(onChange, onError);
-    } else {
-      alert('Please enter a name'); return false; 
-    }
+    } else { alert('Please enter a name'); return false; }
+    alert('pre-loop');
     for (var c = 1; c <= $('div.block').length; c++) {
       var blockName = "block_"+c;
       var saved_code = { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } }; 

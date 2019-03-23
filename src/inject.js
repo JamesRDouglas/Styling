@@ -2,7 +2,6 @@
 function onChange() { }
 function onError(error) { console.log(`Error: ${error}`); }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
-function insertAfter(el, referenceNode) { referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling); }
 function getDomain(url) {
   url = url.replace(/(https?:\/\/)?(www.)?/i, '');
   if (url.indexOf('/') !== -1) { return url.split('/')[0]; }
@@ -24,7 +23,7 @@ function updateStyles() {
             styleElement.setAttribute("class", "styling");
             styleElement.setAttribute("type", "text/css");
             styleElement.appendChild(document.createTextNode(item.styling_1.block_1.code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
-            insertAfter(styleElement, document.getElementsByTagName('html')[0]);
+            $(styleElement).insertAfter($('html'));
             //document.getElementsByTagName('html')[0].appendChild(styleElement);
           }
         }

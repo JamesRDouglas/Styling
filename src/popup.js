@@ -46,7 +46,7 @@ browser.storage.local.get(function(item) {
       }
     }
   }
-  for (x = 1; x <= objectLength(active_styles); x++) { $('#active-styles').append('<div><input type="checkbox"> <span>'+active_styles["style_"+x+"_name"]+'</span><a href="edit.html?style='+x+'" class="edit"><i class="far fa-pen"></i></a><a href="#" class="delete" title="Not implemented"><i class="far fa-trash-alt"></i></a></div>'); }
+  for (x = 1; x <= objectLength(active_styles); x++) { $('#active-styles').append('<div><input type="checkbox"> <span>'+active_styles["style_"+x+"_name"]+'</span><a href="edit.html?style='+x+'" class="edit"><i class="far fa-edit"></i></a><a href="#" class="delete" title="Not implemented"><i class="far fa-trash-alt"></i></a></div>'); }
   if (objectLength(active_styles) === 0) { $('#active-styles').append('<i>No styles for this page</i>'); }
 });
 $(function() {

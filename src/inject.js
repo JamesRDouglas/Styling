@@ -12,7 +12,7 @@ function updateStyles() {
     for (var a = 0; a < document.getElementsByClassName('styling').length; a++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[a]); }
     var styles = objectLength(item) - 1;
     for (var b = 1; b <= styles; b++) {
-      if (item.styling_1 && item.styling_1.disabled != "true" && item.disabled == "false") {
+      if (item["styling_"+b] && item["styling_"+b].disabled != "true" && item.disabled == "false") {
         var blocks = objectLength(item["styling_"+b]) - 2;
         for (var c = 1; c <= blocks; c++) {
           var urls = (objectLength(item["styling_"+b]["block_"+c]) - 1) / 2;

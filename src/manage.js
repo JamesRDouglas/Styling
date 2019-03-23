@@ -18,8 +18,7 @@ $(function() {
   });
   $(document).on('click', '.delete', function() {
   	var confirmation = confirm("Are you sure you want to delete "+"?");
-    if (confirmation) { alert("Deleted (not really)"); }
-    //if (confirmation) { window.location.href = "edit.html?delete=1"; }
+    if (confirmation) { window.location.href = "edit.html?delete=1"; }
   });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "all styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "all styles enabled") { $('#enabled').prop('disabled', false); } });

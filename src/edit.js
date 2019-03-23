@@ -16,7 +16,7 @@ function aceinit(){
 $(function() {
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
-      $('#sidebar input[type=text]').val(item.styling_1.styleName);
+      $('#sidebar input[type=text]').val(item.styling_1.name);
       var blocks = objectLength(item.styling_1) - 1;
       for (var e = 1; e <= blocks; e++) {
         if (blocks > 1 && e > 1) { $('#content > .block:last-of-type > .add_block').click(); }
@@ -48,7 +48,7 @@ $(function() {
   updateBlocks();
   $('#save').click(function() {
     if ($('#sidebar input[type=text]').val()) {
-      var saved_code = { styling_1: { styleName: $('#sidebar input[type=text]').val() } }; 
+      var saved_code = { styling_1: { name: $('#sidebar input[type=text]').val() } }; 
       var extendedItem;
       browser.storage.local.get().then(function(item) { 
         $.extend(true, item, saved_code);

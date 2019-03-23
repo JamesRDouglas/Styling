@@ -1,8 +1,8 @@
 $(function() {
   browser.storage.local.get().then(onGot, onError);
   function onGot(item) { 
-    if (item.disabled.value == true) { $('img').prop("src", "../images/StylingDisabled.png");
-    } else { $('img').prop("src", "../images/Styling.png"); }
+    if (item.disabled.value == "true") { $('img').prop("src", "../images/StylingDisabled.png"); $('input[type=checkbox]').prop("checked", true);
+    } else { $('img').prop("src", "../images/Styling.png");  $('input[type=checkbox]').prop("checked", false); }
   }
   function onChange() { /*console.log("changed");*/ }
   function onError(error) { console.log(`Error: ${error}`); }

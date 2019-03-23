@@ -15,9 +15,9 @@ $(function() {
     if (item.styling_1) {
       var urls = (objectLength(item.styling_1.block_1) - 1) / 2;
       for (a = 1; a <= urls; a++) { 
-        if (item.styling_1.block_1["url_" + urls]) { $('div.controls:nth-of-type(' + urls + ') input.url').val(item.styling_1.block_1["url_" + urls]); }
-        if (item.styling_1.block_1["url_" + urls + "_type"]) { $('div.controls:nth-of-type(' + urls + ') select').val(item.styling_1.block_1["url_" + urls + "_type"]); }
-        if (item.styling_1.block_1["url_" + urls + "_type"] == 'everything') { $('div.controls:nth-of-type(' + urls + ') input.url').hide(); }
+        if (item.styling_1.block_1["url_" + urls]) { $('section.controls:nth-of-type(' + urls + ') input.url').val(item.styling_1.block_1["url_" + urls]); }
+        if (item.styling_1.block_1["url_" + urls + "_type"]) { $('section.controls:nth-of-type(' + urls + ') select').val(item.styling_1.block_1["url_" + urls + "_type"]); }
+        if (item.styling_1.block_1["url_" + urls + "_type"] == 'everything') { $('section.controls:nth-of-type(' + urls + ') input.url').hide(); }
       }
       if (item.styling_1.block_1.code) { $('textarea.code').text(item.styling_1.block_1.code); }
     }

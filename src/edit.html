@@ -15,8 +15,8 @@
       div.block:last-of-type { margin-bottom: 25vh; }
       section.controls { display: flex; margin: 5px 0 3px 0; }
       div.url-container { flex-grow: 1; display: flex; flex-wrap: wrap; }
-      textarea.code { width: 100%; resize: vertical; box-sizing: border-box; padding: 5px 5px 5px 55px; border: none; margin: 0; height: 100%; }
-      textarea.code:focus { box-shadow: 0 0 0 2px lightblue; }
+      div.code { width: 100%; resize: vertical; box-sizing: border-box; padding: 5px 5px 5px 55px; border: none; margin: 0; height: 100%; }
+      div.code:focus { box-shadow: 0 0 0 2px lightblue; }
       input.url { padding: 2px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; flex-grow: 1; margin-left: 2px; }
       input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       select { margin-left: 5px; width: 175px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: 158px 5px; cursor: pointer; }
@@ -46,8 +46,7 @@
         <span><br><hr><br></span>
         Code block <span>1</span><br>
         <div class="container">
-          <div class="side"></div>
-          <textarea rows="15" class="code"></textarea><br>
+          <div class="code"></div><br>
         </div>
         <section class="controls">
           <span>Applies to: </span>
@@ -55,7 +54,6 @@
             <option value="url">URL</option>
             <option value="starting">URLs starting with</option>
             <option value="domain">URLs on the domain</option>
-        <!--<option value="regexp">URLs matching the regexp</option>-->
             <option value="everything">Everything</option>
           </select>
           <input class="url"><button class="remove_controls">Remove</button><button class="add_controls">Add</button><br>

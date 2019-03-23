@@ -32,14 +32,12 @@ $(function() {
           if (item.styling_1["block_"+e]["url_"+a+"_type"]) { $('body .block:nth-of-type('+e+') section:nth-of-type('+a+') select').val(item.styling_1["block_"+e]["url_"+a+"_type"]); }
           if (item.styling_1["block_"+e]["url_"+a+"_type"] == 'everything') { $('body .block:nth-of-type('+e+') section:nth-of-type('+a+') input.url').hide(); }
         }
-        if (item.styling_1["block_"+e].code) { ace.edit("code_"+e).setValue(item.styling_1["block_"+e].code, -1); updateBlocks(item); }
+        if (item.styling_1["block_"+e].code) { ace.edit("code_"+e).setValue(item.styling_1["block_"+e].code, -1); }
         if (item.styling_1.disabled === "true") { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); }
         if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
+        updateBlocks(item);
       }
-      updateBlocks(item);
-    } else {
-      updateBlocks();
-    }
+    } else { updateBlocks(); }
     $('#enabled').click(function() { 
       var code = item; 
       if ($('#enabled').is(':checked')) { $.extend(true, code, { styling_1: { disabled: "false" } }); browser.storage.local.set(code).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);

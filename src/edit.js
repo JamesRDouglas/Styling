@@ -21,17 +21,17 @@ function aceinit() {
 $(function() {
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
-      if (item.styling_1.name) { $('#style-name').val(item.styling_1.name); }
-      if (item.styling_1.options.line_count) { $('#line-count').val(item.styling_1.options.line_count); }
-      if (item.styling_1.options.tab_size) { $('#tab-size').val(item.styling_1.options.tab_size); }
-      if (item.styling_1.options.font_size) { $('#font-size').val(item.styling_1.options.font_size); }
+      $('#style-name').val(item.styling_1.name);
+      $('#line-count').val(item.styling_1.options.line_count);
+      $('#tab-size').val(item.styling_1.options.tab_size);
+      $('#font-size').val(item.styling_1.options.font_size);
       if (item.styling_1.options.autocomplete == true) { $('#autocomplete').prop("checked", true); }
       if (item.styling_1.options.error_marker == true) { $('#error-marker').prop("checked", true); }
       if (item.styling_1.options.soft_tabs == true) { $('#soft-tabs').prop("checked", true); }
       if (item.styling_1.options.guide_indent == true) { $('#guide-indent').prop("checked", true); }
       if (item.styling_1.options.show_invisible == true) { $('#show-invisible').prop("checked", true); }
-      if (item.styling_1.options.keybinding) { $('#keybinding').val(item.styling_1.options.keybinding); }
-      var blocks = objectLength(item.styling_1) - 3;
+      $('#keybinding').val(item.styling_1.options.keybinding);
+      var blocks = objectLength(item.styling_1) - 2;
       for (var e = 1; e <= blocks; e++) {
         if (blocks > 1 && e > 1) { $('#content > .block:last-of-type > .add_block').click(); }
         var urls = (objectLength(item.styling_1["block_"+e]) - 1) / 2;

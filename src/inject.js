@@ -20,10 +20,8 @@ function updateStyles() {
           for (var i = 0; i < elements.length; i++) { document.getElementsByTagName("html")[0].removeChild(elements[i]); }
         }
       }
-      if (item.styling_1.block_1.url_1) {
-        if((item.styling_1.block_1.url_1_type == "url" && item.styling_1.block_1.url_1 == window.location.href) || (item.styling_1.block_1.url_1_type == "starting" && window.location.href.startsWith(item.styling_1.block_1.url_1)) || (item.styling_1.block_1.url_1_type == "domain" && item.styling_1.block_1.url_1 == location.hostname) || (item.styling_1.block_1.url_1_type == "everything")) {
-          apply();
-        }
+      if (item.styling_1.block_1.url_1 != undefined && ((item.styling_1.block_1.url_1_type == "url" && item.styling_1.block_1.url_1 == window.location.href) || (item.styling_1.block_1.url_1_type == "starting" && window.location.href.startsWith(item.styling_1.block_1.url_1)) || (item.styling_1.block_1.url_1_type == "domain" && item.styling_1.block_1.url_1 == location.hostname) || (item.styling_1.block_1.url_1_type == "everything"))) {
+        apply();
       }
     }
   });

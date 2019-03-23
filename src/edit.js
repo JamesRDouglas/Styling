@@ -15,8 +15,9 @@ function numOfLines(textArea, lineHeight) {
 function updateTextarea() {
   var lines = numOfLines($('textarea.code'), document.querySelector("textarea").style.lineHeight.slice(0, 2));
   if (lines < 15) { lines = 15; }
-  for (a = 1; a <= lines; a++) {
-    $('.side').append('<span class="line">'+a+'</span>');
+  if (lines != $('.side *').length) {
+    $('.side').empty();
+    for (a = 1; a <= lines; a++) { $('.side').append('<span class="line">'+a+'</span>'); }
   }
 }
 $(function() {

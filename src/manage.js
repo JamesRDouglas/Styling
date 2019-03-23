@@ -1,18 +1,9 @@
-function setItem() { 
-  document.getElementById("url").value = `${item.styling_url.value}`;
-  document.getElementById("code").value = `${item.styling_code.value}`;
-}
-function onError(error) { 
-  console.log(error) 
-  var styling_url = "*";
-  var styling_code = "background-color: yellow;";
-  browser.storage.local.set({styling_url, styling_code}).then(setItem(), onError());
-}
-$('#update').click(function() {
-  alert('hi');
-  var styling_url = { value: document.getElementById("url").value }
-  var styling_code = { value: document.getElementById("code").value }
-  browser.storage.local.set({styling_url, styling_code}).then(setItem(), onError()); 
+$(function() {
+  function onChange() { /*console.log("changed");*/ }
+  function onError(error) { console.log(`Error: ${error}`); }
+  $('textarea').text(browser.storage.local.get().stylish_1.code);
+  $('#update').click(function() {
+    var stylingCode = { value: document.getElementById("code").value };
+    browser.storage.local.set({ stylish_1: { code: stylingCode } }).then(onChange, onError); 
+  });
 });
-browser.storage.local.get("styling_url").then(setItem(), onError());
-browser.storage.local.get("styling_code").then(setItem(), onError());

@@ -22,7 +22,7 @@ $(function() {
         if (item.styling_1.block_1["url_"+a+"_type"] == 'everything') { $('section.controls:nth-of-type('+a+') input.url').hide(); }
       }
       if (item.styling_1.block_1.code) { $('textarea.code').text(item.styling_1.block_1.code); updateTextarea(); }
-      if (item.styling_1.disabled === "true") { $('#enabled').prop('checked', true); } else { $('#enabled').prop('checked', false); }
+      if (item.styling_1.disabled === "true") { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); }
       if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     }
     $('#enabled').click(function() { 
@@ -48,7 +48,9 @@ $(function() {
         var objectUrlType = objectUrl+'_type';
         $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), [objectUrlType]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val() } } });
       }
-      browser.storage.local.set(saved_code).then(onChange, onError);
+      let gettingItem = browser.storage.local.get().then(onChange, onError);
+      $.extend(true, gettingItem, saved_code);
+      browser.storage.local.set(gettingItem).then(onChange, onError);
     }
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });

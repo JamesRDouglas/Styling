@@ -19,7 +19,7 @@
       section.controls { display: flex; margin: 5px 0 3px 0; }
       div.url-container { flex-grow: 1; display: flex; flex-wrap: wrap; }
       div.code { width: 100%; height: 200px; box-shadow: 0 0 0 1px lightgrey; margin-top: 5px; }
-      div.code.ace_focus { box-shadow: 0 0 0 2px lightblue; }
+      div.code.ace_focus { box-shadow: 0 0 2px 2px lightblue; }
       input.url { padding: 2px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; flex-grow: 1; margin-left: 2px; }
       input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       select { margin-left: 5px; width: 175px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: 158px 5px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
@@ -39,6 +39,7 @@
       <input type="checkbox" id="enabled"> Enabled
       <br>
       <button id="save">Save</button>
+      <button class="beautify">Beautify</button>
       <button id="back">Back to manage</button>
     </div>
     <div id="content">
@@ -59,6 +60,7 @@
         <button class="add_block">Add new section</button>
         <button class="remove_block">Remove section</button>
         <button class="clone_block">Clone</button>
+        <button class="beautify">Beautify</button>
       </div>
     </div>
     <script src="jquery-3.3.1.min.js"></script>

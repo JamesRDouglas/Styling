@@ -44,8 +44,10 @@ $(function() {
   $('select').change(function() { if ($(this).val() == "everything") { $(this).next('input.url').hide(); $(this).parent().addClass('current').parent().children('div.controls:not(.current)').remove(); } else { $(this).next('input.url').show(); } });
   $('textarea').bind('input propertychange', function() { updateTextarea($(this)); });
   $('textarea').resize(function() { $(this).parent('div.container').css('height', $(this).height()); });
-  $(document).on('click', '.add', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().find('input.url').val('').end().insertAfter($(this).parent()); });
-  $(document).on('click', '.remove', function() { if ($(this).parent().parent().children('.controls').length > 1) { $(this).parent().remove(); } });
+  $(document).on('click', '.add_controls', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().find('input.url').val('').end().insertAfter($(this).parent()); });
+  $(document).on('click', '.remove_controls', function() { if ($(this).parent().parent().children('.controls').length > 1) { $(this).parent().remove(); } });
+  $(document).on('click', '.add_block', function() { $(this).parent().clone().find('textarea.code').val('').end().find('input').val('').end().insertAfter($(this).parent()); });
+  $(document).on('click', '.clone_block', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().insertAfter($(this).parent()); });
 });
 browser.runtime.onMessage.addListener(request => { console.log('message received'); });
 

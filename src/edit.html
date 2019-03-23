@@ -6,10 +6,11 @@
     <title>Edit style</title>
     <style>
       @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-Light.ttf') format('truetype'); }
-      body { padding: 0; margin: 0; box-sizing: border-box; height: 100vh; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; }
-      #sidebar { width: 250px; height: 100vh; box-sizing: border-box; border-right: 1px dashed grey; float: left; padding: 0.8em 1.1em; }
-      #content { width: calc(100vw - 250px); height: 100vh; box-sizing: border-box; float: left; background-color: #EFEFEF; padding: 1em 2em; }
+      body { padding: 0; margin: 0; box-sizing: border-box; height: 100%; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; background-color: #EFEFEF; }
+      #sidebar { width: 250px; height: 100vh; position: fixed; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 0.8em 1.1em; background-color: white; }
+      #content { width: calc(100vw - 250px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1em 2em; }
       h1 { padding: 0; margin: 0; font-size: 1.6em; width: 100%; }
+      div.block:first-of-type > span:first-of-type { display: none; }
       section.controls { display: flex; margin: 5px 0 3px 0; }
       div.url-container { flex-grow: 1; display: flex; flex-wrap: wrap; }
       textarea.code { width: 100%; resize: vertical; box-sizing: border-box; padding: 5px 5px 5px 55px; border: none; margin: 0; height: 100%; }
@@ -39,6 +40,7 @@
     </div>
     <div id="content">
       <div class="block" id="block_1">
+        <span><br><hr><br></span>
         Code block 1<br>
         <div class="container">
           <div class="side"></div>
@@ -53,10 +55,10 @@
         <!--<option value="regexp">URLs matching the regexp</option>-->
             <option value="everything">Everything</option>
           </select>
-          <input class="url"><button class="remove">Remove</button><button class="add">Add</button><br>
+          <input class="url"><button class="remove_controls">Remove</button><button class="add_controls">Add</button><br>
         </section>
-        <button>Add new section</button>
-        <button>Clone</button>
+        <button class="add_block">Add new section</button>
+        <button class="clone_block">Clone</button>
       </div>
     </div>
     <script src="jquery-3.3.1.min.js"></script>

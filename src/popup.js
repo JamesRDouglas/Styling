@@ -4,8 +4,8 @@ $(function() {
   } else {
     $('img').prop("src", "../images/Styling.png");
   }*/
-  function onCreated(item) { 
-    console.log('hi');
+  function onCreated() { 
+    console.log(browser.storage.local.get("disabled"));
   }
   function onError(error) { 
     console.log(error) 

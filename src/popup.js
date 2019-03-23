@@ -57,11 +57,17 @@ $(function() {
   $('#url').prop('href', browser.extension.getURL("src/edit.html?create=url&target=")+currentURL);
   $('#domain').prop('href', browser.extension.getURL("src/edit.html?create=domain&target=")+getDomain(currentURL));
   $('#subdomain').prop('href', browser.extension.getURL("src/edit.html?create=domain&target=")+getDomain(currentURL, true));
-  $(document).on('click', '#url', function() { browser.tabs.create({ url: $(this).prop('href') }); return false; });
-  $(document).on('click', '#domain', function() { browser.tabs.create({ url: $(this).prop('href') }); return false; });
-  $(document).on('click', '#subdomain', function() { browser.tabs.create({ url: $(this).prop('href') }); return false; });
-  $(document).on('click', '.edit', function() { browser.tabs.create({ url: $(this).prop('href') }); return false; });
+  $(document).on('click', '#url', function() { browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { browser.pageAction.hide(0); }); browser.tabs.create({ url: $(this).prop('href') }); return false; });
+  $(document).on('click', '#domain', function() { browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { browser.pageAction.hide(0); }); browser.tabs.create({ url: $(this).prop('href') }); return false; });
+  $(document).on('click', '#subdomain', function() { browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { browser.pageAction.hide(0); }); browser.tabs.create({ url: $(this).prop('href') }); return false; });
+  $(document).on('click', '.edit', function() { browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { browser.pageAction.hide(0); }); browser.tabs.create({ url: $(this).prop('href') }); return false; });
 });
+
+
+
+
+
+
 
 
 

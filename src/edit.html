@@ -31,7 +31,7 @@
       #content input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       @media only screen and (max-width: 840px) {
         #sidebar { height: 165px; width: 100vw; overflow: hidden; positon: fixed; border-right: none; border-bottom: 1px dashed grey; padding: 0.5em 0; }
-        #sidebar h3 { margin: 0 0 5px 0; position: absolute; left: 1em; }
+        #sidebar h3:not(.placeholder) { margin: 0 0 5px 0; position: absolute; left: 1em; }
         #sidebar h3.placeholder { display: block; visibility: hidden; margin: 0; }
         #sidebar > h1, #sidebar > br:first-of-type, #sidebar .hide-small-screen { display: none; }
         #sidebar div.small-screen-top { width: calc(100vw - 2.2em); display: flex; flex-wrap: wrap; margin: 0.6em 1.1em; }
@@ -62,98 +62,100 @@
         <button id="back">Back to manage</button>
       </div>
       <br>
-      <h3>Options</h3>
-      <div class="small-screen">
-        <h3 class="placeholder" style="margin-bottom: 5px;">Options</h3>
-        Line count: <input type="number" id="line-count" class="options"><br style="margin-bottom: 5px;">
-        Tab size: <input type="number" id="tab-size" class="options"><br style="margin-bottom: 5px;">
-        Font size: <input type="number" id="font-size" class="options"><br style="margin-bottom: 7px;">
-      </div>
-      <div class="small-screen">
-        <h3 class="placeholder">Options</h3>
-        <input type="checkbox" id="autocomplete" class="options"> Autocomplete<br>
-        <input type="checkbox" id="error-marker" class="options"> Syntax validation<br>
-        <input type="checkbox" id="soft-tabs" class="options"> Use soft tabs<br>
-        <span class="hide-small-screen"><input type="checkbox" id="guide-indent" class="options"> Show indent guides<br></span>
-        <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br style="margin-bottom: 7px;">
-      </div>
-      <div class="small-screen">
-        <h3 class="placeholder">Options</h3>
-        Theme: 
-        <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 6px;" id="theme" class="options">
-          <optgroup label="Light">
-            <option value="chrome">Chrome</option>
-            <option value="clouds">Clouds</option>
-            <option value="crimson_editor" selected>Crimson Editor</option>
-            <option value="dawn">Dawn</option>
-            <option value="dreamweaver">Dreamweaver</option>
-            <option value="eclipse">Eclipse</option>
-            <option value="github">GitHub</option>
-            <option value="iplastic">IPlastic</option>
-            <option value="solarized_light">Solarized Light</option>
-            <option value="textmate">TextMate</option>
-            <option value="tomorrow">Tomorrow</option>
-            <option value="xcode">XCode</option>
-            <option value="kuroir">Kuroir</option>
-            <option value="katzenmilch">KatzenMilch</option>
-            <option value="sqlserver">SQL Server</option>
-          </optgroup>
-          <optgroup label="Dark">
-            <option value="ambiance">Ambiance</option>
-            <option value="chaos">Chaos</option>
-            <option value="clouds_midnight">Clouds Midnight</option>
-            <option value="dracula">Dracula</option>
-            <option value="cobalt">Cobalt</option>
-            <option value="gruvbox">Gruvbox</option>
-            <option value="gob">Green on Black</option>
-            <option value="idle_fingers">idle Fingers</option>
-            <option value="kr_theme">krTheme</option>
-            <option value="merbivore">Merbivore</option>
-            <option value="merbivore_soft">Merbivore Soft</option>
-            <option value="mono_industrial">Mono Industrial</option>
-            <option value="monokai">Monokai</option>
-            <option value="pastel_on_dark">Pastel on dark</option>
-            <option value="solarized_dark">Solarized Dark</option>
-            <option value="terminal">Terminal</option>
-            <option value="tomorrow_night">Tomorrow Night</option>
-            <option value="tomorrow_night_blue">Tomorrow Night Blue</option>
-            <option value="tomorrow_night_bright">Tomorrow Night Bright</option>
-            <option value="tomorrow_night_eighties">Tomorrow Night 80s</option>
-            <option value="twilight">Twilight</option>
-            <option value="vibrant_ink">Vibrant Ink</option>
-          </optgroup>
-        </select>
-        <br style="margin-bottom: 5px;">
-        Keybinding: 
-        <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 5px;" id="keybinding" class="options">
-          <option value="default">Default</option>
-          <option value="vim">Vim</option>
-          <option value="emacs">Emacs</option>
-        </select>
-      </div>
-    </div>
-    <div id="content">
-      <div class="block" id="block_1">
-        <span><br><hr><br></span>
-        Code block <span>1</span><br>
-        <div class="code"></div>
-        <section class="target">
-          <span>Applies to: </span>
-          <select>
-            <option value="url">URL</option>
-            <option value="starting">URLs starting with</option>
-            <option value="domain">URLs on the domain</option>
-            <option value="everything">Everything</option>
+      <details open>
+        <summary><h3>Options</h3></summary>
+        <div class="small-screen">
+          <h3 class="placeholder" style="margin-bottom: 5px;">Options</h3>
+          Line count: <input type="number" id="line-count" class="options"><br style="margin-bottom: 5px;">
+          Tab size: <input type="number" id="tab-size" class="options"><br style="margin-bottom: 5px;">
+          Font size: <input type="number" id="font-size" class="options"><br style="margin-bottom: 7px;">
+        </div>
+        <div class="small-screen">
+          <h3 class="placeholder">Options</h3>
+          <input type="checkbox" id="autocomplete" class="options"> Autocomplete<br>
+          <input type="checkbox" id="error-marker" class="options"> Syntax validation<br>
+          <input type="checkbox" id="soft-tabs" class="options"> Use soft tabs<br>
+          <span class="hide-small-screen"><input type="checkbox" id="guide-indent" class="options"> Show indent guides<br></span>
+          <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br style="margin-bottom: 7px;">
+        </div>
+        <div class="small-screen">
+          <h3 class="placeholder">Options</h3>
+          Theme: 
+          <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 6px;" id="theme" class="options">
+            <optgroup label="Light">
+              <option value="chrome">Chrome</option>
+              <option value="clouds">Clouds</option>
+              <option value="crimson_editor" selected>Crimson Editor</option>
+              <option value="dawn">Dawn</option>
+              <option value="dreamweaver">Dreamweaver</option>
+              <option value="eclipse">Eclipse</option>
+              <option value="github">GitHub</option>
+              <option value="iplastic">IPlastic</option>
+              <option value="solarized_light">Solarized Light</option>
+              <option value="textmate">TextMate</option>
+              <option value="tomorrow">Tomorrow</option>
+              <option value="xcode">XCode</option>
+              <option value="kuroir">Kuroir</option>
+              <option value="katzenmilch">KatzenMilch</option>
+              <option value="sqlserver">SQL Server</option>
+            </optgroup>
+            <optgroup label="Dark">
+              <option value="ambiance">Ambiance</option>
+              <option value="chaos">Chaos</option>
+              <option value="clouds_midnight">Clouds Midnight</option>
+              <option value="dracula">Dracula</option>
+              <option value="cobalt">Cobalt</option>
+              <option value="gruvbox">Gruvbox</option>
+              <option value="gob">Green on Black</option>
+              <option value="idle_fingers">idle Fingers</option>
+              <option value="kr_theme">krTheme</option>
+              <option value="merbivore">Merbivore</option>
+              <option value="merbivore_soft">Merbivore Soft</option>
+              <option value="mono_industrial">Mono Industrial</option>
+              <option value="monokai">Monokai</option>
+              <option value="pastel_on_dark">Pastel on dark</option>
+              <option value="solarized_dark">Solarized Dark</option>
+              <option value="terminal">Terminal</option>
+              <option value="tomorrow_night">Tomorrow Night</option>
+              <option value="tomorrow_night_blue">Tomorrow Night Blue</option>
+              <option value="tomorrow_night_bright">Tomorrow Night Bright</option>
+              <option value="tomorrow_night_eighties">Tomorrow Night 80s</option>
+              <option value="twilight">Twilight</option>
+              <option value="vibrant_ink">Vibrant Ink</option>
+            </optgroup>
           </select>
-          <input class="url"><button class="remove_target">Remove</button><button class="add_target">Add</button><br>
-        </section>
-        <button class="add_block">Add new section</button>
-        <button class="remove_block">Remove section</button>
-        <button class="raise_block">&uarr;</button>
-        <button class="lower_block">&darr;</button>
-        <button class="clone_block">Clone</button>
-        <button class="beautify_block">Beautify</button>
+          <br style="margin-bottom: 5px;">
+          Keybinding: 
+          <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 5px;" id="keybinding" class="options">
+            <option value="default">Default</option>
+            <option value="vim">Vim</option>
+            <option value="emacs">Emacs</option>
+          </select>
+        </div>
       </div>
+      <div id="content">
+        <div class="block" id="block_1">
+          <span><br><hr><br></span>
+          Code block <span>1</span><br>
+          <div class="code"></div>
+          <section class="target">
+            <span>Applies to: </span>
+            <select>
+              <option value="url">URL</option>
+              <option value="starting">URLs starting with</option>
+              <option value="domain">URLs on the domain</option>
+              <option value="everything">Everything</option>
+            </select>
+            <input class="url"><button class="remove_target">Remove</button><button class="add_target">Add</button><br>
+          </section>
+          <button class="add_block">Add new section</button>
+          <button class="remove_block">Remove section</button>
+          <button class="raise_block">&uarr;</button>
+          <button class="lower_block">&darr;</button>
+          <button class="clone_block">Clone</button>
+          <button class="beautify_block">Beautify</button>
+        </div>
+      </details>
     </div>
   </body>
 </html>

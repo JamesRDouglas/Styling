@@ -2,15 +2,7 @@ function onChange(item) {}
 function onError(error) { console.log(`Error: ${error}`); }
 function sendMessageToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, { message: "styles updated" }).then(response => {}).catch(onError); } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
-function updateTextarea() {
-  for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); }
-  $('textarea').each(function() {
-    if ($(this).val().split(/\r*\n/).length != $(this).prev('.side *').length) {
-      $(this).prev('div.side').empty();
-      for (var b = 1; b <= $(this).val().split(/\r*\n/).length; b++) { $(this).prev('div.side').append('<span class="line">'+b+'</span>'); }
-    }
-  });
-}
+function updateTextarea() { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); } }
 $(function() {
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
@@ -29,6 +21,7 @@ $(function() {
         if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
       }
     }
+    ace.edit($('textarea.code'), { mode: "ace/mode/javascript", selectionStyle: "text" });
     $('#enabled').click(function() { 
       var code = item; 
       if ($('#enabled').is(':checked')) { 
@@ -65,8 +58,6 @@ $(function() {
   $('#back').click(function() { window.location.replace("manage.html"); });
   $(document).on('change', 'select', function() { if ($(this).val() == "everything") { $(this).next('input.url').hide(); $(this).parent().addClass('current').parent().children('div.controls:not(.current)').remove(); } else { $(this).next('input.url').show(); } });
   $(document).on('input', 'textarea', function() { updateTextarea(); });
-  $(document).on('scroll', 'textarea', function () { $(this).parent('div.container').find('.side').scrollTop($(this).scrollTop()); });
-  $(document).on('resize', 'textarea', function() { $(this).parent('div.container').css('height', $(this).height()); });
   $(document).on('click', '.add_controls', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().find('input.url').val('').end().insertAfter($(this).parent()); });
   $(document).on('click', '.remove_controls', function() { if ($(this).parent().parent().children('.controls').length > 1) { $(this).parent().remove(); } });
   $(document).on('click', '.add_block', function() { $(this).parent().clone().find('textarea.code').val('').end().find('input').val('').end().find('section:not(:first-of-type)').remove().end().prop('id', '').insertAfter($(this).parent()); updateTextarea(); });

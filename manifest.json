@@ -4,7 +4,7 @@
 	"author": "James Douglas",
     "description": "__MSG_description__",
 	"manifest_version": 2,
-	"version": "0.7.72",
+	"version": "0.7.73",
 	"icons": { "128": "images/Styling.png" },
 	"options_ui": { "page": "src/options.html", "chrome_style": false },
 	"default_locale": "en",
@@ -27,6 +27,7 @@
 		"src/popup.html", 
 		"src/manage.js", 
 		"src/manage.html",
+		"ace/worker-css.js",
 		"fonts/Roboto-Light.ttf"
 	]
 }

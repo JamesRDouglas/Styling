@@ -21,7 +21,7 @@ function aceinit() {
 $(function() {
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
-      $('#style_name').val(item.styling_1.name);
+      $('#style-name').val(item.styling_1.name);
       $('#line-count').val(item.styling_1.options.line_count);
       $('#tab-size').val(item.styling_1.options.tab_size);
       $('#font-size').val(item.styling_1.options.font_size);
@@ -55,9 +55,9 @@ $(function() {
   });
   updateBlocks();
   $('#save').click(function() {
-    if ($('#style_name').val()) {
+    if ($('#style-name').val()) {
       browser.storage.local.get().then(function(item) { 
-        $.extend(true, item, { styling_1: { name: $('#style_name').val() } });
+        $.extend(true, item, { styling_1: { name: $('#style-name').val() } });
         for (var c = 1; c <= $('div.block').length; c++) {
           var blockName = "block_"+c, urls = $('div.block:nth-of-type('+c+')').children('section').length;
           $.extend(true, item, { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } });

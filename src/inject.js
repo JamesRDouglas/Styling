@@ -7,6 +7,8 @@ function updateStyles() {
       styleElement.setAttribute("type", "text/css");
       styleElement.appendChild(document.createTextNode("body { background-color: yellow; }"));
       document.getElementsByTagName('html')[0].appendChild(styleElement);
+    } else {
+      document.getElementsByClassName('styling').remove();
     }
   });
 }

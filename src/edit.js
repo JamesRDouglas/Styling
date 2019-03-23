@@ -14,11 +14,10 @@ function numOfLines(textArea, lineHeight) {
 }
 function updateTextarea() {
   var lines = numOfLines($('textarea.code'), document.querySelector("textarea").style.lineHeight.slice(0, 2));
-  if (lines < 15) { 
+  if (lines < 15) { lines = 15; }
+  if (document.querySelector("textarea").value.split(/\r*\n/).length < 15) {
     var toBeAdded = 15 - document.querySelector("textarea").value.split(/\r*\n/).length;
-    for (a = 1; a <= toBeAdded; a++) { $('textarea').val(currentText + '\n'); }
-    $('textarea').val(currentText); 
-    lines = 15; 
+    for (a = 1; a <= toBeAdded; a++) { var currentText = $('textarea').val(); $('textarea').val(currentText + '\n'); }
   }
   if (lines != $('.side *').length) {
     $('.side').empty();

@@ -31,7 +31,7 @@ $('#disable').change(function() {
 var active_styles = [];
 browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; });
 browser.storage.local.get(function(item) {
-  var styles = objectLength(item) - 1;
+  var styles = objectLength(item) - 2;
   for (var b = 1; b <= styles; b++) {
     var blocks = objectLength(item["styling_"+b]) - 2;
     block:
@@ -53,26 +53,11 @@ $(function() {
   $('img, label').click(function() { $('#disable').click(); });
   $('#manage').click(function() { browser.tabs.create({ url: "manage.html" }).then(onChange, onError); window.close(); });
   $('#details').click(function() { chrome.runtime.openOptionsPage(); window.close(); });
-  $('#url').prop('href', browser.extension.getURL("src/edit.html?create=url&target=")+currentURL);
-  $('#domain').prop('href', browser.extension.getURL("src/edit.html?create=domain&target=")+getDomain(currentURL));
-  $('#subdomain').prop('href', browser.extension.getURL("src/edit.html?create=domain&target=")+getDomain(currentURL, true));
+  $('#url').prop('href', browser.extension.getURL("src/edit.html?new=url&target=")+currentURL);
+  $('#domain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL));
+  $('#subdomain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL, true));
   $(document).on('click', '#url', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
   $(document).on('click', '#domain', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
   $(document).on('click', '#subdomain', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
   $(document).on('click', '.edit', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

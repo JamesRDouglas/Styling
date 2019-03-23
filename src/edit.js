@@ -10,28 +10,15 @@ function saveOptions() {
   });
 }
 function aceinit() {
-  current = this;
-  browser.storage.local.get().then(function(item) { 
-    if (item.styling_1) { 
-      var e = ace.edit(current);
-      ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
-      e.setTheme("ace/theme/"+item.styling_1.options.theme);
-      e.setOptions({ maxLines: Infinity, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, tabSize: Number(item.styling_1.options.tab_size), fontSize: Number(item.styling_1.options.font_size), enableBasicAutocompletion: item.styling_1.options.autocomplete, enableLiveAutocompletion: item.styling_1.options.autocomplete });
-      e.setDisplayIndentGuides(item.styling_1.options.guide_indent);
-      e.setShowInvisibles(item.styling_1.options.show_invisible);
-      if (item.styling_1.options.keybinding !== "default") { e.setKeyboardHandler("ace/keyboard/"+item.styling_1.options.keybinding); }
-      e.getSession().setMode("ace/mode/css");
-      return e;
-    } else { 
-      var e = ace.edit(current);
-      ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
-      e.setTheme("ace/theme/crimson_editor");
-      e.setOptions({ maxLines: Infinity, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, tabSize: 2, fontSize: 12, enableBasicAutocompletion: true, enableLiveAutocompletion: true });
-      e.setDisplayIndentGuides(false);
-      e.getSession().setMode("ace/mode/css");
-      return e;
-    }
-  });
+  var e = ace.edit(this);
+  ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
+  e.setTheme("ace/theme/"+$('#theme').val());
+  e.setOptions({ maxLines: Infinity, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked') });
+  e.setDisplayIndentGuides($('#guide-indent').prop('checked'));
+  e.setShowInvisibles($('#show-invisible').prop('checked'));
+  if ($('#keybinding').val() !== "default") { e.setKeyboardHandler("ace/keyboard/"+$('#keybinding').val()); }
+  e.getSession().setMode("ace/mode/css");
+  return e;
 }
 $(function() {
   browser.storage.local.get().then(function(item) { 

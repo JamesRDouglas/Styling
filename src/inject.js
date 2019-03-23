@@ -23,7 +23,7 @@ function updateStyles() {
             styleElement.setAttribute("class", "styling");
             styleElement.setAttribute("type", "text/css");
             styleElement.appendChild(document.createTextNode(item.styling_1.block_1.code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
-            $(styleElement).insertAfter($('html'));
+            $(styleElement).insertAfter($('body'));
             //document.getElementsByTagName('html')[0].appendChild(styleElement);
           }
         }

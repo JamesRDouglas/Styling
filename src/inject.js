@@ -10,7 +10,7 @@ function updateStyles() {
       document.getElementsByTagName('html')[0].appendChild(styleElement);
     } else {
       var elements = document.getElementsByClassName('styling');
-      for (var i = 0; i < elements.length; i++) { elements[i].remove(); }
+      for (var i = 0; i < elements.length; i++) { document.getElementsByTagName("html")[0].removeChild(elements[i]); }
     }
   });
 }

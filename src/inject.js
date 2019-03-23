@@ -1,14 +1,10 @@
+Element.prototype.appendAfter = function (element) { element.parentNode.insertBefore(this, element.nextSibling); },false;
 "use strict";
 function onChange() { }
 function onError(error) { console.log(`Error: ${error}`); }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function insertAfter(newNode, referenceNode) { referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling); }
-function waitForElementToDisplay(selector, time, element) { if(document.querySelector(selector)!=null) { document.getElementsByTagName('html')[0].appendChild(element); return; } else { setTimeout(function() { waitForElementToDisplay(selector, time); }, time); } }
-function getDomain(url) {
-  url = url.replace(/(https?:\/\/)?(www.)?/i, '');
-  if (url.indexOf('/') !== -1) { return url.split('/')[0]; }
-  return url;
-}
+function getDomain(url) { url = url.replace(/(https?:\/\/)?(www.)?/i, ''); if (url.indexOf('/') !== -1) { return url.split('/')[0]; } return url; }
 function updateStyles() {
   let localStorage = browser.storage.local.get(function(item) {
     if (!item.disabled) { browser.storage.local.set({ disabled: "false" }).then(onChange, onError); }
@@ -26,7 +22,8 @@ function updateStyles() {
             styleElement.setAttribute("class", "styling");
             styleElement.setAttribute("type", "text/css");
             styleElement.appendChild(document.createTextNode(item.styling_1["block_"+e].code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
-            waitForElementToDisplay('body', 100, styleElement);
+            //document.getElementsByTagName('html')[0].appendChild(styleElement);
+            styleElement.appendAfter(document.querySelector('body')[0]);
             break;
           }
         }

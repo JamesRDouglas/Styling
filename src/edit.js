@@ -53,12 +53,12 @@ $(function() {
       browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
     } else { alert('Please enter a name'); return false; }
   });
-  $('#beautify').click(function() { alert('beautify all'); });
+  $('#beautify').click(function() { alert('beautify all'); ace.require("ace/ext/beautify").beautify(ace.edit($(this).parent().children('div:first-of-type').prop('id')).session); });
   $('#back').click(function() { window.location.replace("manage.html"); });
   $(document).on('click', '.add_block', function() { $(this).parent().clone().find('input').val('').end().find('section:not(:first-of-type)').remove().end().prop('id', '').insertAfter($(this).parent()); updateBlocks(); });
   $(document).on('click', '.remove_block', function() { $(this).parent().remove(); updateBlocks(); });
   $(document).on('click', '.clone_block', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().insertAfter($(this).parent()); updateBlocks(); });
-  $(document).on('click', '.beautify_block', function() { alert('beautify'); style_html($(this).parent().children('div:first-of-type').prop('id'), { 'indent_size': 2, 'indent_char': ' ' }); });
+  $(document).on('click', '.beautify_block', function() { alert('beautify'); ace.require("ace/ext/beautify").beautify(ace.edit($(this).parent().children('div:first-of-type').prop('id')).session); });
   $(document).on('click', '.add_controls', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().find('input.url').val('').end().insertAfter($(this).parent()); });
   $(document).on('click', '.remove_controls', function() { if ($(this).parent().parent().children('.controls').length > 1) { $(this).parent().remove(); } });
   $(document).on('change', 'select', function() { if ($(this).val() == "everything") { $(this).next('input.url').hide(); $(this).parent().addClass('current').parent().children('div.controls:not(.current)').remove(); } else { $(this).next('input.url').show(); } });

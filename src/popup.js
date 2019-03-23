@@ -28,9 +28,9 @@ $('#disable').change(function() {
     browser.tabs.query({currentWindow: true}).then(sendEnableToTabs).catch(onError);
   }
 });
-$('#url').prop('href', browser.extension.getURL("src/manage.html?create=url&target="));
-$('#domain').prop('href', browser.extension.getURL("src/manage.html?create=domain&target="));
-$('#subdomain').prop('href', browser.extension.getURL("src/manage.html?create=domain&target="));
+//$('#url').prop('href', browser.extension.getURL("src/manage.html?create=url&target="));
+//$('#domain').prop('href', browser.extension.getURL("src/manage.html?create=domain&target="));
+//$('#subdomain').prop('href', browser.extension.getURL("src/manage.html?create=domain&target="));
   var active_styles = [];
   browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; });
   browser.storage.local.get(function(item) {
@@ -50,10 +50,20 @@ $('#subdomain').prop('href', browser.extension.getURL("src/manage.html?create=do
       }
     }
     console.log(active_styles);
-    for (x = 1; x <= objectLength(active_styles); x++) { $('#active-styles').append('<div><input type="checkbox"> <span>'+active_styles["style_"+x+"_name"]+'</span><a style="position: absolute; right: 4.5em;">edit</a><a style="position: absolute; right: 20px;">delete</a></div>'); }
+    for (x = 1; x <= objectLength(active_styles); x++) { $('#active-styles').append('<div><input type="checkbox"> <span>'+active_styles["style_"+x+"_name"]+'</span><a href="edit.html?style='+x+'" class="edit">edit</a><a href="#" class="delete" title="Not implemented">delete</a></div>'); }
   });
 $(function() {
   $('img, label').click(function() { $('#disable').click(); });
   $('#manage').click(function() { browser.tabs.create({ url: "manage.html" }).then(onChange, onError); window.close(); });
   $('#details').click(function() { chrome.runtime.openOptionsPage(); window.close(); });
+  $(document).on('click', '.edit', function() { browser.tabs.create({ url: $(this).prop('href') }); return false; });
 });
+
+
+
+
+
+
+
+
+

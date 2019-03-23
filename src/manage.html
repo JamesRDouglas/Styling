@@ -5,14 +5,17 @@
     <style>
       @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-Light.ttf') format('truetype'); }
       body { padding: 0; margin: 0; box-sizing: border-box; height: 100vh; width: 100vw; font-family: 'Roboto'; }
-      #sidebar { width: 250px; height: 100vh; box-sizing: border-box; border-right: 1px dashed black; float: left; padding: 1em; }
+      #sidebar { width: 250px; height: 100vh; box-sizing: border-box; border-right: 1px dashed grey; float: left; padding: 0.9em 1em; }
       #content { width: calc(100vw - 250px); height: 100vh; box-sizing: border-box; float: left; background-color: #EFEFEF; padding: 1em 2em; }
       h1 { padding: 0; margin: 0; font-size: 1.6em; width: 100%; }
       textarea.code { width: 100%; resize: vertical; box-sizing: border-box; padding: 5px 5px 5px 45px; box-shadow: 0 0 0 1px lightgrey; border: none; }
-      input.url { padding: 2px; width: 230px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey; border: 0; }
+      div.controls { display: flex; margin: 3px 0 5px 0; }
+      div.url-container { flex-grow: 1; display: flex; flex-wrap: wrap; }
+      input.url { padding: 2px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey; border: 0; flex-grow: 1; }
       textarea.code:focus, input.url:focus { box-shadow: 0 0 2px 3px lightblue; }
-      select { width: 175px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; }
-      button { height: 2em; width: 6em; text-align: center; }
+      select { width: 175px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: 158px 5px; cursor: pointer; }
+      select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; }
+      button { padding: 2px 6px; text-align: center; }
     </style>
   </head>
   <body>
@@ -21,18 +24,22 @@
       <button id="save">Save</button>
     </div>
     <div id="content">
-      <div>
+      <div class="block">
         Code block 1<br>
         <textarea rows="15" class="code"></textarea><br>
-        Applies to: 
-        <select>
-          <option>URL</option>
-          <option>URLs starting with</option>
-          <option>URLs on the domain</option>
-          <option>URLs matching the regexp</option>
-          <option>Everything</option>
-        </select>
-        <input class="url"><br>
+        <div class="controls">
+          Applies to: 
+          <select>
+            <option>URL</option>
+            <option>URLs starting with</option>
+            <option>URLs on the domain</option>
+            <option>URLs matching the regexp</option>
+            <option>Everything</option>
+          </select>
+          <div class="url-container"><input class="url"><br style="margin-bottom: 4px;"></div>
+        </div>
+        <button>Add new section</button>
+        <button>Clone</button>
       </div>
     </div>
     <script src="jquery-3.3.1.min.js"></script>

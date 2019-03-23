@@ -22,9 +22,9 @@ $(function() {
       $('#style_name').val(item.styling_1.name);
       $('#tab-size').val(item.styling_1.options.tab_size);
       $('#font-size').val(item.styling_1.options.font_size);
-      $('#smart-indent').val(item.styling_1.options.smart_indent);
-      $('#tab-indent').val(item.styling_1.options.tab_indent);
-      $('#auto-close').val(item.styling_1.options.auto_close);
+      if (item.styling_1.options.smart_indent === "true") { $('#smart-indent').val("checked"); }
+      if (item.styling_1.options.tab_indent === "true") { $('#tab-indent').val("checked"); }
+      if (item.styling_1.options.auto_close === "true") { $('#auto-close').val("checked"); }
       $('#theme').val(item.styling_1.options.theme);
       $('#keybinding').val(item.styling_1.options.keybinding);
       var blocks = objectLength(item.styling_1) - 3;

@@ -13,7 +13,7 @@
       #style_name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       #enabled { margin-bottom: 10px; }
       h1 { padding: 0; margin: 0; font-size: 1.6em; width: 100%; }
-      div.block:first-of-type > span:first-of-type { display: none; }
+      div.block:first-of-type > span:first-of-type, div.block:first-of-type > button.raise_block, div.block:last-of-type > button.lower_block { display: none; }
       div.block:only-child .remove_block { display: none; } 
       div.block:last-of-type { margin-bottom: 25vh; }
       section.target { display: flex; margin: 5px 0 3px 0; }
@@ -32,9 +32,9 @@
       div.ace_hidden-cursors { display: none; }
     </style>
     <script src="jquery-3.3.1.min.js"></script>
-    <script src="src-min-noconflict/ace.js"></script>
-    <script src="src-min-noconflict/ext-error_marker.js"></script>
-    <script src="src-min-noconflict/ext-language_tools.js"></script>
+    <script src="ace/ace.js"></script>
+    <script src="ace/ext-error_marker.js"></script>
+    <script src="ace/ext-language_tools.js"></script>
     <script src="edit.js"></script>
   </head>
   <body>

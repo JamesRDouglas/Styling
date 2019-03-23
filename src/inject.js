@@ -15,7 +15,4 @@ function updateStyles() {
   });
 }
 updateStyles();
-browser.runtime.onMessage.addListener(request => {
-  updateStyles();
-  return Promise.resolve({ response: "Hi" });
-});
+browser.runtime.onMessage.addListener(request => { updateStyles(); });

@@ -27,7 +27,7 @@ $(function() {
       $('#style_name').val(item.styling_1.name);
       $('#tab-size').val(item.styling_1.options.tab_size);
       $('#font-size').val(item.styling_1.options.font_size);
-      $('#line-count').val(item.styling_1.options.font_size);
+      $('#line-count').val(item.styling_1.options.line_count);
       if (item.styling_1.options.autocomplete == true) { $('#autocomplete').prop("checked", true); }
       if (item.styling_1.options.error_marker == true) { $('#error-marker').prop("checked", true); }
       if (item.styling_1.options.soft_tabs == true) { $('#soft-tabs').prop("checked", true); }

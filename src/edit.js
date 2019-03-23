@@ -12,11 +12,14 @@ function numOfLines(textArea, lineHeight) {
   textArea.css({ 'height': currentHeight, 'padding': currentPadding });
   return Math.ceil(scrollHeight / lineHeight);
 }
-$(function() {
+function updateTextarea() {
   var lines = numOfLines($('textarea.code'), document.querySelector("textarea").style.lineHeight.slice(0, 2));
+  if (lines < 15) { lines = 15; }
   for (a = 1; a <= lines; a++) {
-    $('html').append('<span class="line">'+lines+'</span>');
+    $('.side').append('<span class="line">'+a+'</span>');
   }
+}
+$(function() {
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
       if (item.styling_1.block_1.url_1) { $('input.url').val(item.styling_1.block_1.url_1); }
@@ -25,10 +28,12 @@ $(function() {
       if (item.styling_1.block_1.code_1) { $('textarea.code').text(item.styling_1.block_1.code_1); }
     }
   });
+  updateTextarea();
   $('#save').click(function() {
     browser.storage.local.set({ styling_1: { block_1: { url_1: $('input.url').val(), url_1_type: $('select').val(), code_1: $('input.code').val() } } }).then(onChange, onError); 
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });
   $('#back').click(function() { window.location.replace("manage.html"); });
   $('select').change(function() { if ($(this).val() == "everything") { $('input.url').hide(); } else { $('input.url').show(); } });
+  $('textarea').bind('input propertychange', function() { updateTextarea(); });
 });

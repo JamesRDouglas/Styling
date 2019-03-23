@@ -8,11 +8,11 @@ function onError(error) {
   var styling_code = "background-color: yellow;";
   browser.storage.local.set({styling_url, styling_code}).then(setItem(), onError());
 }
-function update() { 
+$('#update').click(function() {
   alert('hi');
   var styling_url = { value: document.getElementById("url").value }
   var styling_code = { value: document.getElementById("code").value }
   browser.storage.local.set({styling_url, styling_code}).then(setItem(), onError()); 
-}
+});
 browser.storage.local.get("styling_url").then(setItem(), onError());
 browser.storage.local.get("styling_code").then(setItem(), onError());

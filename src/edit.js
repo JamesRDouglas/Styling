@@ -2,6 +2,7 @@ function onChange(item) {}
 function onError(error) { console.log(`Error: ${error}`); }
 function sendMessageToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, { message: "update scripts" }).then(response => {}).catch(onError); } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
+function notify(message) { console.log(message.message); }
 function updateTextarea() {
   $('textarea').each(function() {
     if ($(this).val().split(/\r*\n/).length != $(this).prev('.side *').length) {
@@ -49,7 +50,7 @@ $(function() {
   $(document).on('click', '.add_block', function() { $(this).parent().clone().find('textarea.code').val('').end().find('input').val('').end().insertAfter($(this).parent()); });
   $(document).on('click', '.clone_block', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().insertAfter($(this).parent()); });
 });
-browser.runtime.onMessage.addListener(function(message) { console.log(message.message); });
+browser.runtime.onMessage.addListener(notify);
 
 
 

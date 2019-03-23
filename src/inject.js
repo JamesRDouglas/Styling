@@ -13,7 +13,7 @@ function updateStyles() {
     var styles = objectLength(item) - 1;
     for (var b = 1; b <= styles; b++) {
       if (item.styling_1 && item.styling_1.disabled != "true" && item.disabled == "false") {
-        var blocks = objectLength(item["styling_"+b]) - 1;
+        var blocks = objectLength(item["styling_"+b]) - 2;
         for (var c = 1; c <= blocks; c++) {
           var urls = (objectLength(item["styling_"+b]["block_"+c]) - 1) / 2;
           for (var d = 1; d <= urls; d++) { 

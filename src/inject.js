@@ -1,3 +1,4 @@
+"use strict";
 function updateStyles() {
   let localStorage = browser.storage.local.get(function(item) {
     if (item.disabled.value == "false") {
@@ -13,3 +14,7 @@ function updateStyles() {
   });
 }
 updateStyles();
+browser.runtime.onMessage.addListener(request => {
+  updateStyles();
+  return Promise.resolve({ response: "Hi" });
+});

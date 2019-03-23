@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="shortcut icon" href="/images/Styling.ico" id="favicon">
-    <title>Manage styles</title>
+    <title>Edit style</title>
     <style>
       @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-Light.ttf') format('truetype'); }
       body { padding: 0; margin: 0; box-sizing: border-box; height: 100vh; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; }
@@ -22,10 +22,29 @@
   </head>
   <body>
     <div id="sidebar">
-      <h1>Installed Styles</h1>
+      <h1>Edit style</h1>
+      <button id="save">Save</button>
+      <button id="back">Back to manage</button>
     </div>
     <div id="content">
-      <a href="edit.html">Edit style 1</a>
+      <div class="block">
+        Code block 1<br>
+        <textarea rows="15" class="code"></textarea><br>
+        <div class="controls">
+          Applies to: 
+          <select>
+            <option value="url">URL</option>
+            <option value="starting">URLs starting with</option>
+            <option value="domain">URLs on the domain</option>
+            <option value="everything">Everything</option>
+          </select>
+          <div class="url-container"><input class="url"><br></div>
+        </div>
+        <button>Add new section</button>
+        <button>Clone</button>
+      </div>
     </div>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="edit.js"></script>
   </body>
 </html>

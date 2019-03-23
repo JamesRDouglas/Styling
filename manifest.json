@@ -4,7 +4,7 @@
 	"author": "James Douglas",
     "description": "__MSG_description__",
 	"manifest_version": 2,
-	"version": "0.5.4",
+	"version": "0.5.40",
 	"icons": { "128": "images/Styling.png" },
 	"options_ui": { "page": "src/manage.html", "open_in_tab": true },
 	"default_locale": "en",
@@ -24,19 +24,24 @@
 		"activeTab",
 		"<all_urls>"
 	],
+	"background": {
+		"scripts": [
+			"src/background.js"
+		]
+	},
 	"content_scripts": [
 		{
 			"matches": [ "<all_urls>" ],
 			"run_at": "document_start",
 			"all_frames": true,
 			"match_about_blank": true,
-			"js": [ "inject.js" ]
+			"js": [ "src/inject.js" ]
 		}
 	],
 	"web_accessible_resources": [ 
 		"images/Styling.png", 
 		"images/StylingDisabled.png", 
-		"inject.js", 
+		"src/inject.js", 
 		"src/popup.js", 
 		"src/popup.html", 
 		"src/manage.js", 

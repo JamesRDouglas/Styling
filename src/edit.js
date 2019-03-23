@@ -11,7 +11,7 @@ function saveOptions() {
 }
 function aceinit() {
   var e = ace.edit(this), t = $(this);
-  ace.require("ace/ext/keybinding_menu", "ace/ext/error_marker", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu").set("workerPath", "worker-css.js");;
+  ace.require("ace/ext/keybinding_menu", "ace/ext/error_marker", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu").set("workerPath", "ace/worker/worker-css.js");;
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) { 
       e.setTheme("ace/theme/"+item.styling_1.options.theme);

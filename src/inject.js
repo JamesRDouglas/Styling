@@ -25,5 +25,5 @@ function updateStyles() {
 }
 updateStyles();
 browser.runtime.onMessage.addListener(request => { updateStyles(); });
-window.onhashchange = function() { updateStyles(); }
+document.onhashchange = function() { updateStyles(); }
 document.onload = function() { updateStyles(); }

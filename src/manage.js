@@ -1,9 +1,9 @@
-function onChange(item) {}
-function onError(error) { console.log(`Error: ${error}`); }
-function sendMessageToTabs(tabs) {
-  for (let tab of tabs) {
-    browser.tabs.sendMessage(tab.id, { message: "update scripts" }).then(response => {}).catch(onError);
-  }
-}
 $(function() {
+  function onChange() { /*console.log("changed");*/ }
+  function onError(error) { console.log(`Error: ${error}`); }
+  $('textarea').text(browser.storage.local.get().stylish_1.code);
+  $('#update').click(function() {
+    var stylingCode = { value: document.getElementById("code").value };
+    browser.storage.local.set({ stylish_1: { code: stylingCode } }).then(onChange, onError); 
+  });
 });

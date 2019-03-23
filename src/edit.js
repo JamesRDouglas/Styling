@@ -14,11 +14,13 @@ function aceinit() {
   var e = ace.edit(this);
   ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
   e.setTheme("ace/theme/"+$('#theme').val());
-  e.setOptions({ maxLines: Infinity, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked') });
+  e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useSoftTabs: $('#tab-indent').prop('checked') });
   e.setDisplayIndentGuides($('#guide-indent').prop('checked'));
   e.setShowInvisibles($('#show-invisible').prop('checked'));
+  e.session.setOption("useWorker", $('#error-marker').prop('checked'));
   if ($('#keybinding').val() !== "default") { e.setKeyboardHandler("ace/keyboard/"+$('#keybinding').val()); }
   e.getSession().setMode("ace/mode/css");
+  e.resize();
   return e;
 }
 $(function() {

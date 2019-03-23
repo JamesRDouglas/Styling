@@ -6,12 +6,4 @@ function sendMessageToTabs(tabs) {
   }
 }
 $(function() {
-  browser.storage.local.get().then(function(item) { 
-    if (item.styling_1.url) { $('input').val(item.styling_1.url); }
-    if (item.styling_1.code) { $('textarea').text(item.styling_1.code); }
-  });
-  $('#save').click(function() {
-    browser.storage.local.set({ styling_1: { url: $('url').val(), code: $('code').val() } }).then(onChange, onError); 
-    browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
-  });
 });

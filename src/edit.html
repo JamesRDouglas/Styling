@@ -21,10 +21,30 @@
   </head>
   <body>
     <div id="sidebar">
-      <h1>Installed Styles</h1>
+      <h1>Edit style</h1>
+      <button id="save">Save</button>
+      <button id="back">Back to manage</button>
     </div>
     <div id="content">
-      <a href="edit.html"></a>
+      <div class="block">
+        Code block 1<br>
+        <textarea rows="15" class="code"></textarea><br>
+        <div class="controls">
+          Applies to: 
+          <select>
+            <option>URL</option>
+            <option>URLs starting with</option>
+            <option>URLs on the domain</option>
+            <option>URLs matching the regexp</option>
+            <option>Everything</option>
+          </select>
+          <div class="url-container"><input class="url"><br></div>
+        </div>
+        <button>Add new section</button>
+        <button>Clone</button>
+      </div>
     </div>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="edit.js"></script>
   </body>
 </html>

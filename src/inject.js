@@ -21,7 +21,7 @@ function updateStyles() {
             styleElement.setAttribute("class", "styling");
             styleElement.setAttribute("type", "text/css");
             styleElement.appendChild(document.createTextNode(item.styling_1["block_"+e].code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
-            $('body').append(styleElement);
+            $('html').find('body').append(styleElement);
             //document.getElementsByTagName('html')[0].appendChild(styleElement);
             break;
           }

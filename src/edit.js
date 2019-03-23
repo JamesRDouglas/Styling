@@ -23,13 +23,15 @@ $(function() {
   });
   updateTextarea($('textarea'));
   $('#save').click(function() {
-    browser.storage.local.set({ styling_1: { block_1: { code: $('textarea.code').val().replace(/^|\s+$/g, '') } } }).then(onChange, onError); 
+    var saved_code = {}
+    $(saved_code).extend({ styling_1: { block_1: { code: $('textarea.code').val().replace(/^|\s+$/g, '') } } }); 
     var urls = 1;
     for (a = 1; a <= urls; a++) { 
       var objectUrl = 'url_' + urls;
       var objectUrlType = objectUrl + '_type';
-      browser.storage.local.push({ styling_1: { block_1: { [objectUrl]: $('input.url').val(), [objectUrlType]: $('select').val() } } }).then(onChange, onError); 
+      $(saved_code).extend({ styling_1: { block_1: { [objectUrl]: $('input.url').val(), [objectUrlType]: $('select').val() } } }); 
     }
+    browser.storage.local.set(saved_code).then(onChange, onError);
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });
   $('textarea').on('scroll', function () { $('.side').scrollTop($(this).scrollTop()); });

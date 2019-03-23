@@ -24,11 +24,11 @@ $(function() {
   updateTextarea($('textarea'));
   $('#save').click(function() {
     var saved_code = { styling_1: { block_1: { code: $('textarea.code').val().replace(/^|\s+$/g, '') } } }; 
-    var urls = 1;
+    var urls = $('section').length;
     for (a = 1; a <= urls; a++) { 
       var objectUrl = 'url_' + urls;
       var objectUrlType = objectUrl + '_type';
-      $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $('input.url').val(), [objectUrlType]: $('select').val() } } });
+      $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $('body section:nth-of-type('+urls+') input.url').val(), [objectUrlType]: $('body section:nth-of-type('+urls+') select').val() } } });
     }
     browser.storage.local.set(saved_code).then(onChange, onError);
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
@@ -38,6 +38,6 @@ $(function() {
   $('select').change(function() { if ($(this).val() == "everything") { $(this).next('input.url').hide(); $(this).parent().addClass('current').parent().children('div.controls:not(.current)').remove(); } else { $(this).next('input.url').show(); } });
   $('textarea').bind('input propertychange', function() { updateTextarea($(this)); });
   $('textarea').resize(function() { $(this).parent('div.container').css('height', $(this).height()); });
-  $(document).on('click', '.add', function() { $(this).parent().clone().children('select').val('url').parent().find('input').val('').end().insertAfter($(this).parent()); });
+  $(document).on('click', '.add', function() { $(this).parent().clone().find('input').val('').end().insertAfter($(this).parent()); });
   $(document).on('click', '.remove', function() { if ($(this).parent().parent().children('.controls').length > 1) { $(this).parent().remove(); } });
 });

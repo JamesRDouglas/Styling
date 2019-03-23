@@ -45,5 +45,6 @@ $(function() {
   $('#back').click(function() { window.location.replace("manage.html"); });
   $('select').change(function() { if ($(this).val() == "everything") { $('input.url').hide(); } else { $('input.url').show(); } });
   $('textarea').bind('input propertychange', function() { updateTextarea(); });
-  $('.add').click(function() { $(this).parent().clone().children('select').val('url').parent().find('input').val('').end().insertAfter($(this).parent()); });
+  $('.controls').on('click', '.add', function() { $(this).parent().clone().children('select').val('url').parent().find('input').val('').end().insertAfter($(this).parent()); });
+  $('.controls').on('click', '.remove', function() { if ($(this).parent().parent().children('.controls').length > 1) { $(this).parent().remove(); } });
 });

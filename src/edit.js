@@ -6,13 +6,14 @@ function sendMessageToTabs(tabs) {
   }
 }
 function numOfLines(textArea, lineHeight) {
-  var currentHeight = textArea.style.height, scrollHeight = textArea.scrollHeight;
+  var currentHeight = textArea.style.height;
   textArea.style.height = 'auto';
+  var scrollHeight = textArea.scrollHeight;
   textArea.style.height = currentHeight;
   return Math.ceil(scrollHeight / lineHeight);
 }
 $(function() {
-  var lines = numOfLines(document.querySelector("textarea"), document.querySelector("textarea").style.lineHeight.slice(0, -2));
+  var lines = numOfLines(document.querySelector("textarea"), document.querySelector("textarea").style.lineHeight.slice(0, 2));
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
       if (item.styling_1.block_1.url_1) { $('input.url').val(item.styling_1.block_1.url_1); }

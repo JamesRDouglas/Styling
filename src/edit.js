@@ -3,9 +3,16 @@ function onError(error) {}
 function sendMessageToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, { message: "styles updated" }).then(response => {}).catch(onError); } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function updateBlocks() { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); $('.block:nth-of-type('+a+')').find('div.code').prop('id', 'code_'+a); } $('div.code').each(function(){ aceinit.call(this); }); }
+function saveOptions() {
+  browser.storage.local.get().then(function(item) { 
+    $.extend(true, item, { styling_1: { options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), tab_indent: $('#tab-indent').prop('checked'), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
+    browser.storage.local.set(item).then(onChange, onError);
+  });
+  $('div.code').each(function(){ aceinit.call(this); });
+}
 function aceinit() {
   var e = ace.edit(this), t = $(this);
-  ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
+  ace.require("ace/ext/keybinding_menu", "ace/ext/error_marker", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) { 
       e.setTheme("ace/theme/"+item.styling_1.options.theme);
@@ -60,7 +67,8 @@ $(function() {
   $('#save').click(function() {
     if ($('#style_name').val()) {
       browser.storage.local.get().then(function(item) { 
-        $.extend(true, item, { styling_1: { name: $('#style_name').val(), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), tab_indent: $('#tab-indent').prop('checked'), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
+        $.extend(true, item, { styling_1: { name: $('#style_name').val() } });
+        saveOptions(); 
         for (var c = 1; c <= $('div.block').length; c++) {
           var blockName = "block_"+c, urls = $('div.block:nth-of-type('+c+')').children('section').length;
           $.extend(true, item, { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } });
@@ -83,6 +91,7 @@ $(function() {
   $(document).on('click', '.add_controls', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().find('input.url').val('').end().insertAfter($(this).parent()); });
   $(document).on('click', '.remove_controls', function() { if ($(this).parent().parent().children('.controls').length > 1) { $(this).parent().remove(); } });
   $(document).on('change', 'select', function() { if ($(this).val() == "everything") { $(this).next('input.url').hide(); $(this).parent().addClass('current').parent().children('div.controls:not(.current)').remove(); } else { $(this).next('input.url').show(); } });
+  $(document).on('change', '.options', function() { saveOptions(); });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "all styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "all styles enabled") { $('#enabled').prop('disabled', false); } });
 

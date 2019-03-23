@@ -42,17 +42,17 @@
       <button id="beautify">Beautify</button>
       <button id="back">Back to manage</button>
       <br><h3>Options</h3>
-      Tab size: <input type="number" id="tab-size">
+      Tab size: <input type="number" id="tab-size" class="options">
       <br style="margin-bottom: 5px;">
-      Font size: <input type="number" id="font-size">
+      Font size: <input type="number" id="font-size" class="options">
       <br style="margin-bottom: 7px;">
-      <input type="checkbox" id="autocomplete"> Autocomplete<br>
-      <input type="checkbox" id="tab-indent"> Indent with tabs<br>
-      <input type="checkbox" id="error-marking"> Show errors and warnings<br>
-      <input type="checkbox" id="guide-indent"> Show indent guides<br>
-      <input type="checkbox" id="show-invisible"> Show invisible characters<br style="margin-bottom: 7px;">
+      <input type="checkbox" id="autocomplete" class="options"> Autocomplete<br>
+      <input type="checkbox" id="tab-indent" class="options"> Indent with tabs<br>
+      <input type="checkbox" id="error-marking" class="options"> Show errors and warnings<br>
+      <input type="checkbox" id="guide-indent" class="options"> Show indent guides<br>
+      <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br style="margin-bottom: 7px;">
       Theme: 
-      <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 6px;" id="theme">
+      <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 6px;" id="theme" class="options">
         <optgroup label="Light">
           <option value="chrome">Chrome</option>
           <option value="clouds">Clouds</option>
@@ -97,7 +97,7 @@
       </select>
       <br style="margin-bottom: 5px;">
       Keybinding: 
-      <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 5px;" id="keybinding">
+      <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 5px;" id="keybinding" class="options">
         <option value="default">Default</option>
         <option value="vim">Vim</option>
         <option value="emacs">Emacs</option>
@@ -126,7 +126,6 @@
     </div>
     <script src="jquery-3.3.1.min.js"></script>
     <script src="ace/ace.js"></script>
-    <script src="ace/error_marker.js"></script>
     <script src="edit.js"></script>
   </body>
 </html>

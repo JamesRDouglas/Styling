@@ -5,7 +5,7 @@ $(function() {
     $('img').prop("src", "../images/Styling.png");
   }*/
   function onCreated(item) { 
-    console.log(`${item.disabled.state}`);
+    console.log('hi');
   }
   function onError(error) { 
     console.log(error) 

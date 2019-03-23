@@ -8,6 +8,7 @@ function saveOptions() {
     $.extend(true, item, { styling_1: { options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), tab_indent: $('#tab-indent').prop('checked'), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
     browser.storage.local.set(item).then(onChange, onError);
   });
+  $('div.code').each(function(){ aceinit.call(this); });
 }
 function aceinit() {
   var e = ace.edit(this);

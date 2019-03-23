@@ -19,7 +19,7 @@ $(function() {
         if (blocks > 1 && e > 1) { $('#content > .block:last-of-type > .add_block').click(); }
         var urls = (objectLength(item.styling_1["block_"+e]) - 1) / 2;
         for (var a = 1; a <= urls; a++) { 
-          if (urls > 1 && a > 1) { $('body div.block:nth-of-type('+e+') section:nth-of-type('+a+') .add_controls').click(); }
+          if (urls > 1 && a > 1) { $('body div.block:nth-of-type('+e+') section:last-of-type .add_controls').click(); }
           if (item.styling_1["block_"+e]["url_"+a]) { $('body .block:nth-of-type('+e+') section:nth-of-type('+a+') input.url').val(item.styling_1["block_"+e]["url_"+a]); }
           if (item.styling_1["block_"+e]["url_"+a+"_type"]) { $('body .block:nth-of-type('+e+') section:nth-of-type('+a+') select').val(item.styling_1["block_"+e]["url_"+a+"_type"]); }
           if (item.styling_1["block_"+e]["url_"+a+"_type"] == 'everything') { $('body .block:nth-of-type('+e+') section:nth-of-type('+a+') input.url').hide(); }

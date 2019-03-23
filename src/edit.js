@@ -6,10 +6,12 @@ function sendMessageToTabs(tabs) {
   }
 }
 function numOfLines(textArea, lineHeight) {
-  var currentHeight = textArea.style.height;
+  var currentHeight = textArea.style.height, currentPadding = textArea.style.padding;
   textArea.style.height = 'auto';
+  textArea.style.padding = 'none';
   var scrollHeight = textArea.scrollHeight;
   textArea.style.height = currentHeight;
+  textArea.style.padding = currentPadding;
   return Math.ceil(scrollHeight / lineHeight);
 }
 $(function() {

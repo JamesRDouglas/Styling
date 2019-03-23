@@ -1,4 +1,3 @@
-Element.prototype.appendAfter = function (element) { element.parentNode.insertBefore(this, element.nextSibling); },false;
 "use strict";
 function onChange() { }
 function onError(error) { console.log(`Error: ${error}`); }
@@ -23,7 +22,7 @@ function updateStyles() {
             styleElement.setAttribute("type", "text/css");
             styleElement.appendChild(document.createTextNode(item.styling_1["block_"+e].code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
             //document.getElementsByTagName('html')[0].appendChild(styleElement);
-            styleElement.appendAfter(document.querySelector('body')[0]);
+            $('body').ready(function() { $(styleElement).insertAfter($('body')); });
             break;
           }
         }

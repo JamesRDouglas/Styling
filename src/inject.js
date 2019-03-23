@@ -15,8 +15,8 @@ function updateStyles() {
     var elements = document.getElementsByClassName('styling');
     for (var i = 0; i < elements.length; i++) { document.getElementsByTagName("html")[0].removeChild(elements[i]); }
     if (item.styling_1 && item.styling_1.disabled != "true" && item.disabled == "false") {
-      var blocks = objectLength(item.styling_1);
-      for (var e = 1; e <= blocks.length; e++) {
+      var blocks = objectLength(item.styling_1) - 1;
+      for (var e = 1; e <= blocks; e++) {
         var urls = (objectLength(item.styling_1["block_"+e]) - 1) / 2;
         for (var a = 1; a <= urls; a++) { 
           if (item.styling_1.block_1["url_"+a] != undefined && ((item.styling_1["block_"+e]["url_"+a+"_type"] == "url" && item.styling_1["block_"+e]["url_"+a] == window.location.href) || (item.styling_1["block_"+e]["url_"+a+"_type"] == "starting" && window.location.href.startsWith(item.styling_1["block_"+e]["url_"+a])) || (item.styling_1["block_"+e]["url_"+a+"_type"] == "domain" && item.styling_1["block_"+e]["url_"+a] == getDomain(window.location.href)) || (item.styling_1["block_"+e]["url_"+a+"_type"] == "everything"))) {

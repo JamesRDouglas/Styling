@@ -14,16 +14,20 @@ function updateTextarea() {
 $(function() {
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
-      var urls = (objectLength(item.styling_1.block_1) - 1) / 2;
-      for (var a = 1; a <= urls; a++) { 
-        if (urls > 1 && a > 1) { $('body section:first-of-type .add').click(); }
-        if (item.styling_1.block_1["url_"+a]) { $('section.controls:nth-of-type('+a+') input.url').val(item.styling_1.block_1["url_"+a]); }
-        if (item.styling_1.block_1["url_"+a+"_type"]) { $('section.controls:nth-of-type('+a+') select').val(item.styling_1.block_1["url_"+a+"_type"]); }
-        if (item.styling_1.block_1["url_"+a+"_type"] == 'everything') { $('section.controls:nth-of-type('+a+') input.url').hide(); }
+      var blocks = objectLength(item.styling_1) - 1;
+      for (var e = 1; e <= blocks; e++) {
+        if (blocks > 1 && e > 1) { $('#content > .block:last-of-type > .add_block').click(); }
+        var urls = (objectLength(item.styling_1["block_"+e]) - 1) / 2;
+        for (var a = 1; a <= urls; a++) { 
+          if (urls > 1 && a > 1) { $('body .block:nth-of-type('+e+') section:nth-of-type('+a+') .add').click(); }
+          if (item.styling_1["block_"+e]["url_"+a]) { $('body .block:nth-of-type('+e+') section:nth-of-type('+a+') input.url').val(item.styling_1["block_"+e]["url_"+a]); }
+          if (item.styling_1["block_"+e]["url_"+a+"_type"]) { $('body .block:nth-of-type('+e+') section:nth-of-type('+a+') select').val(item.styling_1["block_"+e]["url_"+a+"_type"]); }
+          if (item.styling_1["block_"+e]["url_"+a+"_type"] == 'everything') { $('body .block:nth-of-type('+e+') section:nth-of-type('+a+') input.url').hide(); }
+        }
+        if (item.styling_1["block_"+e].code) { $('body .block:nth-of-type('+e+') textarea.code').text(item.styling_1["block_"+e].code); updateTextarea(); }
+        if (item.styling_1.disabled === "true") { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); }
+        if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
       }
-      if (item.styling_1.block_1.code) { $('textarea.code').text(item.styling_1.block_1.code); updateTextarea(); }
-      if (item.styling_1.disabled === "true") { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); }
-      if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     }
     $('#enabled').click(function() { 
       var code = item; 

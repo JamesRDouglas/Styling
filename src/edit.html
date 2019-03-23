@@ -7,47 +7,42 @@
     <style>
       @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-Light.ttf') format('truetype'); }
       body { padding: 0; margin: 0; box-sizing: border-box; height: 100%; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; background-color: #EFEFEF; }
-      h3.placeholder { display: none; }
-      #sidebar { width: 275px; height: 100vh; position: fixed; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 0.8em 1.1em; background-color: white; }
-      #content { width: calc(100vw - 275px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1em 2em; }
-      #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; margin-top: 10px; }
-      #style-name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
-      #enabled { margin-bottom: 10px; }
-      h1 { padding: 0; margin: 0; font-size: 1.6em; width: 100%; }
-      div.block:first-of-type > span:first-of-type, div.block:first-of-type > button.raise_block, div.block:last-of-type > button.lower_block { display: none; }
-      div.block:only-child .remove_block { display: none; } 
-      div.block:last-of-type { margin-bottom: 25vh; }
-      section.target { display: flex; margin: 5px 0 3px 0; }
-      section.target:not(:first-of-type) > span { visibility: hidden; }
-      div.url-container { flex-grow: 1; display: flex; flex-wrap: wrap; }
-      div.code { width: 100%; height: 200px; box-shadow: 0 0 0 1px lightgrey; margin-top: 5px; }
-      div.code.ace_focus { box-shadow: 0 0 2px 2px lightblue; }
-      input.url { padding: 2px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; flex-grow: 1; margin-left: 2px; }
-      input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       select { margin-left: 5px; width: 175px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: 158px 6px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
       select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       button { padding: 2px 6px; text-align: center; }
-      span.line { display: block; font-family: monospace; font-size: 13px; padding-right: 5px; text-align: right; }
-      span.line:last-of-type { padding-bottom: 5px; }
-      button.remove { margin-left: 2px; }
-      div.ace_hidden-cursors { display: none; }
-      div.small-screen { display: inline-block; }
-      div.small-screen-top > div { margin: 0; display: inline-block; padding: 0; }
+
+      #sidebar { width: 275px; height: 100vh; position: fixed; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 0.8em 1.1em; background-color: white; }
+      #sidebar #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; margin-top: 10px; }
+      #sidebar #style-name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
+      #sidebar h3.placeholder { display: none; }
+      #sidebar div.small-screen { display: inline-block; }
+
+      #content { width: calc(100vw - 275px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1em 2em; }
+      #content div.block:first-of-type > span:first-of-type, div.block:first-of-type > button.raise_block, div.block:last-of-type > button.lower_block { display: none; }
+      #content div.block:only-child .remove_block { display: none; } 
+      #content div.block:last-of-type { margin-bottom: 25vh; }
+      #content div.code { width: 100%; height: 200px; box-shadow: 0 0 0 1px lightgrey; margin-top: 5px; }
+      #content div.code.ace_focus { box-shadow: 0 0 2px 2px lightblue; }
+      #content div.ace_hidden-cursors { display: none; }
+      #content section.target { display: flex; margin: 5px 0 3px 0; }
+      #content section.target:not(:first-of-type) > span { visibility: hidden; }
+      #content div.url-container { flex-grow: 1; display: flex; flex-wrap: wrap; }
+      #content input.url { padding: 2px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; flex-grow: 1; margin-left: 2px; }
+      #content input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       @media only screen and (max-width: 840px) {
-        #sidebar { height: 175px; width: 100vw; overflow: hidden; positon: fixed; border-right: none; border-bottom: 1px dashed grey; padding: 0.5em 0; }
+        #sidebar { height: 165px; width: 100vw; overflow: hidden; positon: fixed; border-right: none; border-bottom: 1px dashed grey; padding: 0.5em 0; }
         #sidebar h3 { margin: 0 0 5px 0; }
         #sidebar h3.placeholder { display: block; visibility: hidden; margin: 0; }
         #sidebar > h1, #sidebar > br:first-of-type, #sidebar .hide-small-screen { display: none; }
-        #sidebar div.small-screen-top { width: calc(100vw - 2.2em); display: flex; flex-wrap: wrap; margin: 0.6 1.1em; }
+        #sidebar div.small-screen-top { width: calc(100vw - 2.2em); display: flex; flex-wrap: wrap; margin: 0.6em 1.1em; }
         #sidebar div.small-screen-top > div { display: flex; flex-grow: 1; }
         #sidebar div.small-screen-top > div > input { flex-grow: 1; }
         #sidebar div.small-screen-top #save { margin-left: 10px; }
-        #sidebar div.small-screen-top #enabled { margin-bottom: 0; }
+        #sidebar div.small-screen-top #enabled { margin-bottom: 3px; }
         #sidebar div.small-screen-top #style-name { flex-grow: 1; margin-top: 0; margin-right: 5px; }
-        #sidebar div.small-screen { width: calc(calc(100vw - 2.2em) / 3); float: left; }
-        #sidebar div.small-screen:nth-of-type(2) { margin-left: 1.1em; }
-        #sidebar div.small-screen:nth-of-type(4) { margin-right: 1.1em; }
-        #content { top: 175px; left: 0; width: 100vw; position: fixed; overflow-x: scroll; }
+        #sidebar div.small-screen { width: calc(calc(100vw - 6.6em) / 3); float: left; }
+        #sidebar div.small-screen { margin: 0 1.1em; }
+        #content { top: 165px; left: 0; width: 100vw; position: fixed; overflow-x: scroll; }
       }
     </style>
     <script src="jquery-3.3.1.min.js"></script>
@@ -58,10 +53,10 @@
   </head>
   <body>
     <div id="sidebar">
-      <h1>Edit style</h1>
+      <h1 style="padding: 0; margin: 0; font-size: 1.6em; width: 100%;">Edit style</h1>
       <div class="small-screen-top">
-        <div><input type="text" id="style-name" placeholder="Enter a name"></div>
-        <input type="checkbox" id="enabled"> Enabled
+        <div style="margin: 0; display: inline-block; padding: 0;"><input type="text" id="style-name" placeholder="Enter a name"></div>
+        <input type="checkbox" id="enabled" style="margin-bottom: 10px;"> Enabled
         <br>
         <button id="save">Save</button>
         <button id="beautify">Beautify</button>

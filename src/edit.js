@@ -6,8 +6,13 @@ function updateBlocks(item) { for (var a = 1; a <= $('.block').length; a++) { $(
 function aceinit(item) {
   var e = ace.edit(this), t = $(this);
   ace.require("ace/ext/language_tools", "ace/ext/error_marker", "ace/ext/keybinding_menu", "ace/ext/searchbox");
-  if (item) { e.setTheme("ace/theme/"+item.styling_1.options.theme).setOptions({ maxLines: Infinity, tabSize: item.styling_1.options.tab_size, fontSize: item.styling_1.options.font_size, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
-  } else { e.setTheme("ace/theme/crimson_editor").setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 });  }
+  if (item) { 
+    e.setTheme("ace/theme/"+item.styling_1.options.theme);
+    e.setOptions({ maxLines: Infinity, tabSize: item.styling_1.options.tab_size, fontSize: item.styling_1.options.font_size, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
+  } else { 
+    e.setTheme("ace/theme/crimson_editor");
+    e.setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 });
+  }
   e.getSession().setMode("ace/mode/css");
   return e;
 }

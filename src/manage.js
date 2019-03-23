@@ -1,6 +1,16 @@
 function onChange(item) {}
 function onError(error) { console.log(`${error}`); }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
+function checkStyleExists(b, item) { 
+  if (item["styling_"+b]) {
+    a++;
+    styles_arr.push(b);
+    $('#content').append('<div class="style" id="style_'+b+'" data-id="'+b+'"><input type="checkbox"><span class="name" title="'+item["styling_"+b].name+'">'+item["styling_"+b].name+'</span><button class="edit" data-id="'+b+'">Edit</button><button class="delete" data-id="'+b+'">Delete</button><div class="url_list"></div></div>');
+  } else {
+    b++;
+    checkStyleExists(b, item);
+  }
+}
 function sendMessageToTabs(tabs) {
   for (let tab of tabs) {
     browser.tabs.sendMessage(tab.id, { message: "update scripts" }).then(response => {}).catch(onError);
@@ -17,14 +27,9 @@ $(function() {
   }
   var styles_arr = [];
   browser.storage.local.get().then(function(item) {
-    var styles = objectLength(item) - 1;
+    var styles = objectLength(item) - 1, b = 1;
     for (a = 1; a <= styles; a = a) {
-      var b = 1;
-      if (item["styling_"+b]) {
-      	a++;
-        styles_arr.push(b);
-        $('#content').append('<div class="style" id="style_'+b+'" data-id="'+b+'"><input type="checkbox"><span class="name" title="'+item["styling_"+b].name+'">'+item["styling_"+b].name+'</span><button class="edit" data-id="'+b+'">Edit</button><button class="delete" data-id="'+b+'">Delete</button><div class="url_list"></div></div>');
-      }
+      checkStyleExists(b, item);
     }
   });
   $('#write-new').click(function() { for (a = 1; styles_arr.indexOf(a) === -1; a++) { window.location.href = "edit.html?create="+a; } });

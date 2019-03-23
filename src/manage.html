@@ -28,6 +28,33 @@
       <button id="write-new">Write new style</button>
       <br>
       <input type="checkbox" id="enabled"> Disable all styles
+      <br>
+      <details open>
+        <summary>Options</summary>
+        <section class="small-screen">
+          <h3 class="placeholder" style="margin-bottom: 5px;">Options</h3>
+          Line count: <input type="number" id="line-count" class="options"><br style="margin-bottom: 5px;">
+          Tab size: <input type="number" id="tab-size" class="options"><br style="margin-bottom: 5px;">
+          Font size: <input type="number" id="font-size" class="options"><br style="margin-bottom: 7px;">
+        </section>
+        <section class="small-screen">
+          <h3 class="placeholder">Options</h3>
+          <input type="checkbox" id="autocomplete" class="options"> Autocomplete<br>
+          <input type="checkbox" id="error-marker" class="options" disabled title="This feature is not available right now"> Syntax validation<br>
+          <input type="checkbox" id="soft-tabs" class="options"> Use soft tabs<br>
+        </section>
+        <section class="small-screen">
+          <h3 class="placeholder">Options</h3>
+          <input type="checkbox" id="guide-indent" class="options"> Show indent guides<br>
+          <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br style="margin-bottom: 7px;">
+          Keybinding: 
+          <select style="width: 135px; background-position: 118px 6px;" id="keybinding" class="options">
+            <option value="default">Default</option>
+            <option value="vim">Vim</option>
+            <option value="emacs">Emacs</option>
+          </select>
+        </section>
+      </details>
     </div>
     <div id="content">
     </div>

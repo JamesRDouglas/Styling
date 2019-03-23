@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      body { padding: 0; margin: 0; box-sizing: border-box; height: 100vh; width: 100vw; }
+      #sidebar { width: 250px; height: 100vh; box-sizing: border-box; border-right: 1px solid black; float: left; padding: 2em; }
+      #content { width: calc(100vw - 250px); height: 100vh; box-sizing: border-box; float: left; }
+      h1 { padding: 0; margin: 0; font-size: 1.7em; }
+    </style>
+  </head>
+  <body>
+    <div id="sidebar">
+      <h1>Installed Styles</h1>
+    </div>
+    <div id="content">
+      <div>
+        <input style="width: 230px; box-sizing: border-box;" placeholder="Target URL (Leave blank to apply to all)" id="url"><br>
+        <textarea style="width: 230px; box-sizing: border-box;" rows="10" placeholder="CSS code to be applied to above URL" id="code"></textarea>
+        <br>
+        <button style="height: 2em; width: 8em; text-align: center;" id="update">Update</button>
+      </div>
+    </div>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="manage.js"></script>
+  </body>
+</html>

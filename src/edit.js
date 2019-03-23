@@ -2,8 +2,8 @@ function onChange(item) {}
 function onError(error) { /*console.log(`${error}`);*/ }
 function sendMessageToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, { message: "styles updated" }).then(response => {}).catch(onError); } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
-function updateBlocks(item) { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); $('.block:nth-of-type('+a+')').find('div.code').prop('id', 'code_'+a); } $('div.code').each(function(){ aceinit(item).call(this); }); }
-function aceinit(item){
+function updateBlocks(item) { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); $('.block:nth-of-type('+a+')').find('div.code').prop('id', 'code_'+a); } $('div.code').each(function(){ aceinit.call(this, item); }); }
+function aceinit(item) {
   var e = ace.edit(this), t = $(this);
   ace.require("ace/ext/language_tools", "ace/ext/error_marker", "ace/ext/keybinding_menu", "ace/ext/searchbox");
   if (item) { e.setTheme("ace/theme/"+item.styling_1.options.theme).setOptions({ maxLines: Infinity, tabSize: item.styling_1.options.tab_size, fontSize: item.styling_1.options.font_size, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 

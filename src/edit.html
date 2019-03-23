@@ -16,7 +16,8 @@
       div.block:first-of-type > span:first-of-type { display: none; }
       div.block:only-child .remove_block { display: none; } 
       div.block:last-of-type { margin-bottom: 25vh; }
-      section.controls { display: flex; margin: 5px 0 3px 0; }
+      section.target { display: flex; margin: 5px 0 3px 0; }
+      section.target:not(:first-of-type) > span { visibility: hidden; }
       div.url-container { flex-grow: 1; display: flex; flex-wrap: wrap; }
       div.code { width: 100%; height: 200px; box-shadow: 0 0 0 1px lightgrey; margin-top: 5px; }
       div.code.ace_focus { box-shadow: 0 0 2px 2px lightblue; }
@@ -28,7 +29,6 @@
       span.line { display: block; font-family: monospace; font-size: 13px; padding-right: 5px; text-align: right; }
       span.line:last-of-type { padding-bottom: 5px; }
       button.remove { margin-left: 2px; }
-      section.controls:not(:first-of-type) > span { visibility: hidden; }
       div.ace_hidden-cursors { display: none; }
     </style>
   </head>
@@ -108,7 +108,7 @@
         <span><br><hr><br></span>
         Code block <span>1</span><br>
         <div class="code"></div>
-        <section class="controls">
+        <section class="target">
           <span>Applies to: </span>
           <select>
             <option value="url">URL</option>
@@ -116,10 +116,12 @@
             <option value="domain">URLs on the domain</option>
             <option value="everything">Everything</option>
           </select>
-          <input class="url"><button class="remove_controls">Remove</button><button class="add_controls">Add</button><br>
+          <input class="url"><button class="remove_target">Remove</button><button class="add_target">Add</button><br>
         </section>
         <button class="add_block">Add new section</button>
         <button class="remove_block">Remove section</button>
+        <button class="raise_block">&uarr;</button>
+        <button class="lower_block">&darr;</button>
         <button class="clone_block">Clone</button>
         <button class="beautify_block">Beautify</button>
       </div>

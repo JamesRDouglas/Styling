@@ -5,7 +5,14 @@ function sendMessageToTabs(tabs) {
     browser.tabs.sendMessage(tab.id, { message: "update scripts" }).then(response => {}).catch(onError);
   }
 }
+function numOfLines(textArea, lineHeight) {
+  var currentHeight = textArea.style.height, scrollHeight = textArea.scrollHeight;
+  textArea.style.height = 'auto';
+  textArea.style.height = currentHeight;
+  return Math.ceil(scrollHeight / lineHeight);
+}
 $(function() {
+  numOfLines($('textarea')[0], $('textarea').css('line-height'));
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
       if (item.styling_1.block_1.url_1) { $('input').val(item.styling_1.block_1.url_1); }
@@ -18,7 +25,7 @@ $(function() {
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });
   $('#back').click(function() { window.location.replace("manage.html"); });
-  $('select').onChange(function() {
+  $('select').change(function() {
     if ($(this).val() == "everything") {
       $('input').val('').prop('disabled', true);
     }

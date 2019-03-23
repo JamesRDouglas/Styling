@@ -6,7 +6,7 @@ function updateStyles() {
       styleElement.setAttribute("id", "styling-id");
       styleElement.setAttribute("class", "styling");
       styleElement.setAttribute("type", "text/css");
-      styleElement.appendChild(document.createTextNode("body { background-color: yellow; }"));
+      styleElement.appendChild(document.createTextNode(item.styling_1.code));
       document.getElementsByTagName('html')[0].appendChild(styleElement);
     } else {
       var elements = document.getElementsByClassName('styling');

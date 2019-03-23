@@ -26,7 +26,9 @@ $(function() {
     browser.storage.local.set({ styling_1: { block_1: { code: $('textarea.code').val().replace(/^|\s+$/g, '') } } }).then(onChange, onError); 
     var urls = 1;
     for (a = 1; a <= urls; a++) { 
-      browser.storage.local.set({ styling_1: { block_1: { 'url_1': $('input.url').val(), 'url_1_type': $('select').val() } } }).then(onChange, onError); 
+      var objectUrl = 'url_' + urls;
+      var objectUrlType = objectUrl + '_type';
+      browser.storage.local.set({ styling_1: { block_1: { objectUrl: $('input.url').val(), objectUrlType: $('select').val() } } }).then(onChange, onError); 
     }
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });

@@ -5,12 +5,18 @@
     <style>
       @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-Light.ttf') format('truetype'); }
       img, input, label { cursor: pointer; }
+      a { text-decoration-style: dashed; color: #0d0d57 !important; }
+      ul { margin: 0; text-align: left; display: inline-block; margin: 0 auto; }
     </style>
   </head>
-  <body style="width: 230px; padding: 1em; text-align: center; font-family: 'Roboto';">
-    <img src="../images/Styling.png" style="width: 128px; height: 128px;"><br>
+  <body style="width: 190px; padding: 1em; text-align: center; font-family: 'Roboto';">
+    <img src="../images/Styling.png" style="width: 100px; height: 100px;"><br>
     Styling version <span id="version"></span>
     <br><hr><input type="checkbox" id="disable"><label>Disable all styles</label><br style="margin-bottom: 0.7em;">
+    Write style for this:
+    <br>
+    <a href="#">URL</a> / <a href="#">domain</a> / <a href="#">subdomain</a>
+    <br><br>
     <button style="padding: 0.2em 1em;" id="manage">Manage</button>
     <button style="padding: 0.2em 1em;" id="details">Details</button>
     <script src="jquery-3.3.1.min.js"></script>

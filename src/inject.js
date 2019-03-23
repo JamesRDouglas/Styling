@@ -19,8 +19,8 @@ function updateStyles() {
           for (var d = 1; d <= urls; d++) { 
             if (item["styling_"+b].block_1["url_"+d] != undefined && ((item["styling_"+b]["block_"+c]["url_"+d+"_type"] == "url" && item["styling_"+b]["block_"+c]["url_"+d] == window.location.href) || (item["styling_"+b]["block_"+c]["url_"+d+"_type"] == "starting" && window.location.href.startsWith(item["styling_"+b]["block_"+c]["url_"+d])) || (item["styling_"+b]["block_"+c]["url_"+d+"_type"] == "domain" && item["styling_"+b]["block_"+c]["url_"+d] == getDomain(window.location.href)) || (item["styling_"+b]["block_"+c]["url_"+d+"_type"] == "everything"))) {
               var styleElement = document.createElement("style");
-              styleElement.setAttribute("id", "styling-"+b);
-              styleElement.setAttribute("data-name", item["styling_"+b+"_"+c].name);
+              styleElement.setAttribute("id", "styling-"+b+"-"+c);
+              styleElement.setAttribute("data-name", item["styling_"+b].name);
               styleElement.setAttribute("class", "styling");
               styleElement.setAttribute("type", "text/css");
               styleElement.appendChild(document.createTextNode(item["styling_"+b]["block_"+c].code.replace(/(\r\n\t|\n|\r\t)/gm,"")));

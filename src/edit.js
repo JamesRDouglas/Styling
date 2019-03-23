@@ -8,7 +8,6 @@ function saveOptions() {
     $.extend(true, item, { styling_1: { options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), tab_indent: $('#tab-indent').prop('checked'), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
     browser.storage.local.set(item).then(onChange, onError);
   });
-  $('div.code').each(function(){ aceinit.call(this); });
 }
 function aceinit() {
   var e = ace.edit(this), t = $(this);
@@ -68,7 +67,6 @@ $(function() {
     if ($('#style_name').val()) {
       browser.storage.local.get().then(function(item) { 
         $.extend(true, item, { styling_1: { name: $('#style_name').val() } });
-        saveOptions(); 
         for (var c = 1; c <= $('div.block').length; c++) {
           var blockName = "block_"+c, urls = $('div.block:nth-of-type('+c+')').children('section').length;
           $.extend(true, item, { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } });
@@ -91,7 +89,7 @@ $(function() {
   $(document).on('click', '.add_controls', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().find('input.url').val('').end().insertAfter($(this).parent()); });
   $(document).on('click', '.remove_controls', function() { if ($(this).parent().parent().children('.controls').length > 1) { $(this).parent().remove(); } });
   $(document).on('change', 'select', function() { if ($(this).val() == "everything") { $(this).next('input.url').hide(); $(this).parent().addClass('current').parent().children('div.controls:not(.current)').remove(); } else { $(this).next('input.url').show(); } });
-  $(document).on('change', '.options', function() { saveOptions(); });
+  $(document).on('change', '.options', function() { saveOptions(); $('div.code').each(function(){ aceinit.call(this); }); });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "all styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "all styles enabled") { $('#enabled').prop('disabled', false); } });
 

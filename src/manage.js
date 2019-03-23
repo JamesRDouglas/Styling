@@ -6,6 +6,6 @@ $(function() {
   });
   $('#update').click(function() {
     var stylingCode = { value: document.getElementById("code").value };
-    browser.storage.local.set({ stylish_1: { code: stylingCode } }).then(onChange, onError); 
+    browser.storage.local.set({ styling_1: { code: stylingCode } }).then(onChange, onError); 
   });
 });

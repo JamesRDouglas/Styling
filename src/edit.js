@@ -10,7 +10,6 @@ function aceinit() {
     if (item.styling_1) { 
       e.setTheme("ace/theme/"+item.styling_1.options.theme);
       e.setOptions({ maxLines: Infinity, tabSize: Number(item.styling_1.options.tab_size), fontSize: Number(item.styling_1.options.font_size), useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, enableBasicAutocompletion: item.styling_1.options.autocomplete, enableLiveAutocompletion: item.styling_1.options.autocomplete });
-      e.setBehavioursEnabled(item.styling_1.options.smart_indent);
       if (item.styling_1.options.keybinding !== "default") { e.setKeyboardHandler("ace/keyboard/"+item.styling_1.options.keybinding); }
     } else { 
       e.setTheme("ace/theme/crimson_editor");
@@ -26,11 +25,12 @@ $(function() {
       $('#style_name').val(item.styling_1.name);
       $('#tab-size').val(item.styling_1.options.tab_size);
       $('#font-size').val(item.styling_1.options.font_size);
-      if (item.styling_1.options.smart_indent == true) { $('#smart-indent').prop("checked", true); }
-      if (item.styling_1.options.tab_indent == true) { $('#tab-indent').prop("checked", true); }
       if (item.styling_1.options.auto_close == true) { $('#auto-close').prop("checked", true); }
       if (item.styling_1.options.autocomplete == true) { $('#autocomplete').prop("checked", true); }
+      if (item.styling_1.options.tab_indent == true) { $('#tab-indent').prop("checked", true); }
       if (item.styling_1.options.error_marker == true) { $('#error-marker').prop("checked", true); }
+      if (item.styling_1.options.guide_indent == true) { $('#guide-indent').prop("checked", true); }
+      if (item.styling_1.options.show_invisible == true) { $('#show-invisible').prop("checked", true); }
       $('#theme').val(item.styling_1.options.theme);
       $('#keybinding').val(item.styling_1.options.keybinding);
       var blocks = objectLength(item.styling_1) - 3;
@@ -58,7 +58,7 @@ $(function() {
   $('#save').click(function() {
     if ($('#style_name').val()) {
       browser.storage.local.get().then(function(item) { 
-        $.extend(true, item, { styling_1: { name: $('#style_name').val(), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), smart_indent: $('#smart-indent').prop('checked'), tab_indent: $('#tab-indent').prop('checked'), auto_close: $('#auto-close').prop('checked'), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
+        $.extend(true, item, { styling_1: { name: $('#style_name').val(), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), tab_indent: $('#tab-indent').prop('checked'), auto_close: $('#auto-close').prop('checked'), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
         for (var c = 1; c <= $('div.block').length; c++) {
           var blockName = "block_"+c, urls = $('div.block:nth-of-type('+c+')').children('section').length;
           $.extend(true, item, { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } });

@@ -8,7 +8,7 @@ function applyStyles(element) { if (document.body) { document.getElementsByTagNa
 function updateStyles() {
   let localStorage = browser.storage.local.get(function(item) {
     if (!item.disabled) { browser.storage.local.set({ disabled: "false" }).then(onChange, onError); }
-    if (!item.styling_1) { browser.storage.local.set({ styling_1: { block_1: { code: "", url_1: "", url_1_type: "url" }, options: { tab_size: "2", font_size: "11", smart_indent: "true", tab_indent: "false", auto_close: "true", theme: "crimson_editor", keybinding: "default" } } }).then(onChange, onError); }
+    if (!item.styling_1) { browser.storage.local.set({ styling_1: { block_1: { code: "", url_1: "", url_1_type: "url" }, options: { tab_size: "2", font_size: "11", auto_close: "true", autocomplete: "true", tab_indent: "false", guide_indent: "true", show_invisible: "false", theme: "crimson_editor", keybinding: "default" } } }).then(onChange, onError); }
     var elements = document.getElementsByClassName('styling');
     for (var i = 0; i < elements.length; i++) { document.getElementsByTagName("html")[0].removeChild(elements[i]); }
     if (item.styling_1 && item.styling_1.disabled != "true" && item.disabled == "false") {

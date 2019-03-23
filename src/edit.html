@@ -7,6 +7,7 @@
     <style>
       @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-Light.ttf') format('truetype'); }
       body { padding: 0; margin: 0; box-sizing: border-box; height: 100%; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; background-color: #EFEFEF; }
+      h3.placeholder { display: none; }
       #sidebar { width: 275px; height: 100vh; position: fixed; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 0.8em 1.1em; background-color: white; }
       #content { width: calc(100vw - 275px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1em 2em; }
       #style_name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; margin-top: 10px; }
@@ -34,7 +35,8 @@
       @media only screen and (max-width: 840px) {
         #sidebar { height: 175px; width: 100vw; overflow: hidden; positon: fixed; border-right: none; border-bottom: 1px dashed grey; }
         #sidebar > h1 { display: inline; }
-        #sidebar > h3 { display: none; }
+        #sidebar h3 { margin: 0 0 5px 0; }
+        #sidebar h3.placeholder { display: block; visibility: hidden; }
         #sidebar > #style_name { width: auto; }
         #sidebar > br:first-of-type { display: none; }
         #sidebar div.small-screen { width: calc(calc(100vw - 2.2em) / 3); float: left; }
@@ -64,13 +66,15 @@
         Font size: <input type="number" id="font-size" class="options"><br style="margin-bottom: 7px;">
       </div>
       <div class="small-screen">
+        <h3 class="placeholder">Options</h3>
         <input type="checkbox" id="autocomplete" class="options"> Autocomplete<br>
         <input type="checkbox" id="error-marker" class="options"> Syntax validation<br>
         <input type="checkbox" id="soft-tabs" class="options"> Use soft tabs<br>
-        <input type="checkbox" id="guide-indent" class="options"> Show indent guides<br>
-        <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br style="margin-bottom: 7px;">
+        <input type="checkbox" id="guide-indent" class="options"> Show indent guides<br style="margin-bottom: 7px;">
       </div>
       <div class="small-screen">
+        <h3 class="placeholder">Options</h3>
+        <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br>
         Theme: 
         <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 6px;" id="theme" class="options">
           <optgroup label="Light">

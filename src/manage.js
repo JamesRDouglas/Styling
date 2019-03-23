@@ -14,11 +14,11 @@ $(function() {
     }
   });
   $(document).on('click', '.edit', function() {
-    window.location.href = "edit.html?style=1"
+    window.location.href = "edit.html?style="+$(this).parent().data("id");
   });
   $(document).on('click', '.delete', function() {
-  	var confirmation = confirm("Are you sure you want to delete "+"?");
-    if (confirmation) { window.location.href = "edit.html?delete=1"; }
+  	var confirmation = confirm("Are you sure you want to delete "+$(this).parent().prop("title")+"?");
+    if (confirmation) { window.location.href = "edit.html?delete="+$(this).parent().data("id"); }
   });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "all styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "all styles enabled") { $('#enabled').prop('disabled', false); } });

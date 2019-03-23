@@ -12,10 +12,9 @@ $(function() {
   $(document).on('click', '.style > input, .url_list', function(e) { e.stopPropagation(); });
   $(document).on('click', '.delete', function(e) { 
     if (confirm('Are you sure you want to delete "'+$(this).parent().find('.name').prop("title")+'"?')) { 
-      var styles;
-      browser.storage.local.get().then(function(item) { styles = item; }); 
-      delete styles["styling_"+$(this).data("id")]; 
-      browser.storage.local.set(styles).then(onDone, onError); 
+      browser.storage.local.get().then(function(item) { 
+        var currentStyle = "styling_"+delete_id; browser.storage.local.remove(currentStyle).then(onChange, onError);
+      }); 
       $(this).parent().remove(); 
       e.stopPropagation(); 
     } 

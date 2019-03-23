@@ -1,6 +1,6 @@
 "use strict";
 function onChange() { }
-function onError(error) { console.log(`Error: ${error}`); }
+function onError(error) { console.log(`${error}`); }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function insertAfter(newNode, referenceNode) { referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling); }
 function getDomain(url) { url = url.replace(/(https?:\/\/)?(www.)?/i, ''); if (url.indexOf('/') !== -1) { return url.split('/')[0]; } return url; }

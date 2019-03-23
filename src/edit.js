@@ -6,7 +6,7 @@ function updateBlocks() { for (var a = 1; a <= $('.block').length; a++) { $('.bl
 function aceinit(){
   var e = ace.edit(this), t = $(this);
   e.setTheme("ace/theme/crimson_editor");
-  e.setOptions({ maxLines: Infinity, tabSize: 8, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
+  e.setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
   e.getSession().setMode("ace/mode/css");
   e.setAutoScrollEditorIntoView(true);
   return e;
@@ -76,7 +76,7 @@ $(function() {
     }
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });
-  $('#beautify', function() { alert('beautify all'); ace.require("ace/ext/beautify").beautify(ace.edit($(this).parent().children('div:first-of-type').prop('id')).session); });
+  $('#beautify').click(function() { alert('beautify all'); ace.require("ace/ext/beautify").beautify(ace.edit($(this).parent().children('div:first-of-type').prop('id')).session); });
   $('#back').click(function() { window.location.replace("manage.html"); });
   $(document).on('click', '.add_block', function() { $(this).parent().clone().find('input').val('').end().find('section:not(:first-of-type)').remove().end().prop('id', '').insertAfter($(this).parent()); updateBlocks(); });
   $(document).on('click', '.remove_block', function() { $(this).parent().remove(); updateBlocks(); });

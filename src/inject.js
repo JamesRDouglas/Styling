@@ -13,7 +13,7 @@ function updateStyles() {
           styleElement.setAttribute("id", "styling-1");
           styleElement.setAttribute("class", "styling");
           styleElement.setAttribute("type", "text/css");
-          styleElement.appendChild(document.createTextNode(item.styling_1.block_1.code));
+          styleElement.appendChild(document.createTextNode(item.styling_1.block_1.code_1));
           document.getElementsByTagName('html')[0].appendChild(styleElement);
         } else {
           var elements = document.getElementsByClassName('styling');

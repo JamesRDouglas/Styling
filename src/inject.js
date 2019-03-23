@@ -25,4 +25,3 @@ function updateStyles() {
 }
 updateStyles();
 browser.runtime.onMessage.addListener(request => { updateStyles(); });
-browser.webRequest.handlerBehaviorChanged().then(function() { apply(); });

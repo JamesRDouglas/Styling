@@ -10,10 +10,8 @@ $(function() {
     if (item.styling_1.url) { $('input').val(item.styling_1.url); }
     if (item.styling_1.code) { $('textarea').text(item.styling_1.code); }
   });
-  $('#update').click(function() {
-    var stylingUrl = document.getElementById("url").value;
-    var stylingCode = document.getElementById("code").value;
-    browser.storage.local.set({ styling_1: { url: stylingUrl, code: stylingCode } }).then(onChange, onError); 
+  $('#save').click(function() {
+    browser.storage.local.set({ styling_1: { url: $('url').val(), code: $('code').val() } }).then(onChange, onError); 
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });
 });

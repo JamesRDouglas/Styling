@@ -2,9 +2,11 @@ $(function() {
   $.getJSON('../manifest.json', function(data) { $('#version').text(data.version); });
   $('#disable').click(function() {
     if ($(this).is(':checked')) {
-      $('img').prop("src", "../StylingDisabled.png");
+      $('img').prop("src", "../images/StylingDisabled.png");
+      browser.browserAction.setIcon({path: "../images/StylingDisabled.png"});
     } else {
-      $('img').prop("src", "../Styling.png");
+      $('img').prop("src", "../images/Styling.png");
+      browser.browserAction.setIcon({path: "../images/Styling.png"});
     }
   });
   $('img, label').click(function() { $('#disable').click(); });

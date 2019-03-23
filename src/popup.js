@@ -28,9 +28,9 @@ $('#disable').change(function() {
     browser.tabs.query({currentWindow: true}).then(sendEnableToTabs).catch(onError);
   }
 });
-$('#url').prop('href', browser.extension.getURL("src/manage.html?action=create&type=url&target='"+getURL()+"'"));
-$('#domain').prop('href', browser.extension.getURL("src/manage.html?action=create&type=domain&target='"+getDomain(getURL(), false)+"'"));
-$('#subdomain').prop('href', browser.extension.getURL("src/manage.html?action=create&type=domain&target='"+getDomain(getURL(), true)+"'"));
+$('#url').prop('href', browser.extension.getURL("src/manage.html?action=create_url_style&target="));
+$('#domain').prop('href', browser.extension.getURL("src/manage.html?action=create_domain_style&target="));
+$('#subdomain').prop('href', browser.extension.getURL("src/manage.html?action=create_domain_style&target="));
 $(function() {
   $('img, label').click(function() { $('#disable').click(); });
   $('#manage').click(function() { browser.tabs.create({ url: "manage.html" }).then(onChange, onError); window.close(); });

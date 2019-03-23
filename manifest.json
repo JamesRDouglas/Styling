@@ -1,33 +1,33 @@
 {
-	"name": "Styling",
-	"short_name": "Styling",
-	"author": "James Douglas",
+    "name": "Styling",
+    "short_name": "Styling",
+    "author": "James Douglas",
     "description": "__MSG_description__",
-	"manifest_version": 2,
-	"version": "0.8.6",
-	"icons": { "128": "images/Styling.png" },
-	"options_ui": { "page": "src/options.html", "chrome_style": false },
-	"default_locale": "en",
-	"applications": { "gecko": { "id": "{4acf1e87-8461-4606-a7c4-d4890aa2147a}" } },
-	"browser_action": { "default_icon": { "128": "images/Styling.png" }, "default_title": "Styling", "default_popup": "src/popup.html" },
-	"permissions": [ "tabs", "storage", "<all_urls>" ],
-	"content_security_policy": "script-src 'self' blob:; object-src 'self'",
-	"background": { "scripts": [ "src/background.js", "src/popup.html", "src/popup.js" ] },
-	"content_scripts": [{
-		"matches": [ "<all_urls>" ],
-		"run_at": "document_start",
-		"all_frames": true,
-		"match_about_blank": true,
-		"js": [ "src/jquery-3.3.1.min.js", "src/inject.js" ]
-	}],
-	"web_accessible_resources": [ 
-		"images/Styling.png", 
-		"images/StylingDisabled.png", 
-		"src/inject.js", 
-		"src/popup.js", 
-		"src/popup.html", 
-		"src/manage.js", 
-		"src/manage.html",
-		"fonts/Roboto-Light.ttf"
+    "manifest_version": 2,
+    "version": "0.8.7",
+    "icons": { "128": "images/Styling.png" },
+    "options_ui": { "page": "src/options.html", "chrome_style": false },
+    "default_locale": "en",
+    "applications": { "gecko": { "id": "{4acf1e87-8461-4606-a7c4-d4890aa2147a}" } },
+    "browser_action": { "default_icon": { "128": "images/Styling.png" }, "default_title": "Styling", "default_popup": "src/popup.html" },
+    "permissions": [ "tabs", "storage", "<all_urls>" ],
+    "content_security_policy": "script-src 'self' blob:; object-src 'self'",
+    "background": { "scripts": [ "src/background.js", "src/popup.html", "src/popup.js" ] },
+    "content_scripts": [{
+        "matches": [ "<all_urls>" ],
+        "run_at": "document_start",
+        "all_frames": true,
+        "match_about_blank": true,
+        "js": [ "src/jquery-3.3.1.min.js", "src/inject.js" ]
+    }],
+    "web_accessible_resources": [ 
+        "images/Styling.png", 
+        "images/StylingDisabled.png", 
+        "src/inject.js", 
+        "src/popup.js", 
+        "src/popup.html", 
+        "src/manage.js", 
+        "src/manage.html",
+        "Roboto-Light.ttf"
 	]
 }

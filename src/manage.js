@@ -2,7 +2,7 @@ function onChange(item) {}
 function onError(error) { console.log(`${error}`); }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function checkStyleExists(b, item) { 
-  if (item["styling_"+b]) {
+  if (item["styling_"+b] !== undefined) {
     a++;
     styles_arr.push(b);
     $('#content').append('<div class="style" id="style_'+b+'" data-id="'+b+'"><input type="checkbox"><span class="name" title="'+item["styling_"+b].name+'">'+item["styling_"+b].name+'</span><button class="edit" data-id="'+b+'">Edit</button><button class="delete" data-id="'+b+'">Delete</button><div class="url_list"></div></div>');

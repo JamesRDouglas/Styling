@@ -33,4 +33,4 @@ function updateStyles() {
   });
 }
 updateStyles();
-browser.runtime.onMessage.addListener(function() { if (message.message === "all styles disabled" || message.message === "all styles enabled" || message.message === "styles updated") { updateStyles(); } });
+browser.runtime.onMessage.addListener(function(message) { if (message.message === "all styles disabled" || message.message === "all styles enabled" || message.message === "styles updated") { updateStyles(); } });

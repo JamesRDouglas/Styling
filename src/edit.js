@@ -6,13 +6,15 @@ function updateBlocks() { for (var a = 1; a <= $('.block').length; a++) { $('.bl
 function aceinit() {
   var e = ace.edit(this), t = $(this);
   ace.require("ace/ext/language_tools", "ace/ext/error_marker", "ace/ext/keybinding_menu", "ace/ext/searchbox");
-  //if (item) { 
-  //  e.setTheme("ace/theme/"+item.styling_1.options.theme);
-  //  e.setOptions({ maxLines: Infinity, tabSize: item.styling_1.options.tab_size, fontSize: item.styling_1.options.font_size, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
-  //} else { 
-    e.setTheme("ace/theme/crimson_editor");
-    e.setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 });
-  //}
+  browser.storage.local.get().then(function(item) { 
+    if (item.styling_1) { 
+      e.setTheme("ace/theme/"+item.styling_1.options.theme);
+      e.setOptions({ maxLines: Infinity, tabSize: item.styling_1.options.tab_size, fontSize: item.styling_1.options.font_size, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
+    } else { 
+      e.setTheme("ace/theme/crimson_editor");
+      e.setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 });
+    }
+  });
   e.getSession().setMode("ace/mode/css");
   return e;
 }
@@ -22,9 +24,9 @@ $(function() {
       $('#style_name').val(item.styling_1.name);
       $('#tab-size').val(item.styling_1.options.tab_size);
       $('#font-size').val(item.styling_1.options.font_size);
-      if (item.styling_1.options.smart_indent === "true") { $('#smart-indent').val("checked"); }
-      if (item.styling_1.options.tab_indent === "true") { $('#tab-indent').val("checked"); }
-      if (item.styling_1.options.auto_close === "true") { $('#auto-close').val("checked"); }
+      if (item.styling_1.options.smart_indent === "true") { $('#smart-indent').prop("checked", true); }
+      if (item.styling_1.options.tab_indent === "true") { $('#tab-indent').prop("checked", true); }
+      if (item.styling_1.options.auto_close === "true") { $('#auto-close').prop("checked", true); }
       $('#theme').val(item.styling_1.options.theme);
       $('#keybinding').val(item.styling_1.options.keybinding);
       var blocks = objectLength(item.styling_1) - 3;

@@ -1,11 +1,11 @@
 function onChange(item) {}
-function onError(error) { /*console.log(`${error}`);*/ }
+function onError(error) {}
 function sendMessageToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, { message: "styles updated" }).then(response => {}).catch(onError); } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function updateBlocks() { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); $('.block:nth-of-type('+a+')').find('div.code').prop('id', 'code_'+a); } $('div.code').each(function(){ aceinit.call(this); }); }
 function aceinit() {
   var e = ace.edit(this), t = $(this);
-  ace.require("ace/ext/keybinding_menu", "ace/ext/beautify", "ace/ext/error_marker", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
+  ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) { 
       e.setTheme("ace/theme/"+item.styling_1.options.theme);
@@ -16,6 +16,7 @@ function aceinit() {
     } else { 
       e.setTheme("ace/theme/crimson_editor");
       e.setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, enableBasicAutocompletion: true, enableLiveAutocompletion: true });
+      e.setDisplayIndentGuides(false);
     }
   });
   e.getSession().setMode("ace/mode/css");
@@ -27,7 +28,6 @@ $(function() {
       $('#style_name').val(item.styling_1.name);
       $('#tab-size').val(item.styling_1.options.tab_size);
       $('#font-size').val(item.styling_1.options.font_size);
-      if (item.styling_1.options.auto_close == true) { $('#auto-close').prop("checked", true); }
       if (item.styling_1.options.autocomplete == true) { $('#autocomplete').prop("checked", true); }
       if (item.styling_1.options.tab_indent == true) { $('#tab-indent').prop("checked", true); }
       if (item.styling_1.options.error_marker == true) { $('#error-marker').prop("checked", true); }
@@ -60,7 +60,7 @@ $(function() {
   $('#save').click(function() {
     if ($('#style_name').val()) {
       browser.storage.local.get().then(function(item) { 
-        $.extend(true, item, { styling_1: { name: $('#style_name').val(), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), tab_indent: $('#tab-indent').prop('checked'), auto_close: $('#auto-close').prop('checked'), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
+        $.extend(true, item, { styling_1: { name: $('#style_name').val(), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), tab_indent: $('#tab-indent').prop('checked'), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
         for (var c = 1; c <= $('div.block').length; c++) {
           var blockName = "block_"+c, urls = $('div.block:nth-of-type('+c+')').children('section').length;
           $.extend(true, item, { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } });

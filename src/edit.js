@@ -6,7 +6,7 @@ function updateBlocks() { for (var a = 1; a <= $('.block').length; a++) { $('.bl
 function aceinit(){
   var e = ace.edit(this), t = $(this);
   e.setTheme("ace/theme/crimson_editor");
-  e.setOptions({ maxLines: Infinity, highlightActiveLine: false, tabSize: 8, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
+  e.setOptions({ maxLines: Infinity, tabSize: 8, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
   e.getSession().setMode("ace/mode/css");
   e.commands.bindKey("Tab", null);
   e.commands.bindKey("Shift-Tab", null);
@@ -16,6 +16,7 @@ function aceinit(){
 $(function() {
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
+      $('#sidebar input[type=text]').val(item.styling_1.styleName);
       var blocks = objectLength(item.styling_1) - 1;
       for (var e = 1; e <= blocks; e++) {
         if (blocks > 1 && e > 1) { $('#content > .block:last-of-type > .add_block').click(); }
@@ -46,6 +47,17 @@ $(function() {
   });
   updateBlocks();
   $('#save').click(function() {
+    if ($('#sidebar input[type=text]').val()) {
+      var saved_code = { styling_1: { styleName: $('#sidebar input[type=text]').val() } }; 
+      var extendedItem;
+      browser.storage.local.get().then(function(item) { 
+        $.extend(true, item, saved_code);
+        extendedItem = item;
+      });
+      browser.storage.local.set(extendedItem).then(onChange, onError);
+    } else {
+      alert('Please enter a name'); return false; 
+    }
     for (var c = 1; c <= $('div.block').length; c++) {
       var blockName = "block_"+c;
       var saved_code = { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } }; 

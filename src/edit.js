@@ -26,7 +26,7 @@ $(function() {
   browser.storage.local.get().then(function(item) { 
     if (item["styling_"+style_id] === undefined || typeof style_id === "number") {
       var style_name = "styling_"+style_id;
-      $.extend(true, item, { [style_name]: { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", theme: "crimson_editor", keybinding: "default" } } });
+      $.extend(true, item, { [style_name]: { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", keybinding: "default" } } });
       browser.storage.local.set(item).then(onChange, onError);
       window.location = 'edit.html?style='+style_id;
     }
@@ -43,7 +43,7 @@ $(function() {
       if (item["styling_"+style_id].options.guide_indent === "true") { $('#guide-indent').prop("checked", true); }
       if (item["styling_"+style_id].options.show_invisible === "true") { $('#show-invisible').prop("checked", true); }
       $('#keybinding').val(item["styling_"+style_id].options.keybinding);
-      var blocks = objectLength(item["styling_"+style_id]) - 2;
+      var blocks = objectLength(item["styling_"+style_id]) - 3;
       for (var b = 1; b <= blocks; b++) {
         if (blocks > 1 && b > 1) { $('#content > .block:last-of-type > .add_block').click(); }
         var urls = (objectLength(item["styling_"+style_id]["block_"+b]) - 1) / 2;

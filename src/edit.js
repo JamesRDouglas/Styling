@@ -46,16 +46,13 @@ $(function() {
   $('#save').click(function() {
     if ($('#style_name').val()) {
       browser.storage.local.get().then(function(item) { $.extend(true, item, { styling_1: { name: $('#style_name').val() } }); browser.storage.local.set(item).then(onChange, onError); });
-      alert('pre-loop');
       for (var c = 1; c <= $('div.block').length; c++) {
         var blockName = "block_"+c, saved_code = { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } }, urls = $('div.block:nth-of-type('+c+')').children('section').length;
         for (var b = 1; b <= urls; b++) { 
           var objectUrl = 'url_'+b, objectUrlType = objectUrl+'_type';
           $.extend(true, saved_code, { styling_1: { [blockName]: { [objectUrl]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), [objectUrlType]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val() } } });
         }
-        var extendedItem;
-        browser.storage.local.get().then(function(item) { $.extend(true, item, saved_code); extendedItem = item; });
-        browser.storage.local.set(extendedItem).then(onChange, onError);
+        browser.storage.local.get().then(function(item) { $.extend(true, item, saved_code); browser.storage.local.set(item).then(onChange, onError); });
       }
       browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
     } else { alert('Please enter a name'); return false; }

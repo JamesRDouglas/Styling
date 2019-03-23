@@ -14,13 +14,9 @@ function aceinit() {
   var e = ace.edit(this);
   ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
   e.setTheme("ace/theme/"+$('#theme').val());
-  e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked') });
-  e.getSession().setUseSoftTabs($('#soft-tabs').prop('checked'));
-  e.setDisplayIndentGuides($('#guide-indent').prop('checked'));
-  e.setShowInvisibles($('#show-invisible').prop('checked'));
+  e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, navigateWithinSoftTabs: true, useSoftTabs: $('#soft-tabs').prop('checked'), displayIndentGuides: $('#guide-indent').prop('checked'), showInvisibles: $('#show-invisible').prop('checked'), tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked') });
   if ($('#keybinding').val() !== "default") { e.setKeyboardHandler("ace/keyboard/"+$('#keybinding').val()); }
-  e.getSession().setMode("ace/mode/css");
-  e.resize();
+  e.getSession().setMode("ace/mode/css").resize();
   return e;
 }
 $(function() {

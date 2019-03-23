@@ -11,8 +11,7 @@ function saveOptions() {
 }
 function aceinit() {
   var e = ace.edit(this), t = $(this);
-  ace.require("ace/ext/keybinding_menu", "ace/ext/error_marker", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
-  ace.require("ace/config").set("workerPath", "worker-css.js");
+  ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
   e.setOptions({ maxLines: Infinity, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 });
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) { 
@@ -27,7 +26,7 @@ function aceinit() {
       e.setDisplayIndentGuides(false);
     }
   });
-  e.getSession().setMode("ace/mode/css");
+  e.getSession().setMode("ace/mode/css_expression");
   return e;
 }
 $(function() {

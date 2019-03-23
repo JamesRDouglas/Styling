@@ -12,17 +12,18 @@ function saveOptions() {
 function aceinit() {
   var e = ace.edit(this), t = $(this);
   ace.require("ace/ext/keybinding_menu", "ace/ext/error_marker", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
-  ace.set("workerPath", "ace/worker/worker-css.js");
+  ace.require("ace/config").set("workerPath", "worker-css.js");
+  e.setOptions({ maxLines: Infinity, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 });
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) { 
       e.setTheme("ace/theme/"+item.styling_1.options.theme);
-      e.setOptions({ maxLines: Infinity, tabSize: Number(item.styling_1.options.tab_size), fontSize: Number(item.styling_1.options.font_size), useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, enableBasicAutocompletion: item.styling_1.options.autocomplete, enableLiveAutocompletion: item.styling_1.options.autocomplete });
+      e.setOptions({ tabSize: Number(item.styling_1.options.tab_size), fontSize: Number(item.styling_1.options.font_size), enableBasicAutocompletion: item.styling_1.options.autocomplete, enableLiveAutocompletion: item.styling_1.options.autocomplete });
       e.setDisplayIndentGuides(item.styling_1.options.guide_indent);
       e.setShowInvisibles(item.styling_1.options.show_invisible);
       if (item.styling_1.options.keybinding !== "default") { e.setKeyboardHandler("ace/keyboard/"+item.styling_1.options.keybinding); }
     } else { 
       e.setTheme("ace/theme/crimson_editor");
-      e.setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, enableBasicAutocompletion: true, enableLiveAutocompletion: true });
+      e.setOptions({ tabSize: 2, fontSize: 12, enableBasicAutocompletion: true, enableLiveAutocompletion: true });
       e.setDisplayIndentGuides(false);
     }
   });

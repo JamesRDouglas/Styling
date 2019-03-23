@@ -3,7 +3,7 @@
 	"short_name": "Styling",
 	"description": "Styling is a simple add-on which lets you add css styles to any webpage!",
 	"manifest_version": 2,
-	"version": "0.4.8",
+	"version": "0.4.9",
 	"icons": { "128": "Styling.png" },
 	"options_ui": { "page": "options.html" },
 	"applications": { "gecko": { "id": "{4acf1e87-8461-4606-a7c4-d4890aa2147a}" } },

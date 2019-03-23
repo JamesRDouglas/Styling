@@ -14,7 +14,7 @@
       #sidebar { width: 270px; height: 100vh; position: fixed; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 0.8em 1.1em; background-color: white; }
       #sidebar #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; margin-top: 10px; }
       #sidebar #style-name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
-      #sidebar summary { font-size: 1.17em; font-weight: bold; margin-bottom: 1em; cursor: pointer; -moz-user-select: none; }
+      #sidebar summary { font-size: 1.17em; font-weight: bold; margin-bottom: 1em; cursor: pointer; }
       #sidebar h3.placeholder { display: none; }
       #sidebar section.small-screen { display: inline-block; }
 
@@ -53,9 +53,9 @@
     </style>
     <script src="jquery-3.3.1.min.js"></script>
     <script src="beautify-css-1.8.9.min.js"></script>
-    <script src="ace-1.4.3/ace.js"></script>
-    <script src="ace-1.4.3/mode-css.js"></script>
-    <script src="ace-1.4.3/ext-language_tools.js"></script>
+    <script src="ace-1.4.2/ace.js"></script>
+    <script src="ace-1.4.2/mode-css.js"></script>
+    <script src="ace-1.4.2/ext-language_tools.js"></script>
   </head>
   <body>
     <div id="sidebar">
@@ -80,7 +80,7 @@
         <section class="small-screen">
           <h3 class="placeholder">Options</h3>
           <input type="checkbox" id="autocomplete" class="options"> Autocomplete<br>
-          <input type="checkbox" id="error-marker" class="options"> Syntax validation<br>
+          <input type="checkbox" id="error-marker" class="options" disabled title="This feature is not available right now"> Syntax validation<br>
           <input type="checkbox" id="soft-tabs" class="options"> Use soft tabs<br>
         </section>
         <section class="small-screen">
@@ -94,30 +94,30 @@
             <option value="emacs">Emacs</option>
           </select>
         </section>
-      </details>
-    </div>
-    <div id="content">
-      <div class="block" id="block_1">
-        <span><br><hr><br></span>
-        Code block <span>1</span><br>
-        <div class="code"></div>
-        <section class="target">
-          <span>Applies to: </span>
-          <select>
-            <option value="url">URL</option>
-            <option value="starting">URLs starting with</option>
-            <option value="domain">URLs on the domain</option>
-            <option value="everything">Everything</option>
-          </select>
-          <input class="url"><button class="add_target">Add</button><button class="remove_target">Remove</button><br>
-        </section>
-        <button class="add_block">Add new section</button>
-        <button class="remove_block">Remove section</button>
-        <button class="raise_block">&uarr;</button>
-        <button class="lower_block">&darr;</button>
-        <button class="clone_block">Clone</button>
-        <button class="beautify_block">Beautify</button>
       </div>
+      <div id="content">
+        <div class="block" id="block_1">
+          <span><br><hr><br></span>
+          Code block <span>1</span><br>
+          <div class="code"></div>
+          <section class="target">
+            <span>Applies to: </span>
+            <select>
+              <option value="url">URL</option>
+              <option value="starting">URLs starting with</option>
+              <option value="domain">URLs on the domain</option>
+              <option value="everything">Everything</option>
+            </select>
+            <input class="url"><button class="add_target">Add</button><button class="remove_target">Remove</button><br>
+          </section>
+          <button class="add_block">Add new section</button>
+          <button class="remove_block">Remove section</button>
+          <button class="raise_block">&uarr;</button>
+          <button class="lower_block">&darr;</button>
+          <button class="clone_block">Clone</button>
+          <button class="beautify_block">Beautify</button>
+        </div>
+      </details>
     </div>
     <script src="edit.js"></script>
   </body>

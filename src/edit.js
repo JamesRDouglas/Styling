@@ -12,7 +12,6 @@ function saveOptions() {
   $('div.code').each(function(){ aceinit.call(this); });
 }
 function aceinit() {
-  ace.config.set('loadWorkerFromBlob', false);
   var e = ace.edit(this);
   ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/searchbox");
   e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, navigateWithinSoftTabs: true, theme: "ace/theme/crimson_editor", useSoftTabs: $('#soft-tabs').prop('checked'), minLines: $('#line-count').val(), maxLines: $('#line-count').val(), displayIndentGuides: $('#guide-indent').prop('checked'), showInvisibles: $('#show-invisible').prop('checked'), tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useWorker: $('#error-marker').prop('checked'), mode: "ace/mode/css" });
@@ -21,26 +20,15 @@ function aceinit() {
   return e;
 }
 $(function() {
+  var style_id = new URLSearchParams(window.location.search).get('style');
+  var delete_id = new URLSearchParams(window.location.search).get('delete');
+  if (!style_id) { window.location = 'edit.html?style=1'; }
   browser.storage.local.get().then(function(item) { 
-    var options = item.options; new_target = new URLSearchParams(window.location.search).get('new'), new_type = new URLSearchParams(window.location.search).get('type'), style_id = new URLSearchParams(window.location.search).get('style');
-    if (new_target && new_type && typeof new_target === "string" && typeof new_type === "string") { 
-      var newstyle_name, newstyle_id;
-      for (a = 1; a = a; a++) { if (styles_arr.indexOf(a) === -1) { newstyle_name = "styling_"+a; break; } }
-      $.extend(true, item, { [newstyle_name]: { name: "new style", disabled: "false", block_1: { code: "", url_1: [new_target], url_1_type: [new_type] }, options } });
-      browser.storage.local.set(item).then(onChange, onError);
-      window.location = 'edit.html?style='+newstyle_id;
-    }
-    if (!style_id) { window.location = 'edit.html?style=1'; }
     if (item["styling_"+style_id] === undefined || typeof style_id === "number") {
       var style_name = "styling_"+style_id;
-      $.extend(true, item, { [style_name]: { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options } });
+      $.extend(true, item, { [style_name]: { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", keybinding: "default" } } });
       browser.storage.local.set(item).then(onChange, onError);
       window.location = 'edit.html?style='+style_id;
-    }
-    if (!item["styling_"+style_id].options) {
-      var style_name = "styling_"+style_id;
-      $.extend(true, item, { [style_name]: { options } });
-      browser.storage.local.set(item).then(onChange, onError);
     }
     if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     if (item["styling_"+style_id] != undefined) {
@@ -108,6 +96,15 @@ $(function() {
   $(document).on('change', 'select', function() { if ($(this).val() == "everything") { $(this).next('input.url').hide(); $(this).parent().addClass('current').parent().children('div.target:not(.current)').remove(); } else { $(this).next('input.url').show(); } });
   $(document).on('change', '.options', function() { saveOptions(); });
 });
-browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "styles enabled") { $('#enabled').prop('disabled', false); } });
+browser.runtime.onMessage.addListener(function(message) { if (message.message === "all styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "all styles enabled") { $('#enabled').prop('disabled', false); } });
+
+
+
+
+
+
+
+
+
 
 

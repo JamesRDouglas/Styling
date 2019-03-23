@@ -49,7 +49,7 @@ $(function() {
   $(document).on('click', '.add_block', function() { $(this).parent().clone().find('textarea.code').val('').end().find('input').val('').end().insertAfter($(this).parent()); });
   $(document).on('click', '.clone_block', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().insertAfter($(this).parent()); });
 });
-browser.runtime.onMessage.addListener(function(message) { console.log(message.message); });
+browser.runtime.onMessage.addListener(function(message) { if (message.message === "all styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "all styles enabled") { $('#enabled').prop('disabled', false); } });
 
 
 

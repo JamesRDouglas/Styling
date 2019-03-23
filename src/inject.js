@@ -33,4 +33,4 @@ function updateStyles() {
   });
 }
 updateStyles();
-browser.runtime.onMessage.addListener(request => { updateStyles(); });
+browser.runtime.onMessage.addListener(function() { if (message.message === "all styles disabled" || message.message === "all styles enabled") { updateStyles(); } });

@@ -46,7 +46,6 @@ $(function() {
       } else { $.extend(true, code, { styling_1: { disabled: "true" } }); browser.storage.local.set(code).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError); } 
     });
   });
-  updateBlocks(item);
   $('#save').click(function() {
     if ($('#style_name').val()) {
       browser.storage.local.get().then(function(item) {

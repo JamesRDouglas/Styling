@@ -53,11 +53,6 @@ browser.storage.local.get(function(item) {
   for (x = 1; x <= objectLength(active_styles); x++) { $('#active-styles').append('<div><input type="checkbox"> <span>'+active_styles["style_"+x+"_name"]+'</span><a href="edit.html?style='+x+'" class="edit">edit</a><a href="#" class="delete" title="Not implemented">delete</a></div>'); }
   if (objectLength(active_styles) === 0) { $('#active-styles').append('<i>No styles for this page</i>'); }
 });
-document.onreadystatechange = function () {
-  if (document.readyState !== "complete") {
-    window.location.reload();
-  }
-}
 $(function() {
   $('img, label').click(function() { $('#disable').click(); });
   $('#manage').click(function() { browser.tabs.create({ url: "manage.html" }).then(onChange, onError); window.close(); });

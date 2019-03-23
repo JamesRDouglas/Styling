@@ -24,14 +24,14 @@ $(function() {
   var delete_id = new URLSearchParams(window.location.search).get('delete');
   if (!style_id) { window.location = 'edit.html?style=1'; }
   browser.storage.local.get().then(function(item) { 
-    if (item["styling_"+style_id] === undefined) {
+    if (item["styling_"+style_id] === undefined || typeof style_id === "number") {
       var style_name = "styling_"+style_id;
       $.extend(true, item, { [style_name]: { name: "new style", block_1: { code: "", url_1: "", url_1_type: "url" }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", theme: "crimson_editor", keybinding: "default" } } });
       browser.storage.local.set(item).then(onChange, onError);
-      window.location = 'edit.html?style='+style_id; 
+      window.location = 'edit.html?style='+style_id;
     }
     if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
-    if (item.styling_1 != undefined) {
+    if (item["styling"+style_id] != undefined) {
       $('#style-name').val(item["styling_"+style_id].name);
       $('#line-count').val(item["styling_"+style_id].options.line_count);
       $('#tab-size').val(item["styling_"+style_id].options.tab_size);
@@ -55,6 +55,7 @@ $(function() {
         }
         if (item["styling_"+style_id]["block_"+b].code) { ace.edit("code_"+b).setValue(item["styling_"+style_id]["block_"+b].code, -1); updateBlocks(); }
       }
+      updateBlocks();
     }
     $('#enabled').click(function() { 
       var code = item, currentStyle = 'styling_'+style_id;

@@ -21,18 +21,15 @@ function aceinit() {
 }
 $(function() {
   var style_id = new URLSearchParams(window.location.search).get('style');
-  var create_id = new URLSearchParams(window.location.search).get('create');
   var delete_id = new URLSearchParams(window.location.search).get('delete');
-  if (create_id) {
-    browser.storage.local.get().then(function(item) { 
-      var style_number = "styling_"+objectLength(item);
-      $.extend(true, item, { [style_number]: { name: "new style", block_1: { code: "", url_1: create_id, url_1_type: "url" }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", theme: "crimson_editor", keybinding: "default" } } });
-      browser.storage.local.set(item).then(onChange, onError);
-      window.location = 'edit.html?style='+style_number; 
-    });
-  } else if (!style_id) { window.location = 'edit.html?style=1'; }
+  if (!style_id) { window.location = 'edit.html?style=1'; }
   browser.storage.local.get().then(function(item) { 
-    if (item["styling_"+style_id] === undefined) { window.location = 'edit.html?style=1'; }
+    if (item["styling_"+style_id] === undefined) {
+      var style_name = "styling_"+style_id;
+      $.extend(true, item, { [style_name]: { name: "new style", block_1: { code: "", url_1: "", url_1_type: "url" }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", theme: "crimson_editor", keybinding: "default" } } });
+      browser.storage.local.set(item).then(onChange, onError);
+      window.location = 'edit.html?style='+style_id; 
+    }
     if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     if (item.styling_1 != undefined) {
       $('#style-name').val(item["styling_"+style_id].name);

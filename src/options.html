@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      @font-face { font-family: 'Roboto'; src: url(../roboto/Roboto-Light.ttf); }
+    </style>
+  </head>
+  <body style="width: 230px; padding: 1em; text-align: center; border: 1px solid black; font-family: 'Roboto';">
+    <img src="../Styling.png" style="width: 128px; height: 128px;" onclick="toggle();"><br>
+    <img src="../StylingDisabled.png" style="width: 12px; height: 128px; display: none;"><br>
+    Styling version <span id="version"></span>
+    <br><hr><input type="checkbox" id="disable">Disable all styles<br style="margin-bottom: 1em;">
+    <button style="padding: 0.2em 1em;">Manage</button>
+    <button style="padding: 0.2em 1em;">Details</button>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

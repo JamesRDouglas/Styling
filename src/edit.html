@@ -15,7 +15,7 @@
       #sidebar #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; margin-top: 10px; }
       #sidebar #style-name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       #sidebar h3.placeholder { display: none; }
-      #sidebar div.small-screen { display: inline-block; }
+      #sidebar section.small-screen { display: inline-block; }
 
       #content { width: calc(100vw - 275px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1em 2em; }
       #content div.block:first-of-type > span:first-of-type, div.block:first-of-type > button.raise_block, div.block:last-of-type > button.lower_block { display: none; }
@@ -31,16 +31,17 @@
       #content input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       @media only screen and (max-width: 840px) {
         #sidebar { height: 165px; width: 100vw; overflow: hidden; positon: fixed; border-right: none; border-bottom: 1px dashed grey; padding: 0.5em 0; }
-        #sidebar h3:not(.placeholder) { margin: 0 0 5px 0; position: absolute; left: 1em; }
+        #sidebar summary { margin: 0 0 5px 0; position: absolute; left: 1em; font-size: 1.17em; font-weight: bold; }
         #sidebar h3.placeholder { display: block; visibility: hidden; margin: 0; }
         #sidebar > h1, #sidebar > br:first-of-type, #sidebar .hide-small-screen { display: none; }
         #sidebar div.small-screen-top { width: calc(100vw - 2.2em); display: flex; flex-wrap: wrap; margin: 0.6em 1.1em; }
-        #sidebar div.small-screen-top > div { display: flex; flex-grow: 1; margin-right: 5px; }
+        #sidebar div.small-screen-top > div { display: flex; flex-grow: 1; margin-right: 5px !important; }
         #sidebar div.small-screen-top > div > #style-name { flex-grow: 1; margin-top: 0; }
         #sidebar div.small-screen-top > #save { margin-left: 10px; }
         #sidebar div.small-screen-top > #enabled { margin-bottom: auto !important }
-        #sidebar div.small-screen { width: calc(calc(100vw - 6.6em) / 3); float: left; }
-        #sidebar div.small-screen { margin: 0 1.1em; }
+        #sidebar section.small-screen:nth-of-type(2) { width: calc(40vw - 2.2em); float: left; margin: 0 1.1em; }
+        #sidebar section.small-screen:nth-of-type(3) { width: calc(20vw - 2.2em); float: left; margin: 0 1.1em; }
+        #sidebar section.small-screen:nth-of-type(4) { width: calc(40vw - 2.2em); float: left; margin: 0 1.1em; }
         #content { top: 165px; left: 0; width: 100vw; position: fixed; overflow-x: scroll; }
       }
     </style>
@@ -64,21 +65,21 @@
       <br>
       <details open>
         <summary><h3>Options</h3></summary>
-        <div class="small-screen">
+        <section class="small-screen">
           <h3 class="placeholder" style="margin-bottom: 5px;">Options</h3>
           Line count: <input type="number" id="line-count" class="options"><br style="margin-bottom: 5px;">
           Tab size: <input type="number" id="tab-size" class="options"><br style="margin-bottom: 5px;">
           Font size: <input type="number" id="font-size" class="options"><br style="margin-bottom: 7px;">
-        </div>
-        <div class="small-screen">
+        </section>
+        <section class="small-screen">
           <h3 class="placeholder">Options</h3>
           <input type="checkbox" id="autocomplete" class="options"> Autocomplete<br>
           <input type="checkbox" id="error-marker" class="options"> Syntax validation<br>
           <input type="checkbox" id="soft-tabs" class="options"> Use soft tabs<br>
           <span class="hide-small-screen"><input type="checkbox" id="guide-indent" class="options"> Show indent guides<br></span>
           <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br style="margin-bottom: 7px;">
-        </div>
-        <div class="small-screen">
+        </section>
+        <section class="small-screen">
           <h3 class="placeholder">Options</h3>
           Theme: 
           <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 6px;" id="theme" class="options">
@@ -131,7 +132,7 @@
             <option value="vim">Vim</option>
             <option value="emacs">Emacs</option>
           </select>
-        </div>
+        </section>
       </div>
       <div id="content">
         <div class="block" id="block_1">

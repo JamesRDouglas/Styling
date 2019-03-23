@@ -46,6 +46,7 @@ $(function() {
   updateBlocks();
   $('#save').click(function() {
     if ($('#style_name').val()) {
+      alert('in if statement');
       var extendedItem;
       browser.storage.local.get().then(function(item) { $.extend(true, item, { styling_1: { name: $('#style_name').val() } }); extendedItem = item; });
       browser.storage.local.set(extendedItem).then(onChange, onError);

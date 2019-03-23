@@ -28,9 +28,12 @@ $(function() {
       var code = item; 
       if ($('#enabled').is(':checked')) { 
         $.extend(true, code, { styling_1: { disabled: "false" } });
+        browser.storage.local.set(code).then(onChange, onError);
+        browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
       } else { 
         $.extend(true, code, { styling_1: { disabled: "true" } }); 
-        console.log(code);
+        browser.storage.local.set(code).then(onChange, onError);
+        browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
       } 
     });
   });

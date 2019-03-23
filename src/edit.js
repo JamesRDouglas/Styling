@@ -41,12 +41,13 @@ $(function() {
   updateTextarea();
   $('#save').click(function() {
     for (var c = 1; c <= $('div.block').length; c++) {
-      var saved_code = { styling_1: { block_1: { code: $('div.block:nth-of-type('+c+') textarea').val().replace(/^|\s+$/g, '') } } }; 
+      var blockName = "block_" + c;
+      var saved_code = { styling_1: { [blockName]: { code: $('div.block:nth-of-type('+c+') textarea').val().replace(/^|\s+$/g, '') } } }; 
       var urls = $('div.block:nth-of-type('+c+')').children('section').length;
       for (var b = 1; b <= urls; b++) { 
         var objectUrl = 'url_'+b;
         var objectUrlType = objectUrl+'_type';
-        $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), [objectUrlType]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val() } } });
+        $.extend(true, saved_code, { styling_1: { [blockName]: { [objectUrl]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), [objectUrlType]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val() } } });
       }
       let gettingItem = browser.storage.local.get().then(onChange, onError);
       $.extend(true, gettingItem, saved_code);

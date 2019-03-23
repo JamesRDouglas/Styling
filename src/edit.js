@@ -12,6 +12,7 @@ function saveOptions() {
 }
 function aceinit() {
   var e = ace.edit(this);
+  importScripts('moz-extension://9012f922-3ddd-174b-8f91-0ae1cf573e95/src/ace/worker-css.js');
   ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/searchbox");
   e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, navigateWithinSoftTabs: true, theme: "ace/theme/crimson_editor", useSoftTabs: $('#soft-tabs').prop('checked'), minLines: $('#line-count').val(), maxLines: $('#line-count').val(), displayIndentGuides: $('#guide-indent').prop('checked'), showInvisibles: $('#show-invisible').prop('checked'), tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useWorker: $('#error-marker').prop('checked'), mode: "ace/mode/css" });
   if ($('#keybinding').val() !== "default") { e.setKeyboardHandler("ace/keyboard/"+$('#keybinding').val()); }

@@ -54,7 +54,7 @@ $(function() {
   $('#save').click(function() {
     if ($('#style_name').val()) {
       browser.storage.local.get().then(function(item) { 
-        $.extend(true, item, { styling_1: { name: $('#style_name').val(), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), smart_indent: $('#smart-indent').val(), tab_indent: $('#tab-indent').val(), auto_close: $('#auto-close').val(), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
+        $.extend(true, item, { styling_1: { name: $('#style_name').val(), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), smart_indent: $('#smart-indent').prop('checked'), tab_indent: $('#tab-indent').prop('checked'), auto_close: $('#auto-close').prop('checked'), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
         for (var c = 1; c <= $('div.block').length; c++) {
           var blockName = "block_"+c, urls = $('div.block:nth-of-type('+c+')').children('section').length;
           $.extend(true, item, { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } });

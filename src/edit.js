@@ -28,7 +28,7 @@ $(function() {
     for (a = 1; a <= urls; a++) { 
       var objectUrl = 'url_' + urls;
       var objectUrlType = objectUrl + '_type';
-      $.extend(saved_code, { styling_1: { block_1: { [objectUrl]: $('input.url').val(), [objectUrlType]: $('select').val() } } });
+      $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $('input.url').val(), [objectUrlType]: $('select').val() } } });
     }
     browser.storage.local.set(saved_code).then(onChange, onError);
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);

@@ -7,7 +7,7 @@ function onChange() { }
 function onError(error) { console.log(`Error: ${error}`); }
 function sendMessageToTabs(tabs) {
   for (let tab of tabs) {
-    browser.tabs.sendMessage(tab.id, {greeting: "Hi from background script"}).then(response => {  }).catch(onError);
+    browser.tabs.sendMessage(tab.id, {greeting: "Hi from background script"}).then(response => { console.log("done"); }).catch(onError);
   }
 }
 $.getJSON('../manifest.json', function(data) { $('#version').text(data.version); });

@@ -22,6 +22,7 @@ $(function() {
         if (item.styling_1.block_1["url_"+a+"_type"] == 'everything') { $('section.controls:nth-of-type('+a+') input.url').hide(); }
       }
       if (item.styling_1.block_1.code) { $('textarea.code').text(item.styling_1.block_1.code); updateTextarea(); }
+      if (item.styling_1.disabled === "true") { $('#enabled').prop('checked', true); } else { $('#enabled').prop('checked', false); }
       if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     }
     $('#enabled').click(function() { 

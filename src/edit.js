@@ -20,8 +20,16 @@ function aceinit() {
   return e;
 }
 $(function() {
+  var new_target = new URLSearchParams(window.location.search).get('new');
+  var new_type = new URLSearchParams(window.location.search).get('type');
   var style_id = new URLSearchParams(window.location.search).get('style');
-  var delete_id = new URLSearchParams(window.location.search).get('delete');
+  if (new_target && new_type && typeof new_target === "string" && typeof new_type === "string") { 
+    var style_name;
+    for (a = 1; a = a; a++) { if (styles_arr.indexOf(a) === -1) { style_name = "styling_"+a; break; } }
+    $.extend(true, item, { [style_name]: { name: "new style", disabled: "false", block_1: { code: "", url_1: [new_target], url_1_type: [new_type] }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", keybinding: "default" } } });
+    browser.storage.local.set(item).then(onChange, onError);
+    window.location = 'edit.html?style='+style_id;
+  }
   if (!style_id) { window.location = 'edit.html?style=1'; }
   browser.storage.local.get().then(function(item) { 
     if (item["styling_"+style_id] === undefined || typeof style_id === "number") {

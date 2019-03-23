@@ -34,8 +34,10 @@
       @media only screen and (max-width: 840px) {
         #sidebar { height: 175px; width: 100vw; overflow: hidden; positon: fixed; border-right: none; border-bottom: 1px dashed grey; }
         #sidebar > h1 { display: inline; }
+        #sidebar > h3 { display: none; }
         #sidebar > #style_name { width: auto; }
         #sidebar > br:first-of-type { display: none; }
+        #sidebar div.small-screen { width: calc(100vw / 3); float: left; }
         #content { top: 175px; left: 0; width: 100vw; position: fixed; overflow-x: scroll; }
       }
     </style>

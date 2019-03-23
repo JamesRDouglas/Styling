@@ -29,6 +29,10 @@ $(function() {
   browser.storage.local.get().then(function(item) {
     var styles = objectLength(item) - 1, b = 1;
     for (a = 1; a <= styles; a = a) {
+      if (item["styling_"+b] !== undefined) {
+        a++;
+        $('#content').append('<div class="style" id="style_'+b+'" data-id="'+b+'"><input type="checkbox"><span class="name" title="'+item["styling_"+b].name+'">'+item["styling_"+b].name+'</span><button class="edit" data-id="'+b+'">Edit</button><button class="delete" data-id="'+b+'">Delete</button><div class="url_list"></div></div>');
+      }
       checkStyleExists(b, item);
     }
   });

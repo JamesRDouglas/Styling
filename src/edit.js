@@ -31,7 +31,7 @@ $(function() {
       for (var b = 1; b <= urls; b++) { 
         var objectUrl = 'url_'+b;
         var objectUrlType = objectUrl+'_type';
-        $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $(this).parent().parent().children('section:nth-of-type('+b+') input.url').val(), [objectUrlType]: $(this).parent().parent().children('section:nth-of-type('+b+') select').val() } } });
+        $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $(this).parent().parent().children('section:nth-of-type('+b+')').children('input.url').val(), [objectUrlType]: $(this).parent().parent().children('section:nth-of-type('+b+')').children('select').val() } } });
       }
       browser.storage.local.set(saved_code).then(onChange, onError);
     });

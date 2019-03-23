@@ -33,8 +33,7 @@ $(function() {
   } else if (delete_id) {
     browser.storage.local.get().then(function(item) {
       var currentStyle = 'styling_'+delete_id;
-      delete item[currentStyle];
-      browser.storage.local.set(item).then(onChange, onError);
+      browser.storage.local.remove(currentStyle).then(onChange, onError);
     });
   } else if (!style_id) { 
     window.location = 'edit.html?style=1'; 

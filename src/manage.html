@@ -6,9 +6,9 @@
     <title>Manage styles</title>
     <style>
       @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-Light.ttf') format('truetype'); }
-      body { padding: 0; margin: 0; box-sizing: border-box; height: 100vh; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; }
-      #sidebar { width: 250px; height: 100vh; box-sizing: border-box; border-right: 1px dashed grey; float: left; padding: 0.8em 1.1em; }
-      #content { width: calc(100vw - 250px); height: 100vh; box-sizing: border-box; float: left; background-color: #EFEFEF; padding: 1em 2em; }
+      body { padding: 0; margin: 0; box-sizing: border-box; height: 100%; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; background-color: #EFEFEF; }
+      #sidebar { width: 250px; height: 100vh; box-sizing: border-box; border-right: 1px dashed grey; position: fixed; left: 0; top: 0; background-color: white; padding: 0.8em 1.1em; }
+      #content { width: calc(100vw - 250px); height: 100vh; box-sizing: border-box; position: absolute; right: 0; top: 0; padding: 1em 2em; }
       h1 { padding: 0; margin: 0; font-size: 1.6em; width: 100%; }
       textarea.code { width: 100%; resize: vertical; box-sizing: border-box; padding: 5px 5px 5px 45px; box-shadow: 0 0 0 1px lightgrey inset; border: none; }
       div.controls { display: flex; margin: 5px 0; }

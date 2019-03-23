@@ -45,10 +45,10 @@ $(function() {
   updateBlocks();
   $('#save').click(function() {
     if ($('#style_name').val()) {
-      alert('in if statement');
       var extendedItem;
       browser.storage.local.get().then(function(item) { $.extend(true, item, { styling_1: { name: $('#style_name').val() } }); extendedItem = item; });
-      setTimeout(browser.storage.local.set(extendedItem).then(onSave, onError), 100);
+      alert(JSON.stringify(extendedItem));
+      browser.storage.local.set(extendedItem).then(onSave, onError);
       alert('pre-loop');
       for (var c = 1; c <= $('div.block').length; c++) {
         var blockName = "block_"+c, saved_code = { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } }, urls = $('div.block:nth-of-type('+c+')').children('section').length;

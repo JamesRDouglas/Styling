@@ -14,7 +14,7 @@ $(function() {
     }
   });
   $('#save').click(function() {
-    browser.storage.local.set({ styling_1: { block_1: { url_1: $('url').val(), url_1_type: $('select').val(), code_1: $('code').val() } } }).then(onChange, onError); 
+    browser.storage.local.set({ styling_1: { block_1: { url_1: $('.url').val(), url_1_type: $('select').val(), code_1: $('.code').val() } } }).then(onChange, onError); 
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });
   $('#back').click(function() {

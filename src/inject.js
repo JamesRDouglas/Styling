@@ -25,3 +25,4 @@ function updateStyles() {
 }
 updateStyles();
 browser.runtime.onMessage.addListener(request => { updateStyles(); });
+window.onhashchange = function() { updateStyles(); }

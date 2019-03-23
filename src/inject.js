@@ -9,22 +9,24 @@ function updateStyles() {
   browser.storage.local.get(function(item) {
     if (!item.disabled) { browser.storage.local.set({ disabled: "false" }).then(onChange, onError); }
     if (!item.styling_1) { browser.storage.local.set({ styling_1: { block_1: { code: "", url_1: "", url_1_type: "url" }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", theme: "crimson_editor", keybinding: "default" } } }).then(onChange, onError); }
-    var elements = document.getElementsByClassName('styling');
-    for (var i = 0; i < elements.length; i++) { document.getElementsByTagName("html")[0].removeChild(elements[i]); }
-    if (item.styling_1 && item.styling_1.disabled != "true" && item.disabled == "false") {
-      var blocks = objectLength(item.styling_1) - 1;
-      for (var e = 1; e <= blocks; e++) {
-        var urls = (objectLength(item.styling_1["block_"+e]) - 1) / 2;
-        for (var a = 1; a <= urls; a++) { 
-          if (item.styling_1.block_1["url_"+a] != undefined && ((item.styling_1["block_"+e]["url_"+a+"_type"] == "url" && item.styling_1["block_"+e]["url_"+a] == window.location.href) || (item.styling_1["block_"+e]["url_"+a+"_type"] == "starting" && window.location.href.startsWith(item.styling_1["block_"+e]["url_"+a])) || (item.styling_1["block_"+e]["url_"+a+"_type"] == "domain" && item.styling_1["block_"+e]["url_"+a] == getDomain(window.location.href)) || (item.styling_1["block_"+e]["url_"+a+"_type"] == "everything"))) {
-            var styleElement = document.createElement("style");
-            styleElement.setAttribute("id", "styling-1");
-            styleElement.setAttribute("data-name", item.styling_1.name);
-            styleElement.setAttribute("class", "styling");
-            styleElement.setAttribute("type", "text/css");
-            styleElement.appendChild(document.createTextNode(item.styling_1["block_"+e].code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
-            applyStyles(styleElement);
-            break;
+    for (var a = 0; a < document.getElementsByClassName('styling').length; a++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[a]); }
+    var styles = objectLength(item) - 1;
+    for (var b = 1; b <= styles; b++) {
+      if (item.styling_1 && item.styling_1.disabled != "true" && item.disabled == "false") {
+        var blocks = objectLength(item["styling_"+b]) - 1;
+        for (var c = 1; c <= blocks; c++) {
+          var urls = (objectLength(item["styling_"+b]["block_"+c]) - 1) / 2;
+          for (var d = 1; d <= urls; d++) { 
+            if (item["styling_"+b].block_1["url_"+d] != undefined && ((item["styling_"+b]["block_"+c]["url_"+d+"_type"] == "url" && item["styling_"+b]["block_"+c]["url_"+d] == window.location.href) || (item["styling_"+b]["block_"+c]["url_"+d+"_type"] == "starting" && window.location.href.startsWith(item["styling_"+b]["block_"+c]["url_"+d])) || (item["styling_"+b]["block_"+c]["url_"+d+"_type"] == "domain" && item["styling_"+b]["block_"+c]["url_"+d] == getDomain(window.location.href)) || (item["styling_"+b]["block_"+c]["url_"+d+"_type"] == "everything"))) {
+              var styleElement = document.createElement("style");
+              styleElement.setAttribute("id", "styling-"+b);
+              styleElement.setAttribute("data-name", item["styling_"+b+"_"+c].name);
+              styleElement.setAttribute("class", "styling");
+              styleElement.setAttribute("type", "text/css");
+              styleElement.appendChild(document.createTextNode(item["styling_"+b]["block_"+c].code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
+              applyStyles(styleElement);
+              break;
+            }
           }
         }
       }

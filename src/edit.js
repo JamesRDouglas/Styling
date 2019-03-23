@@ -28,7 +28,7 @@ $(function() {
     for (a = 1; a <= urls; a++) { 
       var objectUrl = 'url_' + a;
       var objectUrlType = objectUrl + '_type';
-      $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $('body section:nth-of-type('+urls+') input.url').val(), [objectUrlType]: $('body section:nth-of-type('+urls+') select').val() } } });
+      $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $('body section:nth-of-type('+a+') input.url').val(), [objectUrlType]: $('body section:nth-of-type('+a+') select').val() } } });
     }
     browser.storage.local.set(saved_code).then(onChange, onError);
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);

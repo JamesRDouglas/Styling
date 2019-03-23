@@ -21,7 +21,7 @@ $(function() {
         if (item.styling_1.block_1["url_"+a+"_type"] == 'everything') { $('section.controls:nth-of-type('+a+') input.url').hide(); }
       }
       if (item.styling_1.block_1.code) { $('textarea.code').text(item.styling_1.block_1.code); updateTextarea(); }
-      if (item.styling_1.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
+      if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     }
   });
   updateTextarea();
@@ -49,7 +49,7 @@ $(function() {
   $(document).on('click', '.add_block', function() { $(this).parent().clone().find('textarea.code').val('').end().find('input').val('').end().insertAfter($(this).parent()); });
   $(document).on('click', '.clone_block', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().insertAfter($(this).parent()); });
 });
-browser.runtime.onMessage.addListener(request => { console.log('message received'); });
+browser.runtime.onMessage.addListener(function(message) { console.log(message.message); });
 
 
 

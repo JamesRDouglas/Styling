@@ -5,11 +5,8 @@ function onGot(item) {
 }
 function onChange() { }
 function onError(error) { console.log(`Error: ${error}`); }
-function sendMessageToTabs(tabs) {
-  for (let tab of tabs) {
-    browser.tabs.sendMessage(tab.id, {greeting: "Hi from background script"}).then(response => {  }).catch(onError);
-  }
-}
+function sendDisableToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, {message: "all styles disabled"}).then(response => {  }).catch(onError); } }
+function sendEnableToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, {message: "all styles enabled"}).then(response => {  }).catch(onError); } }
 $.getJSON('../manifest.json', function(data) { $('#version').text(data.version); });
 $('#disable').change(function() {
   if ($(this).is(':checked')) {

@@ -31,7 +31,7 @@ $('#disable').change(function() {
 var active_styles = [];
 browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; });
 browser.storage.local.get(function(item) {
-  var styles = objectLength(item) - 1;
+  var styles = objectLength(item) - 2;
   for (var b = 1; b <= styles; b++) {
     var blocks = objectLength(item["styling_"+b]) - 2;
     block:

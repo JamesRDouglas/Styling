@@ -5,7 +5,7 @@ function sendMessageToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMess
 function checkStyleExists(b, item, styles_arr) { if (item["styling_"+b]) { styles_arr.push(b); $('#content').append('<div class="style" id="style_'+b+'" data-id="'+b+'"><input type="checkbox"><span class="name" title="'+item["styling_"+b].name+'">'+item["styling_"+b].name+'</span><button class="edit" data-id="'+b+'">Edit</button><button class="delete" data-id="'+b+'">Delete</button><div class="url_list"></div></div>'); b++; } else { b++; checkStyleExists(b, item, styles_arr); b++; } return b; }
 $(function() {
   var styles_arr = [];
-  browser.storage.local.get().then(function(item) { var styles = objectLength(item) - 1, b = 1; for (a = 1; a <= styles; a = a) { if (a > styles) { break; } if (item["styling_"+b] !== undefined) { a++; } b = checkStyleExists(b, item, styles_arr); } });
+  browser.storage.local.get().then(function(item) { var styles = objectLength(item) - 2, b = 1; for (a = 1; a <= styles; a = a) { if (a > styles) { break; } if (item["styling_"+b] !== undefined) { a++; } b = checkStyleExists(b, item, styles_arr); } });
   $('#write-new').click(function() { for (a = 1; a = a; a++) { if (styles_arr.indexOf(a) === -1) { window.location.href = "edit.html?style="+a; break; } } });
   $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });
   $(document).on('click', '.style > input, .url_list', function(e) { e.stopPropagation(); });

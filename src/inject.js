@@ -1,6 +1,7 @@
 "use strict";
 function onChange() { }
-function onError(error) { console.log(`${error}`); }
+function onError(error) { console.log(`${error}`
+  ); }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function insertAfter(newNode, referenceNode) { referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling); }
 function getDomain(url) { url = url.replace(/(https?:\/\/)?(www.)?/i, ''); if (url.indexOf('/') !== -1) { return url.split('/')[0]; } return url; }
@@ -8,11 +9,10 @@ function applyStyles(element) { if (document.body) { document.getElementsByTagNa
 function updateStyles() {
   browser.storage.local.get(function(item) {
     if (!item.disabled) { browser.storage.local.set({ disabled: "false" }).then(onChange, onError); }
+    if (!item.options) { browser.storage.local.set({ options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", keybinding: "default" } }).then(onChange, onError); }
     if (!item.styling_1) { browser.storage.local.set({ styling_1: { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", keybinding: "default" } } }).then(onChange, onError); }
-    for (var a = 0; a < document.getElementsByClassName('styling').length; a++) { 
-      document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[a]); 
-    }
-    var styles = objectLength(item) - 1;
+    for (var a = 0; a < document.getElementsByClassName('styling').length; a++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[a]); }
+    var styles = objectLength(item) - 2;
     for (var b = 1; b <= styles; b++) {
       if (item["styling_"+b] && item["styling_"+b].disabled != "true" && item.disabled == "false") {
         var blocks = objectLength(item["styling_"+b]) - 2;

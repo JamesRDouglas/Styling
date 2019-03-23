@@ -10,6 +10,8 @@ function aceinit() {
     if (item.styling_1) { 
       e.setTheme("ace/theme/"+item.styling_1.options.theme);
       e.setOptions({ maxLines: Infinity, tabSize: Number(item.styling_1.options.tab_size), fontSize: Number(item.styling_1.options.font_size), useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, enableBasicAutocompletion: item.styling_1.options.autocomplete, enableLiveAutocompletion: item.styling_1.options.autocomplete });
+      e.setDisplayIndentGuides(item.styling_1.options.guide_indent);
+      e.setShowInvisibles(item.styling_1.options.show_invisible);
       if (item.styling_1.options.keybinding !== "default") { e.setKeyboardHandler("ace/keyboard/"+item.styling_1.options.keybinding); }
     } else { 
       e.setTheme("ace/theme/crimson_editor");

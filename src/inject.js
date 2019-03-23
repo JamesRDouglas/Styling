@@ -22,7 +22,7 @@ function updateStyles() {
             styleElement.setAttribute("type", "text/css");
             styleElement.appendChild(document.createTextNode(item.styling_1["block_"+e].code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
             //document.getElementsByTagName('html')[0].appendChild(styleElement);
-            $('body').ready(function() { $(styleElement).insertAfter($('body')); });
+            $(styleElement).insertAfter($('body'));
             break;
           }
         }

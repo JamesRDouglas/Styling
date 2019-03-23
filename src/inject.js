@@ -1,6 +1,11 @@
 "use strict";
+function onChange() { }
+function onError(error) { console.log(`Error: ${error}`); }
 function updateStyles() {
   let localStorage = browser.storage.local.get(function(item) {
+    if (!item.disabled) {
+      browser.storage.local.set({ disabled: "false" }).then(onChange, onError);
+    }
     if (item.styling_1) {
       function apply() {
         if (item.disabled == "false") {
@@ -8,7 +13,7 @@ function updateStyles() {
           styleElement.setAttribute("id", "styling-1");
           styleElement.setAttribute("class", "styling");
           styleElement.setAttribute("type", "text/css");
-          styleElement.appendChild(document.createTextNode(item.styling_1.code));
+          styleElement.appendChild(document.createTextNode(item.styling_1.block_1.code));
           document.getElementsByTagName('html')[0].appendChild(styleElement);
         } else {
           var elements = document.getElementsByClassName('styling');

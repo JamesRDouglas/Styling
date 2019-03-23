@@ -3,7 +3,7 @@ function onGot(item) {
   if (item.disabled == "true") { $('img').prop("src", "../images/StylingDisabled.png"); $('input[type=checkbox]').prop("checked", true);
   } else { $('img').prop("src", "../images/Styling.png");  $('input[type=checkbox]').prop("checked", false); }
 }
-function onChange() { /*console.log("changed");*/ }
+function onChange() { }
 function onError(error) { console.log(`Error: ${error}`); }
 function sendMessageToTabs(tabs) {
   for (let tab of tabs) {

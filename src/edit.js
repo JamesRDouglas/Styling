@@ -7,11 +7,14 @@ function sendMessageToTabs(tabs) {
 }
 $(function() {
   browser.storage.local.get().then(function(item) { 
-    if (item.styling_1.url) { $('input').val(item.styling_1.url); }
-    if (item.styling_1.code) { $('textarea').text(item.styling_1.code); }
+    if (item.styling_1) {
+      if (item.styling_1.block_1.url_1) { $('input').val(item.styling_1.block_1.url_1); }
+      if (item.styling_1.block_1.url_1_type) { $('option[value='+item.styling_1.block_1.url_1_type+']').prop('selected', 'true'); }
+      if (item.styling_1.block_1.code_1) { $('textarea').text(item.styling_1.block_1.code_1); }
+    }
   });
   $('#save').click(function() {
-    browser.storage.local.set({ styling_1: { url: $('url').val(), code: $('code').val() } }).then(onChange, onError); 
+    browser.storage.local.set({ styling_1: { block_1: { url_1: $('url').val(), url_1_type: $('select').val(), code_1: $('code').val() } } }).then(onChange, onError); 
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
   });
   $('#back').click(function() {

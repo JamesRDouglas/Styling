@@ -26,7 +26,7 @@ $(function() {
   browser.storage.local.get().then(function(item) { 
     if (item["styling_"+style_id] === undefined || typeof style_id === "number") {
       var style_name = "styling_"+style_id;
-      $.extend(true, item, { [style_name]: { name: "new style", block_1: { code: "", url_1: "", url_1_type: "url" }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", theme: "crimson_editor", keybinding: "default" } } });
+      $.extend(true, item, { [style_name]: { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", theme: "crimson_editor", keybinding: "default" } } });
       browser.storage.local.set(item).then(onChange, onError);
       window.location = 'edit.html?style='+style_id;
     }
@@ -37,11 +37,11 @@ $(function() {
       $('#tab-size').val(item["styling_"+style_id].options.tab_size);
       $('#font-size').val(item["styling_"+style_id].options.font_size);
       if (item["styling_"+style_id].disabled === "true") { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); }
-      if (item["styling_"+style_id].options.autocomplete == true) { $('#autocomplete').prop("checked", true); }
-      if (item["styling_"+style_id].options.error_marker == true) { $('#error-marker').prop("checked", true); }
-      if (item["styling_"+style_id].options.soft_tabs == true) { $('#soft-tabs').prop("checked", true); }
-      if (item["styling_"+style_id].options.guide_indent == true) { $('#guide-indent').prop("checked", true); }
-      if (item["styling_"+style_id].options.show_invisible == true) { $('#show-invisible').prop("checked", true); }
+      if (item["styling_"+style_id].options.autocomplete === "true") { $('#autocomplete').prop("checked", true); }
+      if (item["styling_"+style_id].options.error_marker === "true") { $('#error-marker').prop("checked", true); }
+      if (item["styling_"+style_id].options.soft_tabs === "true") { $('#soft-tabs').prop("checked", true); }
+      if (item["styling_"+style_id].options.guide_indent === "true") { $('#guide-indent').prop("checked", true); }
+      if (item["styling_"+style_id].options.show_invisible === "true") { $('#show-invisible').prop("checked", true); }
       $('#keybinding').val(item["styling_"+style_id].options.keybinding);
       var blocks = objectLength(item["styling_"+style_id]) - 2;
       for (var b = 1; b <= blocks; b++) {

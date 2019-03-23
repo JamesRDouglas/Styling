@@ -5,7 +5,7 @@ function objectLength(object) { var length = 0; for(var key in object) { if( obj
 function updateBlocks() { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); $('.block:nth-of-type('+a+')').find('div.code').prop('id', 'code_'+a); } $('div.code').each(function(){ aceinit.call(this); }); }
 function saveOptions() {
   browser.storage.local.get().then(function(item) { 
-    $.extend(true, item, { styling_1: { options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), tab_indent: $('#tab-indent').prop('checked'), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
+    $.extend(true, item, { styling_1: { options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), soft_tabs: $('#soft-tabs').prop('checked'), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), theme: $('#theme').val(), keybinding: $('#keybinding').val() } } }); 
     browser.storage.local.set(item).then(onChange, onError);
   });
   $('div.code').each(function(){ aceinit.call(this); });
@@ -14,7 +14,7 @@ function aceinit() {
   var e = ace.edit(this);
   ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/linking", "ace/ext/modelist", "ace/ext/options", "ace/ext/searchbox", "ace/ext/settings_menu");
   e.setTheme("ace/theme/"+$('#theme').val());
-  e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useSoftTabs: $('#tab-indent').prop('checked') });
+  e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useSoftTabs: $('#soft-tabs').prop('checked') });
   e.setDisplayIndentGuides($('#guide-indent').prop('checked'));
   e.setShowInvisibles($('#show-invisible').prop('checked'));
   e.session.setOption("useWorker", $('#error-marker').prop('checked'));
@@ -30,7 +30,7 @@ $(function() {
       $('#tab-size').val(item.styling_1.options.tab_size);
       $('#font-size').val(item.styling_1.options.font_size);
       if (item.styling_1.options.autocomplete == true) { $('#autocomplete').prop("checked", true); }
-      if (item.styling_1.options.tab_indent == true) { $('#tab-indent').prop("checked", true); }
+      if (item.styling_1.options.soft_tabs == true) { $('#soft-tabs').prop("checked", true); }
       if (item.styling_1.options.error_marker == true) { $('#error-marker').prop("checked", true); }
       if (item.styling_1.options.guide_indent == true) { $('#guide-indent').prop("checked", true); }
       if (item.styling_1.options.show_invisible == true) { $('#show-invisible').prop("checked", true); }

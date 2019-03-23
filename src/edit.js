@@ -14,6 +14,7 @@ $(function() {
     if (item.styling_1) {
       var urls = (objectLength(item.styling_1.block_1) - 1) / 2;
       for (a = 1; a <= urls; a++) { 
+        if (urls > 1) { $('body section:first-of-type .add').click(); }
         if (item.styling_1.block_1["url_" + a]) { $('section.controls:nth-of-type(' + a + ') input.url').val(item.styling_1.block_1["url_" + a]); }
         if (item.styling_1.block_1["url_" + a + "_type"]) { $('section.controls:nth-of-type(' + a + ') select').val(item.styling_1.block_1["url_" + a + "_type"]); }
         if (item.styling_1.block_1["url_" + a + "_type"] == 'everything') { $('section.controls:nth-of-type(' + a + ') input.url').hide(); }

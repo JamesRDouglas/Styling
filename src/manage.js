@@ -19,10 +19,11 @@ $(function() {
   browser.storage.local.get().then(function(item) {
     var styles = objectLength(item) - 1;
     for (a = 1; a <= styles; a = a) {
-      if (item["styling_"+a]) {
-        styles_arr.push(a);
-        $('#content').append('<div class="style" id="style_'+a+'" data-id="'+a+'"><input type="checkbox"><span class="name" title="'+item["styling_"+a].name+'">'+item["styling_"+a].name+'</span><button class="edit" data-id="'+a+'">Edit</button><button class="delete" data-id="'+a+'">Delete</button><div class="url_list"></div></div>');
-        a++;
+      var b = 1;
+      if (item["styling_"+b]) {
+      	a++;
+        styles_arr.push(b);
+        $('#content').append('<div class="style" id="style_'+b+'" data-id="'+b+'"><input type="checkbox"><span class="name" title="'+item["styling_"+b].name+'">'+item["styling_"+b].name+'</span><button class="edit" data-id="'+b+'">Edit</button><button class="delete" data-id="'+b+'">Delete</button><div class="url_list"></div></div>');
       }
     }
   });

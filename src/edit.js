@@ -3,7 +3,7 @@ function onError(error) { console.log(`Error: ${error}`); }
 function sendMessageToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, { message: "styles updated" }).then(response => {}).catch(onError); } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function updateTextarea() {
-  for (var a = 1; a <= $('.block').length; a++) { $(this).prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); }
+  for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); }
   $('textarea').each(function() {
     if ($(this).val().split(/\r*\n/).length != $(this).prev('.side *').length) {
       $(this).prev('div.side').empty();

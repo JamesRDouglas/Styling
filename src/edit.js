@@ -43,7 +43,7 @@ $(function() {
           if (blocks > 1 && b > 1) { $('#content > .block:last-of-type > .add_block').click(); }
           var urls = (objectLength(item["styling_"+a]["block_"+b]) - 1) / 2;
           for (var c = 1; c <= urls; c++) { 
-            if (urls > 1 && c > 1) { $('body div.block:nth-of-type('+e+') section:last-of-type .add_target').click(); }
+            if (urls > 1 && c > 1) { $('body div.block:nth-of-type('+b+') section:last-of-type .add_target').click(); }
             if (item["styling_"+a]["block_"+b]["url_"+c]) { $('body .block:nth-of-type('+b+') section:nth-of-type('+c+') input.url').val(item["styling_"+a]["block_"+b]["url_"+c]); }
             if (item["styling_"+a]["block_"+b]["url_"+c+"_type"]) { $('body .block:nth-of-type('+b+') section:nth-of-type('+c+') select').val(item["styling_"+a]["block_"+b]["url_"+c+"_type"]); }
             if (item["styling_"+a]["block_"+b]["url_"+c+"_type"] == 'everything') { $('body .block:nth-of-type('+b+') section:nth-of-type('+c+') input.url').hide(); }

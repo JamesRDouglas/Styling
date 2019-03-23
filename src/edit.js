@@ -36,6 +36,11 @@ $(function() {
       browser.storage.local.set(item).then(onChange, onError);
       window.location = 'edit.html?style='+style_id;
     }
+    if (!item["styling_"+style_id].options) {
+      var style_name = "styling_"+style_id;
+      $.extend(true, item, { [style_name]: { options } });
+      browser.storage.local.set(item).then(onChange, onError);
+    }
     if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     if (item["styling_"+style_id] != undefined) {
       $('#style-name').val(item["styling_"+style_id].name);

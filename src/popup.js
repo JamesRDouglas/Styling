@@ -13,12 +13,12 @@ $('#disable').change(function() {
     $('img').prop("src", "../images/StylingDisabled.png");
     browser.browserAction.setIcon({path: "../images/StylingDisabled.png"});
     browser.storage.local.set({ disabled: "true" }).then(onChange, onError);
-    browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
+    browser.tabs.query({ currentWindow: true }).then(sendDisableToTabs).catch(onError);
   } else {
     $('img').prop("src", "../images/Styling.png");
     browser.browserAction.setIcon({path: "../images/Styling.png"});
     browser.storage.local.set({ disabled: "false" }).then(onChange, onError);
-    browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
+    browser.tabs.query({ currentWindow: true }).then(sendEnableToTabs).catch(onError);
   }
 });
 $(function() {

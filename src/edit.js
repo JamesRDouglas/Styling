@@ -5,8 +5,12 @@ function objectLength(object) { var length = 0; for(var key in object) { if( obj
 function updateBlocks() { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); $('.block:nth-of-type('+a+')').find('div.code').prop('id', 'code_'+a); } $('div.code').each(function(){ aceinit.call(this); }); }
 function aceinit(){
   var e = ace.edit(this), t = $(this);
+  ace.require("ace/ext/language_tools");
+  ace.require("ace/ext/error_marker");
+  ace.require("ace/ext/keybinding_menu");
+  ace.require("ace/ext/searchbox");
   e.setTheme("ace/theme/crimson_editor");
-  e.setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15 }); 
+  e.setOptions({ maxLines: Infinity, tabSize: 2, fontSize: 12, useSoftTabs: false, fixedWidthGutter: true, printMargin: false, minLines: 15, maxLines: 15, enableBasicAutocompletion: true }); 
   e.getSession().setMode("ace/mode/css");
   return e;
 }

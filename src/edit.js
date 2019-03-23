@@ -46,12 +46,13 @@ $(function() {
   });
   $('#back').click(function() { window.location.replace("manage.html"); });
   $(document).on('change', 'select', function() { if ($(this).val() == "everything") { $(this).next('input.url').hide(); $(this).parent().addClass('current').parent().children('div.controls:not(.current)').remove(); } else { $(this).next('input.url').show(); } });
-  $(document).on('change', 'textarea', function() { updateTextarea(); });
+  $(document).on('keydown', 'textarea', function() { updateTextarea(); });
   $(document).on('scroll', 'textarea', function () { $('.side').scrollTop($(this).scrollTop()); });
   $(document).on('resize', 'textarea', function() { $(this).parent('div.container').css('height', $(this).height()); });
   $(document).on('click', '.add_controls', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().find('input.url').val('').end().insertAfter($(this).parent()); });
   $(document).on('click', '.remove_controls', function() { if ($(this).parent().parent().children('.controls').length > 1) { $(this).parent().remove(); } });
   $(document).on('click', '.add_block', function() { $(this).parent().clone().find('textarea.code').val('').end().find('input').val('').end().prop('id', '').insertAfter($(this).parent()); updateTextarea(); });
+  $(document).on('click', '.add_block', function() { $(this).parent().remove(); updateTextarea(); });
   $(document).on('click', '.clone_block', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().insertAfter($(this).parent()); updateTextarea(); });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "all styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "all styles enabled") { $('#enabled').prop('disabled', false); } });

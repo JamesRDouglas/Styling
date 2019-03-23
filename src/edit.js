@@ -2,12 +2,13 @@ function onChange(item) {}
 function onError(error) { console.log(`Error: ${error}`); }
 function sendMessageToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, { message: "update scripts" }).then(response => {}).catch(onError); } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
-function updateTextarea(textarea) {
-  var lines = textarea.val().split(/\r*\n/).length;
-  if (lines != textarea.prev('.side *').length) {
-    textarea.prev('div.side').empty();
-    for (a = 1; a <= lines; a++) { textarea.prev('div.side').append('<span class="line">'+a+'</span>'); }
-  }
+function updateTextarea() {
+  $('textarea').each(function() {
+    if ($(this).val().split(/\r*\n/).length != $(this).prev('.side *').length) {
+      $(this).prev('div.side').empty();
+      for (a = 1; a <= $(this).val().split(/\r*\n/).length; a++) { $(this).prev('div.side').append('<span class="line">'+a+'</span>'); }
+    }
+  });
 }
 $(function() {
   browser.storage.local.get().then(function(item) { 
@@ -22,14 +23,14 @@ $(function() {
       if (item.styling_1.block_1.code) { $('textarea.code').text(item.styling_1.block_1.code); }
     }
   });
-  updateTextarea($('textarea'));
+  updateTextarea();
   $('#save').click(function() {
-    var saved_code = { styling_1: { block_1: { code: $('textarea.code').val().replace(/^|\s+$/g, '') } } }; 
-    var urls = $('section').length;
+    var saved_code = { styling_1: { block_1: { code: $('body block_1 textarea.code').val().replace(/^|\s+$/g, '') } } }; 
+    var urls = $('body block_1 section').length;
     for (var b = 1; b <= urls; b++) { 
       var objectUrl = 'url_' + b;
       var objectUrlType = objectUrl + '_type';
-      $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $('body section:nth-of-type('+b+') input.url').val(), [objectUrlType]: $('body section:nth-of-type('+b+') select').val() } } });
+      $.extend(true, saved_code, { styling_1: { block_1: { [objectUrl]: $('body block_1 section:nth-of-type('+b+') input.url').val(), [objectUrlType]: $('body block_1 section:nth-of-type('+b+') select').val() } } });
     }
     browser.storage.local.set(saved_code).then(onChange, onError);
     browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);

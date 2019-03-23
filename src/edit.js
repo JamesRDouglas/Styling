@@ -1,23 +1,4 @@
 function onChange(item) {}
-function onSave(item) {
-  alert('pre-loop');
-  for (var c = 1; c <= $('div.block').length; c++) {
-    var blockName = "block_"+c;
-    var saved_code = { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } }; 
-    var urls = $('div.block:nth-of-type('+c+')').children('section').length;
-    for (var b = 1; b <= urls; b++) { 
-      var objectUrl = 'url_'+b;
-      var objectUrlType = objectUrl+'_type';
-      $.extend(true, saved_code, { styling_1: { [blockName]: { [objectUrl]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), [objectUrlType]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val() } } });
-    }
-    var extendedItem;
-    browser.storage.local.get().then(function(item) { $.extend(true, item, saved_code); extendedItem = item; });
-    alert('pre-save');
-    browser.storage.local.set(extendedItem).then(onChange, onError);
-    alert('post-save');
-  }
-  browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
-}
 function onError(error) { console.log(`Error: ${error}`); }
 function sendMessageToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, { message: "styles updated" }).then(response => {}).catch(onError); } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
@@ -67,7 +48,19 @@ $(function() {
       alert('in if statement');
       var extendedItem;
       browser.storage.local.get().then(function(item) { $.extend(true, item, { styling_1: { name: $('#style_name').val() } }); extendedItem = item; });
-      browser.storage.local.set(extendedItem).then(onSave, onError);
+      setTimeout(browser.storage.local.set(extendedItem).then(onSave, onError), 100);
+      alert('pre-loop');
+      for (var c = 1; c <= $('div.block').length; c++) {
+        var blockName = "block_"+c, saved_code = { styling_1: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } }, urls = $('div.block:nth-of-type('+c+')').children('section').length;
+        for (var b = 1; b <= urls; b++) { 
+          var objectUrl = 'url_'+b, objectUrlType = objectUrl+'_type';
+          $.extend(true, saved_code, { styling_1: { [blockName]: { [objectUrl]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), [objectUrlType]: $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val() } } });
+        }
+        var extendedItem;
+        browser.storage.local.get().then(function(item) { $.extend(true, item, saved_code); extendedItem = item; });
+        browser.storage.local.set(extendedItem).then(onChange, onError);
+      }
+      browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
     } else { alert('Please enter a name'); return false; }
   });
   $('#beautify').click(function() { alert('beautify all'); ace.require("ace/ext/beautify").beautify(ace.edit($(this).parent().children('div:first-of-type').prop('id')).session); });

@@ -50,7 +50,7 @@ $('#subdomain').prop('href', browser.extension.getURL("src/manage.html?create=do
       }
     }
     console.log(active_styles);
-    for (x = 1; x <= objectLength(active_styles); x++) { $('#active-styles').append('<div><input type="checkbox"> '+active_styles["style_"+x+"_name"]+'</div>'); }
+    for (x = 1; x <= objectLength(active_styles); x++) { $('#active-styles').append('<div><input type="checkbox"> <span>'+active_styles["style_"+x+"_name"]+'</span><a style="position: absolute; right: 4.5em;">edit</a><a style="position: absolute; right: 20px;">delete</a></div>'); }
   });
 $(function() {
   $('img, label').click(function() { $('#disable').click(); });

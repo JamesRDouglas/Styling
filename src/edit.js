@@ -17,7 +17,7 @@ $(function() {
   browser.storage.local.get().then(function(item) { 
     if (item.styling_1) {
       $('#sidebar input[type=text]').val(item.styling_1.name);
-      var blocks = objectLength(item.styling_1) - 1;
+      var blocks = objectLength(item.styling_1) - 2;
       for (var e = 1; e <= blocks; e++) {
         if (blocks > 1 && e > 1) { $('#content > .block:last-of-type > .add_block').click(); }
         var urls = (objectLength(item.styling_1["block_"+e]) - 1) / 2;

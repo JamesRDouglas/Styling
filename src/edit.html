@@ -7,7 +7,7 @@
     <style>
       @font-face { font-family: 'Roboto'; src: url('../Roboto-Light.ttf') format('truetype'); }
       body { padding: 0; margin: 0; box-sizing: border-box; height: 100%; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; background-color: #EFEFEF; }
-      select { margin-left: 5px; width: 175px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: 158px 6px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
+      select { margin-left: 5px; width: 135px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: 118px 6px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
       select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       button { padding: 2px 6px; text-align: center; }
 
@@ -28,7 +28,7 @@
       #content section.target { display: flex; margin: 5px 0 3px 0; }
       #content section.target:not(:first-of-type) > span { visibility: hidden; }
       #content div.url-container { flex-grow: 1; display: flex; flex-wrap: wrap; }
-      #content input.url { padding: 2px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; flex-grow: 1; margin-left: 2px; }
+      #content input.url { padding: 2px 5px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; flex-grow: 1; margin-left: 2px; }
       #content input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       @media only screen and (max-width: 840px) {
         #sidebar { height: auto; width: 100vw; overflow: hidden; border-right: none; border-bottom: 1px dashed grey; padding: 0.5em 0; }
@@ -82,59 +82,14 @@
           <h3 class="placeholder">Options</h3>
           <input type="checkbox" id="autocomplete" class="options"> Autocomplete<br>
           <input type="checkbox" id="error-marker" class="options"> Syntax validation<br>
-          <input type="checkbox" id="soft-tabs" class="options"> Use soft tabs<br>
-          <span class="hide-small-screen"><input type="checkbox" id="guide-indent" class="options"> Show indent guides<br></span>
-          <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br style="margin-bottom: 7px;">
+          <input type="checkbox" id="soft-tabs" class="options"> Use soft tabs<br style="margin-bottom: 7px;">
         </section>
         <section class="small-screen">
           <h3 class="placeholder">Options</h3>
-          Theme: 
-          <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 6px;" id="theme" class="options">
-            <optgroup label="Light">
-              <option value="chrome">Chrome</option>
-              <option value="clouds">Clouds</option>
-              <option value="crimson_editor" selected>Crimson Editor</option>
-              <option value="dawn">Dawn</option>
-              <option value="dreamweaver">Dreamweaver</option>
-              <option value="eclipse">Eclipse</option>
-              <option value="github">GitHub</option>
-              <option value="iplastic">IPlastic</option>
-              <option value="solarized_light">Solarized Light</option>
-              <option value="textmate">TextMate</option>
-              <option value="tomorrow">Tomorrow</option>
-              <option value="xcode">XCode</option>
-              <option value="kuroir">Kuroir</option>
-              <option value="katzenmilch">KatzenMilch</option>
-              <option value="sqlserver">SQL Server</option>
-            </optgroup>
-            <optgroup label="Dark">
-              <option value="ambiance">Ambiance</option>
-              <option value="chaos">Chaos</option>
-              <option value="clouds_midnight">Clouds Midnight</option>
-              <option value="dracula">Dracula</option>
-              <option value="cobalt">Cobalt</option>
-              <option value="gruvbox">Gruvbox</option>
-              <option value="gob">Green on Black</option>
-              <option value="idle_fingers">idle Fingers</option>
-              <option value="kr_theme">krTheme</option>
-              <option value="merbivore">Merbivore</option>
-              <option value="merbivore_soft">Merbivore Soft</option>
-              <option value="mono_industrial">Mono Industrial</option>
-              <option value="monokai">Monokai</option>
-              <option value="pastel_on_dark">Pastel on dark</option>
-              <option value="solarized_dark">Solarized Dark</option>
-              <option value="terminal">Terminal</option>
-              <option value="tomorrow_night">Tomorrow Night</option>
-              <option value="tomorrow_night_blue">Tomorrow Night Blue</option>
-              <option value="tomorrow_night_bright">Tomorrow Night Bright</option>
-              <option value="tomorrow_night_eighties">Tomorrow Night 80s</option>
-              <option value="twilight">Twilight</option>
-              <option value="vibrant_ink">Vibrant Ink</option>
-            </optgroup>
-          </select>
-          <br style="margin-bottom: 5px;">
+          <input type="checkbox" id="guide-indent" class="options"> Show indent guides<br>
+          <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br>
           Keybinding: 
-          <select style="width: 160px; position: absolute; right: 16px; background-position: 143px 5px;" id="keybinding" class="options">
+          <select style="width: 135px; position: absolute; right: 16px; background-position: 118px 6px;" id="keybinding" class="options">
             <option value="default">Default</option>
             <option value="vim">Vim</option>
             <option value="emacs">Emacs</option>

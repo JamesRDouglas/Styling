@@ -32,13 +32,16 @@
       button.remove { margin-left: 2px; }
       div.ace_hidden-cursors { display: none; }
       div.small-screen { display: inline-block; }
+      div.small-screen-top > div { margin: 0; display: inline-block; padding: 0; }
       @media only screen and (max-width: 840px) {
         #sidebar { height: 175px; width: 100vw; overflow: hidden; positon: fixed; border-right: none; border-bottom: 1px dashed grey; padding: 0.5em 0; }
         #sidebar h3 { margin: 0 0 5px 0; }
         #sidebar h3.placeholder { display: block; visibility: hidden; }
-        #sidebar > #style-name { flex-grow: 1; }
-        #sidebar > h1, #sidebar > br:first-of-type, #sidebar #guide-indent, #sidebar #guide-indent + br { display: none; }
-        #sidebar div.small-screen-top { width: 100vw; display: flex; flex-wrap: wrap; }
+        #sidebar > h1, #sidebar > br:first-of-type, #sidebar .hide-small-screen { display: none; }
+        #sidebar div.small-screen-top { width: calc(100vw - 2.2em); display: flex; flex-wrap: wrap; margin: 0 1.1em; }
+        #sidebar div.small-screen-top > div { display: flex; flex-grow: 1; }
+        #sidebar div.small-screen-top > div > input { flex-grow: 1; }
+        #sidebar div.small-screen-top #style-name { flex-grow: 1; }
         #sidebar div.small-screen { width: calc(calc(100vw - 2.2em) / 3); float: left; }
         #sidebar div.small-screen:nth-of-type(2) { margin-left: 1.1em; }
         #sidebar div.small-screen:nth-of-type(4) { margin-right: 1.1em; }
@@ -55,7 +58,7 @@
     <div id="sidebar">
       <h1>Edit style</h1>
       <div class="small-screen-top">
-        <input type="text" id="style-name" placeholder="Enter a name">
+        <div><input type="text" id="style-name" placeholder="Enter a name"></div>
         <input type="checkbox" id="enabled"> Enabled
         <br>
         <button id="save">Save</button>
@@ -74,7 +77,7 @@
         <input type="checkbox" id="autocomplete" class="options"> Autocomplete<br>
         <input type="checkbox" id="error-marker" class="options"> Syntax validation<br>
         <input type="checkbox" id="soft-tabs" class="options"> Use soft tabs<br>
-        <input type="checkbox" id="guide-indent" class="options"> Show indent guides<br>
+        <span class="hide-small-screen"><input type="checkbox" id="guide-indent" class="options"> Show indent guides<br></span>
         <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br style="margin-bottom: 7px;">
       </div>
       <div class="small-screen">

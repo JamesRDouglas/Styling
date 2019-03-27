@@ -14,7 +14,7 @@ function addStylesToList(y, styles_status, applicable_styles) {
     currentStatus = " checked"; 
   } 
   if (applicable_styles[y]) { 
-    $('#active-styles').append('<div data-id="'+y+'"><input class="check" type="checkbox"'+currentStatus+'><span>'+applicable_styles[y]+'</span><a href="edit.html?style='+y+'" class="edit"><i class="far fa-edit"></i></a><a href="#" class="delete" title="Not implemented"><i class="far fa-trash-alt"></i></a></div>'); 
+    $('#applicable-styles').append('<div data-id="'+y+'"><input class="check" type="checkbox"'+currentStatus+'><span>'+applicable_styles[y]+'</span><a href="edit.html?style='+y+'" class="edit"><i class="far fa-edit"></i></a><a href="#" class="delete" title="Not implemented"><i class="far fa-trash-alt"></i></a></div>'); 
   } else { 
     y++; 
     addStylesToList(y, styles_status, applicable_styles); 
@@ -42,7 +42,7 @@ function loadStyles(currentURL) {
         }
       }
     }
-    for (x = 1; x <= objectLength(applicable_styles); x = x) { if (x > objectLength(applicable_styles)) { break; } if (applicable_styles[y]) { x++; } y = addStylesToList(y, styles_status, applicable_styles); }
+    for (x = 0; x < objectLength(applicable_styles); x = x) { if (x === objectLength(applicable_styles)) { break; } if (applicable_styles[y]) { x++; } y = addStylesToList(y, styles_status, applicable_styles); }
     if (objectLength(applicable_styles) === 0) { $('#applicable-styles').append('<i>No styles for this page</i>'); }
   });
 }
@@ -71,6 +71,6 @@ $(function() {
   $(document).on('click', '#subdomain', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled" || message.message === "styles enabled") {  } });
-browser.runtime.onMessage.addListener(function(message) { if (message.message === "style updated") { $('#active-styles').empty(); loadStyles(); } });
+browser.runtime.onMessage.addListener(function(message) { if (message.message === "style updated") { $('#applicable-styles').empty(); loadStyles(); } });
 
 

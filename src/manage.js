@@ -25,7 +25,7 @@ $(function() {
     if (item.options.show_invisible === "true") { $('#show-invisible').prop("checked", true); }
     $('#keybinding').val(item.options.keybinding);
     var styles = item.styles.length, b = 0; 
-    for (a = 1; a < styles; a = a) { if (a === styles) { break; } if (item.styles[b]) { a++; } b = checkStyleExists(b, item); }
+    for (a = 0; a < styles; a = a) { if (a === styles) { break; } if (item.styles[b]) { a++; } b = checkStyleExists(b, item); }
     styles_arr = item.styles;
   });
   $('#write-new').click(function() { for (a = 0; a = a; a++) { if (!styles_arr[a]) { window.location.href = "edit.html?style="+a; break; } } });

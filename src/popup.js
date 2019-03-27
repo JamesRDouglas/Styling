@@ -27,7 +27,8 @@ function loadStyles(currentURL) {
       }
     }
     for (x = 0; x > -1; x++) { if (x === 0 && y === objectLength(applicable_styles)) { break; } y = addStylesToList(y, styles_status, applicable_styles); if (y > objectLength(applicable_styles)) { break; } }
-    if (objectLength(applicable_styles) === 0) { $('#applicable-styles').append('<i>No styles for this page</i>'); }
+    //if (objectLength(applicable_styles) === 0) { $('#applicable-styles').append('<i>No styles for this page</i>'); }
+    if (objectLength(applicable_styles) === 0) { $('#applicable-styles').append(currentURL); }
   });
 }
 var currentURL;

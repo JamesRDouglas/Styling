@@ -18,7 +18,7 @@ function addStylesToList(y, styles_status, active_styles) { if (item["styling_"+
   return y;
 }
 function loadStyles(currentURL) {
-  var active_styles = [], styles_status = [];
+  var active_styles = [], styles_status = [], y = 1;
   browser.storage.local.get(function(item) {
     var styles = objectLength(item) - 2;
     for (var b = 1; b <= styles; b++) {

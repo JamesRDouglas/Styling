@@ -24,7 +24,6 @@ $(function() {
         }
         browser.storage.local.set(item).then(onDone, onError); 
         window.location = 'edit.html?style='+newstyle_id; 
-        //item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+(item.styles.length-1);
     }
     var styles_arr = [];
     for (a = 0; a < item.styles.length; a++) { styles_arr.push(item.styles[a].id); }

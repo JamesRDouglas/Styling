@@ -73,8 +73,8 @@ $(function() {
     $(this).parent().next().find('section').remove();
     $(this).parent().clone().find('section').insertAfter($(this).parent().next().find('.code'));
     var editor = ace.edit($(this).parent().next().find('code')[0]), cloned = ace.edit($(this).parent().find('.code')[0]).getValue();
-    editor.setValue(cloned);
     updateBlocks();
+    editor.setValue(cloned);
   });
   $(document).on('click', '.beautify_block', function() { ace.edit($(this).parent().find('div.code')[0]).setValue(css_beautify(ace.edit($(this).parent().find('div.code')[0]).getValue(), { 'indent_size': 2, 'selector_separator_newline': false, 'space_around_selector_separator': true })); });
   $(document).on('click', '.add_target', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().find('input.url').val('').end().insertAfter($(this).parent()); });

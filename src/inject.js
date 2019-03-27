@@ -4,7 +4,7 @@ function objectLength(object) { var length = 0; for(var key in object) { if( obj
 function insertAfter(newNode, referenceNode) { referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling); }
 function getDomain(url, subdomain) { subdomain = subdomain || false; url = url.replace(/(https?:\/\/)?(www.)?/i, ''); if (!subdomain) { url = url.split('.').slice(url.length - 2).join('.'); } if (url.indexOf('/') !== -1) { return url.split('/')[0]; } return url; }
 function applyStyles(element) { if (document.body) { document.getElementsByTagName('html')[0].appendChild(element); } else { setTimeout(function() { applyStyles(element); }, 10); } }
-function updateStyles(currentURL) {
+function updateStyles() {
   browser.storage.local.get(function(item) {
     var options = item.options, default_style = { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options };
     if (!item.disabled) { browser.storage.local.set({ disabled: "false" }).then(onDone, onError); }
@@ -18,7 +18,7 @@ function updateStyles(currentURL) {
         for (var c = 1; c <= blocks; c++) {
           var urls = (objectLength(item.styles[b]["block_"+c]) - 1) / 2;
           for (var d = 1; d <= urls; d++) { 
-            if (item.styles[b].block_1["url_"+d] && ((item.styles[b]["block_"+c]["url_"+d+"_type"] === "url" && item.styles[b]["block_"+c]["url_"+d] === currentURL) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "starting" && currentURL.startsWith(item.styles[b]["block_"+c]["url_"+d])) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "domain" && item.styles[b]["block_"+c]["url_"+d] === getDomain(currentURL)) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "everything"))) {
+            if (item.styles[b].block_1["url_"+d] && ((item.styles[b]["block_"+c]["url_"+d+"_type"] === "url" && item.styles[b]["block_"+c]["url_"+d] === window.location.href) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "starting" && window.location.href.startsWith(item.styles[b]["block_"+c]["url_"+d])) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "domain" && item.styles[b]["block_"+c]["url_"+d] === getDomain(window.location.href)) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "everything"))) {
               var styleElement = document.createElement("style");
               styleElement.setAttribute("id", "styling-"+b+"-"+c+"-"+d);
               styleElement.setAttribute("data-name", item.styles[b].name);
@@ -34,14 +34,7 @@ function updateStyles(currentURL) {
     }
   });
 }
-var currentURL;
-browser.tabs.query({
-  currentWindow: true, 
-  active: true
-}, function(tabs) { 
-  currentURL = tabs[0].url; 
-  updateStyles(currentURL); 
-});
+updateStyles(); 
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled" || message.message === "styles enabled" || message.message === "styles updated") { updateStyles(); } });
 
 

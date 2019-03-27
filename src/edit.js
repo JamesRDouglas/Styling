@@ -67,12 +67,10 @@ $(function() {
         item.styles[style_id].blocks = [];
         for (c = 0; c < $('div.block').length; c++) {
           var urls = $('div.block:nth-of-type('+(c+1)+')').children('section').length, code = ace.edit("code_"+(c+1)).getValue().replace(/^|\s+$/g, '');
-          item.styles[style_id].blocks.push({ code: code });
-          item.styles[style_id].blocks[c].urls = [];
-          for (b = 0; b < urls; b = b) { 
+          item.styles[style_id].blocks.push({ code: code, urls: [] });
+          for (b = 0; b < urls; b++) { 
             var address = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('input.url').val(), type = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('select').val();
             item.styles[style_id].blocks[b].urls.push({ address: address, type: type });
-            b++;
           }
         }
         browser.storage.local.set(item).then(onDone, onError);

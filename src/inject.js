@@ -18,6 +18,8 @@ function updateStyles() {
         for (var c = 1; c <= blocks; c++) {
           var urls = (objectLength(item.styles[b]["block_"+c]) - 1) / 2;
           for (var d = 1; d <= urls; d++) { 
+            var currentURL;
+            browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; loadStyles(currentURL); });
             if (item.styles[b].block_1["url_"+d] && ((item.styles[b]["block_"+c]["url_"+d+"_type"] === "url" && item.styles[b]["block_"+c]["url_"+d] === currentURL) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "starting" && currentURL.startsWith(item.styles[b]["block_"+c]["url_"+d])) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "domain" && item.styles[b]["block_"+c]["url_"+d] === getDomain(currentURL)) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "everything"))) {
               var styleElement = document.createElement("style");
               styleElement.setAttribute("id", "styling-"+b+"-"+c+"-"+d);
@@ -34,8 +36,6 @@ function updateStyles() {
     }
   });
 }
-var currentURL;
-browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; loadStyles(currentURL); });
 updateStyles();
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled" || message.message === "styles enabled" || message.message === "styles updated") { updateStyles(); } });
 

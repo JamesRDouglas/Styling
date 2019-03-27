@@ -58,7 +58,7 @@ $(function() {
       } else { 
         item.styles[currentStyle].disabled = "true"; 
       }
-      browser.storage.local.set({ styles: item.styles }).then(onDone, onError); });
+      browser.storage.local.set(item).then(onDone, onError); });
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
     });
   $(document).on('click', '.edit', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });

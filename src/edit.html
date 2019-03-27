@@ -21,7 +21,9 @@
 
       #content { width: calc(100vw - 250px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1em 2em; }
       #content div.block:first-of-type > span:first-of-type, div.block:first-of-type > button.raise_block, div.block:last-of-type > button.lower_block { display: none; }
-      #content div.block:only-child .remove_block { display: none; }
+      /*#content div.block:only-child .remove_block { display: none; }*/
+      #content div.block:only-child .remove_block { color: #adadad; opacity: 0.5; pointer-events: none; }
+      #content div.block section:only-of-type { color: #adadad; opacity: 0.5; pointer-events: none; }
       #content div.block:last-of-type { margin-bottom: 25vh; }
       #content div.code { width: 100%; height: 200px; box-shadow: 0 0 0 1px lightgrey; margin-top: 5px; }
       #content div.code.ace_focus { box-shadow: 0 0 2px 2px lightblue; }

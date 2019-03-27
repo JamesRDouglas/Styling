@@ -71,7 +71,7 @@ $(function() {
   $(document).on('click', '.clone_block', function() {
     $(this).parent().find('.add_block').click();
     $(this).parent().next().find('section').remove();
-    $(this).parent().clone().children('section').insertAfter($(this).parent().next().children('.code'));
+    $(this).parent().clone().find('section').insertAfter($(this).parent().next().find('.code'));
     ace.edit($(this).parent().next().find('code')).setValue(ace.edit($(this).parent().find('.code').getValue()));
     updateBlocks();
   });

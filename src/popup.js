@@ -32,7 +32,7 @@ function loadStyles(currentURL) {
 }
 var currentURL;
 $.getJSON('../manifest.json', function(data) { $('#version').text(data.version); });
-$('#disable').change(function() { if ($(this).is(':checked')) { $('img').prop("src", "../images/StylingDisabled.png"); browser.browserAction.setIcon({path: "../images/StylingDisabled.png"}); browser.storage.local.set({ disabled: true }).then(onDone, onError); browser.tabs.query().then(function(tabs) { sendMessageToTabs(tabs,"disable"); }).catch(onError); } else { $('img').prop("src", "../images/Styling.png"); browser.browserAction.setIcon({path: "../images/Styling.png"}); browser.storage.local.set({ disabled: false }).then(onDone, onError); browser.tabs.query().then(function(tabs) { sendMessageToTabs(tabs,"enable"); }).catch(onError); } });
+$('#disable').change(function() { if ($(this).is(':checked')) { $('img').prop("src", "../images/StylingDisabled.png"); browser.browserAction.setIcon({path: "../images/StylingDisabled.png"}); browser.storage.local.set({ disabled: true }).then(onDone, onError); browser.tabs.query({}).then(function(tabs) { sendMessageToTabs(tabs,"disable"); }).catch(onError); } else { $('img').prop("src", "../images/Styling.png"); browser.browserAction.setIcon({path: "../images/Styling.png"}); browser.storage.local.set({ disabled: false }).then(onDone, onError); browser.tabs.query({}).then(function(tabs) { sendMessageToTabs(tabs,"enable"); }).catch(onError); } });
 browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; loadStyles(currentURL); });
 $(function() {
   $('img, label').click(function() { $('#disable').click(); });

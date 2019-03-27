@@ -3,42 +3,15 @@ function onError(error) { console.log(`${error}`); }
 function sendMessageToTabs(tabs, message) { for (let tab of tabs) { if (message === "disable") { browser.tabs.sendMessage(tab.id, {message: "styles disabled"}).then(onDone, onError); } else if (message === "enable") { browser.tabs.sendMessage(tab.id, {message: "styles enabled"}).then(onDone, onError); } else if (message === "update") { browser.tabs.sendMessage(tab.id, {message: "styles updated"}).then(onDone, onError); } } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function updateBlocks() { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); $('.block:nth-of-type('+a+')').find('div.code').prop('id', 'code_'+a); } $('div.code').each(function(){ aceinit.call(this); }); }
-function saveOptions() {
-  browser.storage.local.get().then(function(item) {
-    item.styles[style_id].options = {  options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), line_count: $('#line-count').val(), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), soft_tabs: $('#soft-tabs').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), keybinding: $('#keybinding').val() } }; 
-    browser.storage.local.set(item).then(onDone, onError);
-  });
-  $('div.code').each(function(){ aceinit.call(this); });
-}
-function aceinit() {
-  ace.config.set('loadWorkerFromBlob', false);
-  var e = ace.edit(this);
-  ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/searchbox");
-  e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, navigateWithinSoftTabs: true, theme: "ace/theme/crimson_editor", useSoftTabs: $('#soft-tabs').prop('checked'), minLines: $('#line-count').val(), maxLines: $('#line-count').val(), displayIndentGuides: $('#guide-indent').prop('checked'), showInvisibles: $('#show-invisible').prop('checked'), tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useWorker: $('#error-marker').prop('checked'), mode: "ace/mode/css" });
-  if ($('#keybinding').val() !== "default") { e.setKeyboardHandler("ace/keyboard/"+$('#keybinding').val()); }
-  e.resize();
-  return e;
-}
+function saveOptions() { browser.storage.local.get().then(function(item) { item.styles[style_id].options = {  options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), line_count: $('#line-count').val(), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), soft_tabs: $('#soft-tabs').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), keybinding: $('#keybinding').val() } }; browser.storage.local.set(item).then(onDone, onError); }); $('div.code').each(function(){ aceinit.call(this); }); }
+function aceinit() { ace.config.set('loadWorkerFromBlob', false); var e = ace.edit(this); ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/searchbox"); e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, navigateWithinSoftTabs: true, theme: "ace/theme/crimson_editor", useSoftTabs: $('#soft-tabs').prop('checked'), minLines: $('#line-count').val(), maxLines: $('#line-count').val(), displayIndentGuides: $('#guide-indent').prop('checked'), showInvisibles: $('#show-invisible').prop('checked'), tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useWorker: $('#error-marker').prop('checked'), mode: "ace/mode/css" }); if ($('#keybinding').val() !== "default") { e.setKeyboardHandler("ace/keyboard/"+$('#keybinding').val()); } e.resize(); return e; }
 $(function() {
   browser.storage.local.get().then(function(item) { 
     var options = item.options; default_style = { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options }; new_target = new URLSearchParams(window.location.search).get('new'), new_type = new URLSearchParams(window.location.search).get('type'), style_id = new URLSearchParams(window.location.search).get('style');
-    if (new_target && new_type && typeof new_target === "string" && typeof new_type === "string") { 
-      var newstyle_id;
-      for (a = 1; a = a; a++) { if (!item.styles[a]) { newstyle_id = a; break; } }
-      item.styles[newstyle_id] = default_style;
-      browser.storage.local.set(item).then(onDone, onError);
-      window.location = 'edit.html?style='+newstyle_id;
-    }
+    if (new_target && new_type && typeof new_target === "string" && typeof new_type === "string") { var newstyle_id; for (a = 1; a = a; a++) { if (!item.styles[a]) { newstyle_id = a; break; } } item.styles[newstyle_id] = default_style; browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+newstyle_id; }
     if (!style_id) { window.location = 'edit.html?style=0'; }
-    if (item.styles[style_id] === undefined && typeof style_id === "number") {
-      item.styles[style_id] = default_style;
-      browser.storage.local.set(item).then(onDone, onError);
-      window.location = 'edit.html?style='+style_id;
-    }
-    if (!item.styles[style_id].options) {
-      item.styles[style_id].options = options;
-      browser.storage.local.set(item).then(onDone, onError);
-    }
+    if (item.styles[style_id] === undefined && typeof style_id === "number") { item.styles[style_id] = default_style; browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+style_id; }
+    if (!item.styles[style_id].options) { item.styles[style_id].options = options; browser.storage.local.set(item).then(onDone, onError); }
     if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     $('#style-name').val(item.styles[style_id].name);
     $('#line-count').val(item.styles[style_id].options.line_count);
@@ -64,17 +37,6 @@ $(function() {
       if (item.styles[style_id]["block_"+b].code) { ace.edit("code_"+b).setValue(item.styles[style_id]["block_"+b].code, -1); updateBlocks(); }
     }
     updateBlocks();
-    $('#enabled').click(function() { 
-      if ($('#enabled').is(':checked')) { 
-        item.styles[style_id].disabled = "false";
-        browser.storage.local.set(item).then(onDone, onError); 
-        browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"enabled"); }).catch(onError);
-      } else { 
-        item.styles[style_id].disabled = "true";
-        browser.storage.local.set(item).then(onDone, onError); 
-        browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"disabled"); }).catch(onError);
-      }
-    });
   });
   updateBlocks();
   $('#save').click(function() {
@@ -94,6 +56,7 @@ $(function() {
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
     } else { alert('Please enter a name'); return false; }
   });
+  $('#enabled').click(function() { browser.storage.local.get(function(item) { if ($('#enabled').is(':checked')) { item.styles[style_id].disabled = "false"; browser.storage.local.set(item).then(onDone, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"styles updated"); }).catch(onError); } else { item.styles[style_id].disabled = "true"; browser.storage.local.set(item).then(onDone, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"disabled"); }).catch(onError); } }) });
   $('#beautify').click(function() { $('div.code').each(function(){ ace.edit(this).setValue(css_beautify(ace.edit(this).getValue(), { 'indent_size': 2, 'selector_separator_newline': false, 'space_around_selector_separator': true })); }); });
   $('#back').click(function() { window.location.replace("manage.html"); });
   $(document).on('click', '.add_block', function() { $(this).parent().clone().find('input').val('').end().find('section:not(:first-of-type)').remove().end().find('.code').empty().end().prop('id', '').insertAfter($(this).parent()); updateBlocks(); });
@@ -108,5 +71,6 @@ $(function() {
   $(document).on('change', '.options', function() { saveOptions(); });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "styles enabled") { $('#enabled').prop('disabled', false); } });
+browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles updated") {  } });
 
 

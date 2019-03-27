@@ -32,7 +32,29 @@ function loadStyles(currentURL) {
 }
 var currentURL;
 $.getJSON('../manifest.json', function(data) { $('#version').text(data.version); });
-$('#disable').change(function() { if ($(this).is(':checked')) { $('img').prop("src", "../images/StylingDisabled.png"); browser.browserAction.setIcon({path: "../images/StylingDisabled.png"}); browser.storage.local.set({ disabled: "true" }).then(onChange, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"disable"); }).catch(onError); } else { $('img').prop("src", "../images/Styling.png"); browser.browserAction.setIcon({path: "../images/Styling.png"}); browser.storage.local.set({ disabled: "false" }).then(onChange, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"enable"); }).catch(onError); } });
+$('#disable').change(function() { 
+  if ($(this).is(':checked')) { 
+    $('img').prop("src", "../images/StylingDisabled.png"); 
+    browser.browserAction.setIcon({path: "../images/StylingDisabled.png"}); 
+    browser.storage.local.get(function(item) {
+      $.extend(true, item, { disabled: "true" });
+      browser.storage.local.set(item).then(onChange, onError); 
+    });
+    browser.tabs.query({currentWindow: true}).then(function(tabs) { 
+      sendMessageToTabs(tabs,"disable"); 
+    }).catch(onError); 
+  } else { 
+    $('img').prop("src", "../images/Styling.png"); 
+    browser.browserAction.setIcon({path: "../images/Styling.png"}); 
+    browser.storage.local.get(function(item) {
+      $.extend(true, item, { disabled: "false" });
+      browser.storage.local.set(item).then(onChange, onError); 
+    });
+    browser.tabs.query({currentWindow: true}).then(function(tabs) { 
+      sendMessageToTabs(tabs,"enable"); 
+    }).catch(onError); 
+  } 
+});
 browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; loadStyles(currentURL); });
 $(function() {
   $('.check').click(function() { 

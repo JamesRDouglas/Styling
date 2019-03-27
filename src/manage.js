@@ -34,10 +34,17 @@ $(function() {
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "styles enabled") { $('#enabled').prop('disabled', false); } });
 //todo:
 /*
-fix injection for iframes and sidebars and other windows
+fix injection for sidebars and other windows
 make ui better for differently sized screens
 fix potential holes in stored data
 warn user before leaving unsaved changes
+fix keybinding option
+fix changing of url type
 add importing/exporting
 add live preview?
+
+environment todo:
+
+use github
+upload automation
 */

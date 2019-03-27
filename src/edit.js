@@ -8,27 +8,10 @@ $(function() {
   var style_id;
   browser.storage.local.get().then(function(item) { 
     style_id = new URLSearchParams(window.location.search).get('style');
-    var default_style = item.default, used_ids = [], style_type = new URLSearchParams(window.location.search).get('type'), style_target = new URLSearchParams(window.location.search).get('target');
+    var default_style = item.default, used_ids = [], styles_arr = [], style_type = new URLSearchParams(window.location.search).get('type'), style_target = new URLSearchParams(window.location.search).get('target');
     for (a = 0; a < item.styles.length; a++) { used_ids.push(item.styles[a].id); }
     if (!style_id || style_id === "0" || used_ids.indexOf(style_id) === -1) { window.location = 'edit.html?style=1'; }
-    if (style_id === "new") { 
-        item.styles.push(default_style);
-        var styles_arr = [], newstyle_id, last_style = item.styles.length-1;
-        for (a = 0; a < item.styles.length; a++) { styles_arr.push(item.styles[a].id); }
-        for (b = 1; b > 0; b++) { 
-          if (styles_arr.indexOf(b.toString()) === -1) { 
-            item.styles[last_style].id = b.toString(); 
-            if (style_type && style_target && typeof style_type === "string" && typeof style_target === "string") {  
-            item.styles[last_style].blocks[0].urls[0].type = style_type; 
-            item.styles[last_style].blocks[0].urls[0].address = style_target; 
-            }
-            newstyle_id = b; break; 
-          } 
-        }
-        browser.storage.local.set(item).then(onDone, onError); 
-        window.location = 'edit.html?style='+newstyle_id; 
-    }
-    var styles_arr = [];
+    if (style_id === "new") { item.styles.push(default_style); var styles_arr = [], newstyle_id, last_style = item.styles.length-1; for (a = 0; a < item.styles.length; a++) { styles_arr.push(item.styles[a].id); } for (b = 1; b > 0; b++) { if (styles_arr.indexOf(b.toString()) === -1) { item.styles[last_style].id = b.toString(); if (style_type && style_target && typeof style_type === "string" && typeof style_target === "string") { item.styles[last_style].blocks[0].urls[0].type = style_type; item.styles[last_style].blocks[0].urls[0].address = style_target; } newstyle_id = b; break; } } browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+newstyle_id; }
     for (a = 0; a < item.styles.length; a++) { styles_arr.push(item.styles[a].id); }
     style_id = styles_arr.indexOf(style_id);
     if (!item.styles[style_id].options) { item.styles[style_id].options = default_style.options; browser.storage.local.set(item).then(onDone, onError); }
@@ -60,19 +43,20 @@ $(function() {
   });
   updateBlocks();
   $('#save').click(function() {
+    style_id = 0;
     if ($('#style-name').val()) {
       browser.storage.local.get().then(function(item) {
         item.styles[style_id].name = $('#style-name').val();
         item.styles[style_id].disabled = $('#enabled').prop('disabled').toString();
         item.styles[style_id].blocks = [];
-        for (c = 0; c < $('div.block').length; c++) {
+        /*for (c = 0; c < $('div.block').length; c++) {
           var urls = $('div.block:nth-of-type('+(c+1)+')').children('section').length, code = ace.edit("code_"+(c+1)).getValue().replace(/^|\s+$/g, '');
           item.styles[style_id].blocks.push({ code: code, urls: [] });
           for (b = 0; b < urls; b++) { 
             var address = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('input.url').val(), type = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('select').val();
             item.styles[style_id].blocks[b].urls.push({ address: address, type: type });
           }
-        }
+        }*/
         browser.storage.local.set(item).then(onDone, onError);
       });
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);

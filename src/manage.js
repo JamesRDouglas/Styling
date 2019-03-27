@@ -27,7 +27,7 @@ $(function() {
       e.stopPropagation(); 
       $(this).parent().remove(); 
       browser.storage.local.get(function(item) { 
-        delete item.styles[$(this).data("id")];
+        item.styles.splice($(this).data("id"),1);
         browser.storage.local.set(item).then(onDone, onError);
       });
     } 

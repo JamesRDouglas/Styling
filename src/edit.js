@@ -11,7 +11,7 @@ $(function() {
     if (new_target && new_type && typeof new_target === "string" && typeof new_type === "string") { item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+newstyle_id; }
     if (!style_id) { window.location = 'edit.html?style=0'; }
     //if (item.styles[style_id] === undefined && typeof style_id === "number") { item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+style_id; }
-    if (style_id === "new") { item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+style_id; }
+    if (style_id === "new") { item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+(item.styles.length-1); }
     if (!item.styles[style_id].options) { item.styles[style_id].options = options; browser.storage.local.set(item).then(onDone, onError); }
     if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     $('#style-name').val(item.styles[style_id].name);

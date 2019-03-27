@@ -10,7 +10,9 @@ function saveOptions() {
 }
 $(function() {
   var styles_arr;
-  browser.storage.local.get().then(function(item) { 
+  browser.storage.local.get().then(function(item) {
+    if (!item.default || !item.default.name || !item.default.disabled || !item.default.blocks) { browser.storage.local.set({ default: { name: "new style", disabled: false, blocks: [ { code: "", urls: [ { address: "", type: "" } ] } ] } }).then(onDone, onError); default_style = item.default; }
+    if (!item.default.options) { item.default.options = { tab_size: "2", font_size: "11", line_count: "15", autocomplete: true, error_marker: true, soft_tabs: true, guide_indent: false, show_invisible: false, keybinding: "default" }; browser.storage.local.set(item).then(onDone, onError); default_style = item.default; }
     $('#line-count').val(item.default.options.line_count);
     $('#tab-size').val(item.default.options.tab_size);
     $('#font-size').val(item.default.options.font_size);

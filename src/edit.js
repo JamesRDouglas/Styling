@@ -30,12 +30,12 @@ $(function() {
       if (blocks > 1 && b > 0) { $('#content > .block:last-of-type > .add_block').click(); }
       var urls = item.styles[style_id].blocks[b].urls.length;
       for (var c = 0; c < urls; c++) { 
-        if (urls > 1 && c > 0) { $('body div.block:nth-of-type('+b+') section:last-of-type .add_target').click(); }
-        if (item.styles[style_id].blocks[b].urls[c].address) { $('body .block:nth-of-type('+b+') section:nth-of-type('+c+') input.url').val(item.styles[style_id].blocks[b].urls[c].address); }
-        if (item.styles[style_id].blocks[b].urls[c].type) { $('body .block:nth-of-type('+b+') section:nth-of-type('+c+') select').val(item.styles[style_id].blocks[b].urls[c].type); }
-        if (item.styles[style_id].blocks[b].urls[c].type === "everything") { $('body .block:nth-of-type('+b+') section:nth-of-type('+c+') input.url').hide(); }
+        if (urls > 1 && c > 0) { $('body div.block:nth-of-type('+(b+1)+') section:last-of-type .add_target').click(); }
+        if (item.styles[style_id].blocks[b].urls[c].address) { $('body .block:nth-of-type('+(b+1)+') section:nth-of-type('+(c+1)+') input.url').val(item.styles[style_id].blocks[b].urls[c].address); }
+        if (item.styles[style_id].blocks[b].urls[c].type) { $('body .block:nth-of-type('+(b+1)+') section:nth-of-type('+(c+1)+') select').val(item.styles[style_id].blocks[b].urls[c].type); }
+        if (item.styles[style_id].blocks[b].urls[c].type === "everything") { $('body .block:nth-of-type('+(b+1)+') section:nth-of-type('+(c+1)+') input.url').hide(); }
       }
-      if (item.styles[style_id].blocks[b].code) { ace.edit("code_"+b).setValue(item.styles[style_id].blocks[b].code, -1); updateBlocks(); }
+      if (item.styles[style_id].blocks[b].code) { ace.edit("code_"+(b+1)).setValue(item.styles[style_id].blocks[b].code, -1); updateBlocks(); }
     }
     updateBlocks();
   });
@@ -47,11 +47,11 @@ $(function() {
         item.styles[style_id].disabled = $('#enabled').prop('disabled').toString();
         item.styles[style_id].blocks = [];
         for (var c = 0; c < $('div.block').length; c++) {
-          var urls = $('div.block:nth-of-type('+c+')').children('section').length, code = ace.edit("code_"+(c+1)).getValue().replace(/^|\s+$/g, '');
+          var urls = $('div.block:nth-of-type('+(c+1)+')').children('section').length, code = ace.edit("code_"+(c+1)).getValue().replace(/^|\s+$/g, '');
           item.styles[style_id].blocks.push({ code: code });
           item.styles[style_id].blocks[c].urls = [];
           for (var b = 0; b < urls; b++) { 
-            var address = $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), type = $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val();
+            var address = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('input.url').val(), type = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('select').val();
             item.styles[style_id].blocks[b].urls.push({ address: address, type: type });
           }
         }

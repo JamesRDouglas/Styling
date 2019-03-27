@@ -35,7 +35,13 @@ function updateStyles(currentURL) {
   });
 }
 var currentURL;
-browser.tabs.query({currentWindow: true, active: true}, function(tabs) { currentURL = tabs[0].url; updateStyles(currentURL); });
+browser.tabs.query({
+  currentWindow: true, 
+  active: true
+}, function(tabs) { 
+  currentURL = tabs[0].url; 
+  updateStyles(currentURL); 
+});
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled" || message.message === "styles enabled" || message.message === "styles updated") { updateStyles(); } });
 
 

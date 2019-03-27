@@ -6,6 +6,7 @@ function sendMessageToTabs(tabs, message) { for (let tab of tabs) { if (message 
 function getDomain(url, subdomain) { subdomain = subdomain || false; url = url.replace(/(https?:\/\/)?(www.)?/i, ''); if (!subdomain) { url = url.split('.').slice(url.length - 2).join('.'); } if (url.indexOf('/') !== -1) { return url.split('/')[0]; } return url; }
 function addStylesToList(y, styles_status, applicable_styles) { 
   var currentStatus = ""; 
+  if (y > objectLength(applicable_styles)) { return y; }
   if (styles_status[y] === "enabled") { currentStatus = " checked"; } 
   if (applicable_styles[y]) { 
     $('#applicable-styles').append('<div data-id="'+y+'"><input class="check" type="checkbox"'+currentStatus+'><span>'+applicable_styles[y]+'</span><a href="edit.html?style='+y+'" class="edit" title="Edit style"><i class="far fa-edit"></i></a><a href="#" class="delete" title="Not implemented"><i class="far fa-trash-alt"></i></a></div>'); 

@@ -13,7 +13,7 @@ $(function() {
         var styles_arr = [], newstyle_id, last_style = item.styles.length-1;
         for (a = 0; a < item.styles.length; a++) { styles_arr.push(item.styles[a].id); }
         for (b = 0; b > -1; b++) { 
-          if (!styles_arr.indexOf(b)) { 
+          if (styles_arr.indexOf(b.toString()) === -1) { 
             item.styles[last_style].id = b; 
             if (style_type && style_target && typeof style_type === "string" && typeof style_target === "string") {  
             item.styles[last_style].blocks[0].urls[0].type = style_type; 

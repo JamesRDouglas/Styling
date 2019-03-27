@@ -1,5 +1,5 @@
 function onDone(item) { }
-function onError(error) { console.log(`${error}`); }
+function onError(error) { console.log(error); }
 function sendMessageToTabs(tabs, message) { for (let tab of tabs) { if (message === "disable") { browser.tabs.sendMessage(tab.id, {message: "styles disabled"}).then(onDone, onError); } else if (message === "enable") { browser.tabs.sendMessage(tab.id, {message: "styles enabled"}).then(onDone, onError); } else if (message === "update") { browser.tabs.sendMessage(tab.id, {message: "styles updated"}).then(onDone, onError); } } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function updateBlocks() { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); $('.block:nth-of-type('+a+')').find('div.code').prop('id', 'code_'+a); } $('div.code').each(function(){ aceinit.call(this); }); }
@@ -56,7 +56,19 @@ $(function() {
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
     } else { alert('Please enter a name'); return false; }
   });
-  $('#enabled').click(function() { browser.storage.local.get(function(item) { if ($('#enabled').is(':checked')) { item.styles[style_id].disabled = "false"; browser.storage.local.set(item).then(onDone, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"styles updated"); }).catch(onError); } else { item.styles[style_id].disabled = "true"; browser.storage.local.set(item).then(onDone, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"disabled"); }).catch(onError); } }) });
+  $('#enabled').click(function() { 
+    browser.storage.local.get(function(item) { 
+      if ($('#enabled').is(':checked')) { 
+        item.styles[style_id].disabled = "false"; 
+        browser.storage.local.set(item).then(onDone, onError); 
+        browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"styles updated"); }).catch(onError); 
+      } else { 
+        item.styles[style_id].disabled = "true"; 
+        browser.storage.local.set(item).then(onDone, onError); 
+        browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"styles updated"); }).catch(onError); 
+      } 
+    }) 
+  });
   $('#beautify').click(function() { $('div.code').each(function(){ ace.edit(this).setValue(css_beautify(ace.edit(this).getValue(), { 'indent_size': 2, 'selector_separator_newline': false, 'space_around_selector_separator': true })); }); });
   $('#back').click(function() { window.location.replace("manage.html"); });
   $(document).on('click', '.add_block', function() { $(this).parent().clone().find('input').val('').end().find('section:not(:first-of-type)').remove().end().find('.code').empty().end().prop('id', '').insertAfter($(this).parent()); updateBlocks(); });
@@ -71,6 +83,6 @@ $(function() {
   $(document).on('change', '.options', function() { saveOptions(); });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "styles enabled") { $('#enabled').prop('disabled', false); } });
-browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles updated") {  } });
+browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles updated") { browser.storage.local.get().then(function(item) { var style_id = new URLSearchParams(window.location.search).get('style'); if (item.styles[style_id].disabled === "true") { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); } }); } });
 
 

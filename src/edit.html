@@ -7,20 +7,21 @@
     <style>
       @font-face { font-family: 'Roboto'; src: url('../Roboto-Light.ttf') format('truetype'); }
       body { padding: 0; margin: 0; box-sizing: border-box; height: 100%; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; background-color: #EFEFEF; }
-      select { margin-left: 5px; width: 135px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: 118px 6px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
+      select { margin-left: 5px; width: 135px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: center right 7px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
       select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       button { padding: 2px 6px; text-align: center; }
 
       #sidebar { width: 270px; height: 100vh; position: fixed; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 0.8em 1.1em; background-color: white; }
-      #sidebar #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; margin-top: 10px; }
+      #sidebar #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; }
       #sidebar #style-name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
-      #sidebar summary { font-size: 1.17em; font-weight: bold; margin-bottom: 1em; cursor: pointer; -moz-user-select: none; }
+      #sidebar summary { font-size: 1.17em; font-weight: bold; margin-bottom: 0.3em; cursor: pointer; -moz-user-select: none; }
       #sidebar h3.placeholder { display: none; }
       #sidebar section.small-screen { display: inline-block; }
+      #sidebar input[type=number] { width: 7em; }
 
       #content { width: calc(100vw - 270px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1em 2em; }
       #content div.block:first-of-type > span:first-of-type, div.block:first-of-type > button.raise_block, div.block:last-of-type > button.lower_block { display: none; }
-      #content div.block:only-child .remove_block { display: none; } 
+      #content div.block:only-child .remove_block { display: none; }
       #content div.block:last-of-type { margin-bottom: 25vh; }
       #content div.code { width: 100%; height: 200px; box-shadow: 0 0 0 1px lightgrey; margin-top: 5px; }
       #content div.code.ace_focus { box-shadow: 0 0 2px 2px lightblue; }
@@ -61,11 +62,13 @@
     <div id="sidebar">
       <h1 style="padding: 0; margin: 0; font-size: 1.6em; width: 100%;">Edit style</h1>
       <div class="small-screen-top">
-        <div style="margin: 0; display: inline-block; padding: 0;"><input type="text" id="style-name" placeholder="Enter a name"></div>
+        <div style="margin: 0;  padding: 10px 0 2px 0; display: flex;">
+          <input type="text" id="style-name" placeholder="Enter a name">
+          <button id="save">Save</button>
+        </div>
         <input type="checkbox" id="enabled" style="margin-bottom: 10px;"> Enabled
         <br>
-        <button id="save">Save</button>
-        <button id="beautify">Beautify</button>
+        <button id="beautify">Beautify all</button>
         <button id="back">Back to manage</button>
       </div>
       <br>
@@ -86,9 +89,9 @@
         <section class="small-screen">
           <h3 class="placeholder">Options</h3>
           <input type="checkbox" id="guide-indent" class="options"> Show indent guides<br>
-          <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br style="margin-bottom: 7px;">
-          Keybinding: 
-          <select style="width: 135px; background-position: 118px 6px;" id="keybinding" class="options">
+          <input type="checkbox" id="show-invisible" class="options"> Show invisibles<br style="margin-bottom: 7px;">
+          Keybinding:
+          <select style="width: 120px; background-position: center right 7px;" id="keybinding" class="options">
             <option value="default">Default</option>
             <option value="vim">Vim</option>
             <option value="emacs">Emacs</option>

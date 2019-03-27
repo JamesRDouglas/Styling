@@ -9,16 +9,22 @@ $(function() {
     var default_style = item.default, style_id = new URLSearchParams(window.location.search).get('style'), style_type = new URLSearchParams(window.location.search).get('type'), style_target = new URLSearchParams(window.location.search).get('target');
     if (!style_id || style_id === "0") { window.location = 'edit.html?style=1'; }
     if (style_id === "new") { 
-      if (style_type && style_target && typeof style_type === "string" && typeof style_target === "string") { 
         item.styles.push(default_style);
-        var styles_arr = [], newstyle_id;
+        var styles_arr = [], newstyle_id, last_style = item.styles.length-1;
         for (a = 0; a < item.styles.length; a++) { styles_arr.push(item.styles[a].id); }
-        for (b = 0; b > -1; b++) { if (!styles_arr.indexOf(b)) { item.styles[(item.styles.length-1)].id = b; newstyle_id = b; break; } }
+        for (b = 0; b > -1; b++) { 
+          if (!styles_arr.indexOf(b)) { 
+            item.styles[last_style].id = b; 
+            if (style_type && style_target && typeof style_type === "string" && typeof style_target === "string") {  
+            item.styles[last_style].blocks[0].urls[0].type = style_type; 
+            item.styles[last_style].blocks[0].urls[0].address = style_target; 
+            }
+            newstyle_id = b; break; 
+          } 
+        }
         browser.storage.local.set(item).then(onDone, onError); 
         window.location = 'edit.html?style='+newstyle_id; 
-      } else {
-        item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+(item.styles.length-1);
-      } 
+        //item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+(item.styles.length-1);
     }
     var styles_arr = [];
     for (a = 0; a < item.styles.length; a++) { styles_arr.push(item.styles[a].id); }

@@ -13,7 +13,7 @@ $(function() {
     if (!item.default || !item.default.name || !item.default.disabled || !item.default.blocks) { item.default = { name: "new style", id: "1", disabled: false, blocks: [ { code: "", urls: [ { address: "", type: "" } ] } ] }; }
     if (!item.default.options) { item.default.options = { tab_size: "2", font_size: "11", line_count: "15", autocomplete: true, error_marker: true, soft_tabs: true, guide_indent: false, show_invisible: false, keybinding: "default" }; browser.storage.local.set(item).then(onDone, onError); default_style = item.default; }
     if (!item.styles[0]) { item.styles[0] = default_style; browser.storage.local.set(item).then(onDone, onError); }
-    if (!item.styles[0].id === "1") { item.styles[0].id = "1"; browser.storage.local.set(item).then(onDone, onError); }
+    if (item.styles[0].id !== "1") { item.styles[0].id = "1"; browser.storage.local.set(item).then(onDone, onError); }
     $('#line-count').val(item.default.options.line_count);
     $('#tab-size').val(item.default.options.tab_size);
     $('#font-size').val(item.default.options.font_size);
@@ -23,7 +23,7 @@ $(function() {
     if (item.default.options.guide_indent === true) { $('#guide-indent').prop("checked", true); }
     if (item.default.options.show_invisible === true) { $('#show-invisible').prop("checked", true); }
     $('#keybinding').val(item.default.options.keybinding);
-    for (a = 0; a < item.styles.length; a = a) { if (item.styles[a]) { styles_arr.push(item.styles[a].id); $('#content').append('<div class="style" id="style_'+styles_arr[a]+'" data-id="'+styles_arr[a]+'"><input type="checkbox"><span class="name" title="'+item.styles[a].name+'">'+item.styles[a].name+'</span><button class="edit" data-id="'+styles_arr[a]+'">Edit</button><button class="delete" data-id="'+styles_arr[a]+'">Delete</button><div class="url_list"></div></div>'); a++; } }
+    for (a = 0; a < item.styles.length; a = a) { if (item.styles[a]) { styles_arr.push(item.styles[a].id); $('#content').append('<div class="style" id="style_'+styles_arr[a]+'" data-id="'+styles_arr[a]+'"><input type="checkbox"><span class="name" title="'+item.styles[a].name+'">'+item.styles[a].name+'</span><button class="edit" data-id="'+styles_arr[a]+'">Edit</button><button class="delete" data-id="'+a+'">Delete</button><div class="url_list"></div></div>'); a++; } }
   });
   $('#write-new').click(function() { window.location.href = "edit.html?style=new"; });
   $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });  

@@ -26,8 +26,9 @@ $(function() {
     if (confirm('Are you sure you want to delete "'+$(this).parent().find('.name').prop("title")+'"?')) { 
       e.stopPropagation(); 
       $(this).parent().remove(); 
+      var style_id = $(this).data("id");
       browser.storage.local.get(function(item) { 
-        item.styles.splice($(this).data("id"),1);
+        item.styles.splice(style_id,1);
         browser.storage.local.set(item).then(onDone, onError);
       });
     } 

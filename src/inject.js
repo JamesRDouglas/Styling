@@ -4,7 +4,7 @@ function objectLength(object) { var length = 0; for(var key in object) { if( obj
 function insertAfter(newNode, referenceNode) { referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling); }
 function getDomain(url, subdomain) { subdomain = subdomain || false; url = url.replace(/(https?:\/\/)?(www.)?/i, ''); if (!subdomain) { url = url.split('.').slice(url.length - 2).join('.'); } if (url.indexOf('/') !== -1) { return url.split('/')[0]; } return url; }
 function applyStyles(element) { if (document.body) { document.getElementsByTagName('html')[0].appendChild(element); } else { setTimeout(function() { applyStyles(element); }, 10); } }
-function updateStyles() {
+function updateStyles(currentURL) {
   browser.storage.local.get(function(item) {
     var options = item.options, default_style = { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options };
     if (!item.disabled) { browser.storage.local.set({ disabled: "false" }).then(onDone, onError); }
@@ -35,8 +35,7 @@ function updateStyles() {
   });
 }
 var currentURL;
-browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; });
-updateStyles(currentURL);
+browser.tabs.query({currentWindow: true, active: true}, function(tabs) { currentURL = tabs[0].url; updateStyles(currentURL); });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled" || message.message === "styles enabled" || message.message === "styles updated") { updateStyles(); } });
 
 

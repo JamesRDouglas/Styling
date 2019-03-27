@@ -7,23 +7,23 @@ function saveOptions() { var style_id = new URLSearchParams(window.location.sear
 function aceinit() { ace.config.set('loadWorkerFromBlob', false); var e = ace.edit(this); ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/searchbox"); e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, navigateWithinSoftTabs: true, theme: "ace/theme/crimson_editor", useSoftTabs: $('#soft-tabs').prop('checked'), minLines: $('#line-count').val(), maxLines: $('#line-count').val(), displayIndentGuides: $('#guide-indent').prop('checked'), showInvisibles: $('#show-invisible').prop('checked'), tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useWorker: $('#error-marker').prop('checked'), mode: "ace/mode/css" }); if ($('#keybinding').val() !== "default") { e.setKeyboardHandler("ace/keyboard/"+$('#keybinding').val()); } e.resize(); return e; }
 $(function() {
   browser.storage.local.get().then(function(item) { 
-    var options = item.options; default_style = { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options }; new_target = new URLSearchParams(window.location.search).get('new'), new_type = new URLSearchParams(window.location.search).get('type'), style_id = new URLSearchParams(window.location.search).get('style');
+    var options = item.options; default_style = { name: "new style", disabled: false, block_1: { code: "", url_1: "", url_1_type: "url" }, options }; new_target = new URLSearchParams(window.location.search).get('new'), new_type = new URLSearchParams(window.location.search).get('type'), style_id = new URLSearchParams(window.location.search).get('style');
     if (new_target && new_type && typeof new_target === "string" && typeof new_type === "string") { item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+newstyle_id; }
     if (!style_id) { window.location = 'edit.html?style=0'; }
     //if (item.styles[style_id] === undefined && typeof style_id === "number") { item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+style_id; }
     if (style_id === "new") { item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+(item.styles.length-1); }
     if (!item.styles[style_id].options) { item.styles[style_id].options = options; browser.storage.local.set(item).then(onDone, onError); }
-    if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
+    if (item.disabled === true) { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     $('#style-name').val(item.styles[style_id].name);
     $('#line-count').val(item.styles[style_id].options.line_count);
     $('#tab-size').val(item.styles[style_id].options.tab_size);
     $('#font-size').val(item.styles[style_id].options.font_size);
-    if (item.styles[style_id].disabled === "true") { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); }
-    if (item.styles[style_id].options.autocomplete === "true") { $('#autocomplete').prop("checked", true); }
-    if (item.styles[style_id].options.error_marker === "true") { $('#error-marker').prop("checked", true); }
-    if (item.styles[style_id].options.soft_tabs === "true") { $('#soft-tabs').prop("checked", true); }
-    if (item.styles[style_id].options.guide_indent === "true") { $('#guide-indent').prop("checked", true); }
-    if (item.styles[style_id].options.show_invisible === "true") { $('#show-invisible').prop("checked", true); }
+    if (item.styles[style_id].disabled === true) { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); }
+    if (item.styles[style_id].options.autocomplete === true) { $('#autocomplete').prop("checked", true); }
+    if (item.styles[style_id].options.error_marker === true) { $('#error-marker').prop("checked", true); }
+    if (item.styles[style_id].options.soft_tabs === true) { $('#soft-tabs').prop("checked", true); }
+    if (item.styles[style_id].options.guide_indent === true) { $('#guide-indent').prop("checked", true); }
+    if (item.styles[style_id].options.show_invisible === true) { $('#show-invisible').prop("checked", true); }
     $('#keybinding').val(item.styles[style_id].options.keybinding);
     var blocks = objectLength(item.styles[style_id]) - 3;
     for (var b = 1; b <= blocks; b++) {
@@ -57,7 +57,7 @@ $(function() {
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
     } else { alert('Please enter a name'); return false; }
   });
-  $('#enabled').click(function() { browser.storage.local.get(function(item) { if ($('#enabled').is(':checked')) { item.styles[style_id].disabled = "false"; browser.storage.local.set(item).then(onDone, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } else { item.styles[style_id].disabled = "true"; browser.storage.local.set(item).then(onDone, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } }); });
+  $('#enabled').click(function() { browser.storage.local.get(function(item) { if ($('#enabled').is(':checked')) { item.styles[style_id].disabled = false; browser.storage.local.set(item).then(onDone, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } else { item.styles[style_id].disabled = true; browser.storage.local.set(item).then(onDone, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } }); });
   $('#beautify').click(function() { $('div.code').each(function(){ ace.edit(this).setValue(css_beautify(ace.edit(this).getValue(), { 'indent_size': 2, 'selector_separator_newline': false, 'space_around_selector_separator': true })); }); });
   $('#back').click(function() { window.location.replace("manage.html"); });
   $(document).on('click', '.add_block', function() { $(this).parent().clone().find('input').val('').end().find('section:not(:first-of-type)').remove().end().find('.code').empty().end().prop('id', '').insertAfter($(this).parent()); updateBlocks(); });
@@ -72,6 +72,6 @@ $(function() {
   $(document).on('change', '.options', function() { saveOptions(); });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "styles enabled") { $('#enabled').prop('disabled', false); } });
-browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles updated") { browser.storage.local.get().then(function(item) { var style_id = new URLSearchParams(window.location.search).get('style'); if (item.styles[style_id].disabled === "true") { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); } }); } });
+browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles updated") { browser.storage.local.get().then(function(item) { var style_id = new URLSearchParams(window.location.search).get('style'); if (item.styles[style_id].disabled === true) { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); } }); } });
 
 

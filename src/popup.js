@@ -1,4 +1,4 @@
-browser.storage.local.get(function(item) { if (item.disabled == "true") { $('img').prop("src", "../images/StylingDisabled.png"); $('input[type=checkbox]').prop("checked", true); } else { $('img').prop("src", "../images/Styling.png");  $('input[type=checkbox]').prop("checked", false); } });
+browser.storage.local.get(function(item) { if (item.disabled === true) { $('img').prop("src", "../images/StylingDisabled.png"); $('input[type=checkbox]').prop("checked", true); } else { $('img').prop("src", "../images/Styling.png");  $('input[type=checkbox]').prop("checked", false); } });
 function onDone(item) { }
 function onError(error) { console.log(error); }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
@@ -11,7 +11,7 @@ function loadStyles(currentURL) {
     var styles = item.styles.length;
     for (var b = 0; b < styles; b++) {
       var blocks = objectLength(item.styles[b]);
-      if (item.styles[b].disabled === "false") { status = "enabled"; } else { status = "disabled"; }
+      if (item.styles[b].disabled === false) { status = "enabled"; } else { status = "disabled"; }
       $.extend(true, styles_status, { [b]: status });
       block:
       for (var c = 1; c <= blocks; c++) {
@@ -30,7 +30,7 @@ function loadStyles(currentURL) {
 }
 var currentURL;
 $.getJSON('../manifest.json', function(data) { $('#version').text(data.version); });
-$('#disable').change(function() { if ($(this).is(':checked')) { $('img').prop("src", "../images/StylingDisabled.png"); browser.browserAction.setIcon({path: "../images/StylingDisabled.png"}); browser.storage.local.set({ disabled: "true" }).then(onDone, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"disable"); }).catch(onError); } else { $('img').prop("src", "../images/Styling.png"); browser.browserAction.setIcon({path: "../images/Styling.png"}); browser.storage.local.set({ disabled: "false" }).then(onDone, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"enable"); }).catch(onError); } });
+$('#disable').change(function() { if ($(this).is(':checked')) { $('img').prop("src", "../images/StylingDisabled.png"); browser.browserAction.setIcon({path: "../images/StylingDisabled.png"}); browser.storage.local.set({ disabled: true }).then(onDone, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"disable"); }).catch(onError); } else { $('img').prop("src", "../images/Styling.png"); browser.browserAction.setIcon({path: "../images/Styling.png"}); browser.storage.local.set({ disabled: false }).then(onDone, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"enable"); }).catch(onError); } });
 browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; loadStyles(currentURL); });
 $(function() {
   $('img, label').click(function() { $('#disable').click(); });
@@ -39,7 +39,7 @@ $(function() {
   $('#url').prop('href', browser.extension.getURL("src/edit.html?new=url&target=")+currentURL);
   $('#domain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL));
   $('#subdomain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL, true));
-  $(document).on('change', '.check', function() { var currentStyle = $(this).parent().data('id'), value; if (currentStyle === undefined) { return false; } if ($(this).is(':checked')) { value = "false"; } else { value = "true"; } browser.storage.local.get(function(item) { item.styles[currentStyle].disabled = value; browser.storage.local.set(item).then(onDone, onError); }); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); });
+  $(document).on('change', '.check', function() { var currentStyle = $(this).parent().data('id'), value; if (currentStyle === undefined) { return false; } browser.storage.local.get(function(item) { item.styles[currentStyle].disabled = $(this).is(':checked'); browser.storage.local.set(item).then(onDone, onError); }); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); });
   $(document).on('click', '.edit', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
   $(document).on('click', '#url', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
   $(document).on('click', '#domain', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });

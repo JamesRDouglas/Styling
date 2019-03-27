@@ -6,14 +6,14 @@ function getDomain(url, subdomain) { subdomain = subdomain || false; url = url.r
 function applyStyles(element) { if (document.body) { document.getElementsByTagName('html')[0].appendChild(element); } else { setTimeout(function() { applyStyles(element); }, 10); } }
 function updateStyles() {
   browser.storage.local.get(function(item) {
-    var options = item.options, default_style = { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options };
-    if (!item.disabled) { browser.storage.local.set({ disabled: "false" }).then(onDone, onError); }
-    if (!item.options) { browser.storage.local.set({ options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", keybinding: "default" } }).then(onDone, onError); options = item.options; }
+    var options = item.options, default_style = { name: "new style", disabled: false, block_1: { code: "", url_1: "", url_1_type: "url" }, options };
+    if (!item.disabled) { browser.storage.local.set({ disabled: false }).then(onDone, onError); }
+    if (!item.options) { browser.storage.local.set({ options: { tab_size: 2, font_size: 11, line_count: 15, autocomplete: true, error_marker: true, soft_tabs: true, guide_indent: false, show_invisible: false, keybinding: "default" } }).then(onDone, onError); options = item.options; }
     if (!item.styles[0]) { item.styles[0] = default_style; browser.storage.local.set(item).then(onDone, onError); }
     for (var a = 0; a < document.getElementsByClassName('styling').length; a++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[a]); }
     var styles = item.styles.length;
     for (var b = 0; b < styles; b++) {
-      if (item.styles[b] && item.styles[b].disabled === "false" && item.disabled === "false") {
+      if (item.styles[b] && item.styles[b].disabled === false && item.disabled === false) {
         var blocks = objectLength(item.styles[b]) - 2;
         for (var c = 1; c <= blocks; c++) {
           var urls = (objectLength(item.styles[b]["block_"+c]) - 1) / 2;

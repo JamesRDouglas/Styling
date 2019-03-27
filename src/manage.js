@@ -9,11 +9,11 @@ $(function() {
     $('#line-count').val(item.options.line_count);
     $('#tab-size').val(item.options.tab_size);
     $('#font-size').val(item.options.font_size);
-    if (item.options.autocomplete === "true") { $('#autocomplete').prop("checked", true); }
-    if (item.options.error_marker === "true") { $('#error-marker').prop("checked", true); }
-    if (item.options.soft_tabs === "true") { $('#soft-tabs').prop("checked", true); }
-    if (item.options.guide_indent === "true") { $('#guide-indent').prop("checked", true); }
-    if (item.options.show_invisible === "true") { $('#show-invisible').prop("checked", true); }
+    if (item.options.autocomplete === true) { $('#autocomplete').prop("checked", true); }
+    if (item.options.error_marker === true) { $('#error-marker').prop("checked", true); }
+    if (item.options.soft_tabs === true) { $('#soft-tabs').prop("checked", true); }
+    if (item.options.guide_indent === true) { $('#guide-indent').prop("checked", true); }
+    if (item.options.show_invisible === true) { $('#show-invisible').prop("checked", true); }
     $('#keybinding').val(item.options.keybinding);
     var styles = item.styles.length, b = 0; 
     for (a = 0; a < styles; a = a) { if (a === styles) { break; } if (item.styles[b]) { a++; } b = checkStyleExists(b, item); }
@@ -22,17 +22,7 @@ $(function() {
   $('#write-new').click(function() { window.location.href = "edit.html?style=new"; });
   $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });  
   $(document).on('click', '.style > input, .url_list', function(e) { e.stopPropagation(); });
-  $(document).on('click', '.delete', function(e) { 
-    if (confirm('Are you sure you want to delete "'+$(this).parent().find('.name').prop("title")+'"?')) { 
-      e.stopPropagation(); 
-      $(this).parent().remove(); 
-      var style_id = $(this).data("id");
-      browser.storage.local.get(function(item) { 
-        item.styles.splice(style_id,1);
-        browser.storage.local.set(item).then(onDone, onError);
-      });
-    } 
-  });
+  $(document).on('click', '.delete', function(e) { if (confirm('Are you sure you want to delete "'+$(this).parent().find('.name').prop("title")+'"?')) { e.stopPropagation(); $(this).parent().remove(); var style_id = $(this).data("id"); browser.storage.local.get(function(item) { item.styles.splice(style_id,1); browser.storage.local.set(item).then(onDone, onError); }); } });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "styles enabled") { $('#enabled').prop('disabled', false); } });
 

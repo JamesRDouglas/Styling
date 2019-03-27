@@ -43,7 +43,6 @@ $(function() {
   });
   updateBlocks();
   $('#save').click(function() {
-    style_id = 0;
     if ($('#style-name').val()) {
       browser.storage.local.get().then(function(item) {
         item.styles[style_id].name = $('#style-name').val();

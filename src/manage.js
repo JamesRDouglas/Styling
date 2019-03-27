@@ -8,7 +8,7 @@ function saveOptions() {
   });
 }
 $(function() {
-  var styles_arr = [];
+  var styles_arr = [], status;
   browser.storage.local.get().then(function(item) {
     if (!item.default || !item.default.name || !item.default.disabled || !item.default.blocks) { item.default = { name: "new style", id: "1", disabled: false, blocks: [ { code: "", urls: [ { address: "", type: "" } ] } ] }; }
     if (!item.default.options) { item.default.options = { tab_size: "2", font_size: "11", line_count: "15", autocomplete: true, error_marker: true, soft_tabs: true, guide_indent: false, show_invisible: false, keybinding: "default" }; browser.storage.local.set(item).then(onDone, onError); default_style = item.default; }
@@ -22,7 +22,7 @@ $(function() {
     if (item.default.options.soft_tabs === true) { $('#soft-tabs').prop("checked", true); }
     if (item.default.options.guide_indent === true) { $('#guide-indent').prop("checked", true); }
     if (item.default.options.show_invisible === true) { $('#show-invisible').prop("checked", true); }
-    if (item.styles[a].disabled === false) { var status = 'checked'; } else { var status = ''; }
+    if (item.styles[a].disabled === false) { status = ' checked'; } else { status = ''; }
     $('#keybinding').val(item.default.options.keybinding);
     for (a = 0; a < item.styles.length; a = a) { if (item.styles[a]) { styles_arr.push(item.styles[a].id); $('#content').append('<div class="style" id="style_'+styles_arr[a]+'" data-id="'+styles_arr[a]+'"><input type="checkbox" class="check"'+status+'><span class="name" title="'+item.styles[a].name+'">'+item.styles[a].name+'</span><button class="edit" data-id="'+styles_arr[a]+'">Edit</button><button class="delete" data-id="'+a+'">Delete</button><div class="url_list"></div></div>'); a++; } }
   });

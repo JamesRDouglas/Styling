@@ -1,7 +1,6 @@
 function onDone(item) { }
 function onError(error) { console.log(error); }
 function sendMessageToTabs(tabs, message) { for (let tab of tabs) { if (message === "disable") { browser.tabs.sendMessage(tab.id, {message: "styles disabled"}).then(response => {  }).catch(onError); } else if (message === "enable") { browser.tabs.sendMessage(tab.id, {message: "styles enabled"}).then(response => {  }).catch(onError); } else if (message === "update") { browser.tabs.sendMessage(tab.id, {message: "styles updated"}).then(response => {  }).catch(onError); } } }
-function checkStyleExists(b, item) { if (item.styles[b]) { $('#content').append('<div class="style" id="style_'+b+'" data-id="'+b+'"><input type="checkbox"><span class="name" title="'+item.styles[b].name+'">'+item.styles[b].name+'</span><button class="edit" data-id="'+b+'">Edit</button><button class="delete" data-id="'+b+'">Delete</button><div class="url_list"></div></div>'); } else { b++; checkStyleExists(b, item); } b++; return b; }
 function saveOptions() { 
   browser.storage.local.get().then(function(item) { 
     item.default.options = { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), line_count: $('#line-count').val(), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), soft_tabs: $('#soft-tabs').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), keybinding: $('#keybinding').val() }; 
@@ -22,9 +21,13 @@ $(function() {
     if (item.default.options.guide_indent === true) { $('#guide-indent').prop("checked", true); }
     if (item.default.options.show_invisible === true) { $('#show-invisible').prop("checked", true); }
     $('#keybinding').val(item.default.options.keybinding);
-    var styles = item.styles.length, b = 0; 
-    for (a = 0; a < styles; a = a) { if (a === styles) { break; } if (item.styles[b]) { a++; } b = checkStyleExists(b, item); }
-    styles_arr = item.styles;
+    for (a = 0; a < item.styles.length; a = a) { 
+      if (item.styles[b]) { 
+        a++; 
+        styles_arr.push(item.styles[b].id);
+        $('#content').append('<div class="style" id="style_'+styles_arr[b]+'" data-id="'+styles_arr[b]+'"><input type="checkbox"><span class="name" title="'+item.styles[b].name+'">'+item.styles[b].name+'</span><button class="edit" data-id="'+styles_arr[b]+'">Edit</button><button class="delete" data-id="'+styles_arr[b]+'">Delete</button><div class="url_list"></div></div>'); 
+      }
+    }
   });
   $('#write-new').click(function() { window.location.href = "edit.html?style=new"; });
   $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });  

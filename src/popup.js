@@ -8,8 +8,6 @@ function addStylesToList(y, styles_status, applicable_styles) { var currentStatu
 function loadStyles(currentURL) {
   var applicable_styles = {}, styles_status = {}, y = 0;
   browser.storage.local.get(function(item) {
-    if (!item.default || !item.default.name || !item.default.disabled || !item.default.blocks) { browser.storage.local.set({ default: { name: "new style", disabled: false, blocks: [ { code: "", urls: [ { address: "", type: "" } ] } ] } }).then(onDone, onError); default_style = item.default; }
-    if (!item.default.options) { item.default.options = { tab_size: "2", font_size: "11", line_count: "15", autocomplete: true, error_marker: true, soft_tabs: true, guide_indent: false, show_invisible: false, keybinding: "default" }; browser.storage.local.set(item).then(onDone, onError); default_style = item.default; }
     var styles = item.styles.length;
     for (var b = 0; b < styles; b++) {
       var blocks = item.styles[b].length;
@@ -40,9 +38,9 @@ $(function() {
   $('img, label').click(function() { $('#disable').click(); });
   $('#manage').click(function() { browser.tabs.create({ url: "manage.html" }).then(onDone, onError); window.close(); });
   $('#details').click(function() { chrome.runtime.openOptionsPage(); window.close(); });
-  $('#url').prop('href', browser.extension.getURL("src/edit.html?new=url&target=")+currentURL);
-  $('#domain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL));
-  $('#subdomain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL, true));
+  $('#url').prop('href', browser.extension.getURL("src/edit.html?style=new&type=url&target=")+currentURL);
+  $('#domain').prop('href', browser.extension.getURL("src/edit.html?style=new&type=domain&target=")+getDomain(currentURL));
+  $('#subdomain').prop('href', browser.extension.getURL("src/edit.html?style=new&type=domain&target=")+getDomain(currentURL, true));
   $(document).on('change', '.check', function() { var currentStyle = $(this).parent().data('id'), value; if (currentStyle === undefined) { return false; } browser.storage.local.get(function(item) { item.styles[currentStyle].disabled = ($(this).is(':checked') === "true"); browser.storage.local.set(item).then(onDone, onError); }); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); });
   $(document).on('click', '.edit', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
   $(document).on('click', '#url', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });

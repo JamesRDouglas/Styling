@@ -5,11 +5,19 @@ function getDomain(url, subdomain) { subdomain = subdomain || false; url = url.r
 function applyStyles(element) { if (document.body) { document.getElementsByTagName('html')[0].appendChild(element); } else { setTimeout(function() { applyStyles(element); }, 10); } }
 function updateStyles() {
   browser.storage.local.get(function(item) {
-    var default_style = item.default;
+    var default_style = item.default, styles_arr = [], newstyle_id;
     if (!item.disabled) { browser.storage.local.set({ disabled: false }).then(onDone, onError); }
-    if (!item.default || !item.default.name || !item.default.disabled || !item.default.blocks) { browser.storage.local.set({ default: { name: "new style", disabled: false, blocks: [ { code: "", urls: [ { address: "", type: "" } ] } ] } }).then(onDone, onError); default_style = item.default; }
-    if (!item.default.options) { item.default.options = { tab_size: "2", font_size: "11", line_count: "15", autocomplete: true, error_marker: true, soft_tabs: true, guide_indent: false, show_invisible: false, keybinding: "default" }; browser.storage.local.set(item).then(onDone, onError); default_style = item.default; }
+    for (a = 0; a < item.styles.length; a++) { styles_arr.push(item.styles[a].id); }
+    if (styles_arr.indexOf(b)) { item.styles[(item.styles.length-1)].id = b; styles_arr = b; }
     if (!item.styles[0]) { item.styles[0] = default_style; browser.storage.local.set(item).then(onDone, onError); }
+
+    if (item.styles[0].id !== "1" && styles_arr.indexOf("1") === -1) { 
+      item.styles[0] = default_style; item.styles[0].id = "1"; browser.storage.local.set(item).then(onDone, onError); 
+    } else if (item.styles[0].id !== "1" && styles_arr.indexOf("1") !== -1) { 
+      for (b = 0; b > -1; b++) { if (!styles_arr.indexOf(b)) { item.styles[(item.styles.length-1)].id = b; newstyle_id = b; break; } }
+      item.styles[0] = default_style; item.styles[styles_arr.indexOf("1")].id = newstyle_id; item.styles[0].id = "1"; browser.storage.local.set(item).then(onDone, onError); 
+    }
+
     for (var a = 0; a < document.getElementsByClassName('styling').length; a++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[a]); }
     var styles = item.styles.length;
     for (var b = 0; b < styles; b++) {

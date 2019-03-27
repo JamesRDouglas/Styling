@@ -6,12 +6,23 @@ function saveOptions() { var style_id = new URLSearchParams(window.location.sear
 function aceinit() { ace.config.set('loadWorkerFromBlob', false); var e = ace.edit(this); ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/searchbox"); e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, navigateWithinSoftTabs: true, theme: "ace/theme/crimson_editor", useSoftTabs: $('#soft-tabs').prop('checked'), minLines: $('#line-count').val(), maxLines: $('#line-count').val(), displayIndentGuides: $('#guide-indent').prop('checked'), showInvisibles: $('#show-invisible').prop('checked'), tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useWorker: $('#error-marker').prop('checked'), mode: "ace/mode/css" }); if ($('#keybinding').val() !== "default") { e.setKeyboardHandler("ace/keyboard/"+$('#keybinding').val()); } e.resize(); return e; }
 $(function() {
   browser.storage.local.get().then(function(item) { 
-    if (!item.default || !item.default.name || !item.default.disabled || !item.default.blocks) { browser.storage.local.set({ default: { name: "new style", disabled: false, blocks: [ { code: "", urls: [ { address: "", type: "" } ] } ] } }).then(onDone, onError); default_style = item.default; }
-    if (!item.default.options) { item.default.options = { tab_size: "2", font_size: "11", line_count: "15", autocomplete: true, error_marker: true, soft_tabs: true, guide_indent: false, show_invisible: false, keybinding: "default" }; browser.storage.local.set(item).then(onDone, onError); default_style = item.default; }
-    var default_style = item.default; new_target = new URLSearchParams(window.location.search).get('new'), new_type = new URLSearchParams(window.location.search).get('type'), style_id = new URLSearchParams(window.location.search).get('style');
-    if (new_target && new_type && typeof new_target === "string" && typeof new_type === "string") { item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+newstyle_id; }
-    if (!style_id) { window.location = 'edit.html?style=0'; }
-    if (style_id === "new") { item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+(item.styles.length-1); }
+    var default_style = item.default, style_id = new URLSearchParams(window.location.search).get('style'), style_type = new URLSearchParams(window.location.search).get('type'), style_target = new URLSearchParams(window.location.search).get('target');
+    if (!style_id) { window.location = 'edit.html?style=1'; }
+    if (style_id === "new") { 
+      if (style_type && style_target && typeof style_type === "string" && typeof style_target === "string") { 
+        item.styles.push(default_style);
+        var styles_arr = [], newstyle_id;
+        for (a = 0; a < item.styles.length; a++) { styles_arr.push(item.styles[a].id); }
+        for (b = 0; b > -1; b++) { if (!styles_arr.indexOf(b)) { item.styles[(item.styles.length-1)].id = b; newstyle_id = b; break; } }
+        browser.storage.local.set(item).then(onDone, onError); 
+        window.location = 'edit.html?style='+newstyle_id; 
+      } else {
+        item.styles.push(default_style); browser.storage.local.set(item).then(onDone, onError); window.location = 'edit.html?style='+(item.styles.length-1);
+      } 
+    }
+    var styles_arr = [];
+    for (a = 0; a < item.styles.length; a++) { styles_arr.push(item.styles[a].id); }
+    style_id = styles_arr.indexOf(style_id);
     if (!item.styles[style_id].options) { item.styles[style_id].options = default_style.options; browser.storage.local.set(item).then(onDone, onError); }
     if (item.disabled === true) { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     $('#style-name').val(item.styles[style_id].name);

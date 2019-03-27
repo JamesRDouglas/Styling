@@ -12,7 +12,7 @@ function updateStyles() {
     if (!item.styling_1) { browser.storage.local.set({ styling_1: { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options } }).then(onDone, onError); }
     for (var a = 0; a < document.getElementsByClassName('styling').length; a++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[a]); }
     var styles = item.styles.length;
-    for (var b = 1; b <= styles; b++) {
+    for (var b = 1; b < styles; b++) {
       if (item.styles[b] && item.styles[b].disabled === "false" && item.disabled === "false") {
         var blocks = objectLength(item.styles[b]) - 2;
         for (var c = 1; c <= blocks; c++) {

@@ -27,9 +27,10 @@ function loadStyles(currentURL) {
   var applicable_styles = {}, styles_status = {}, y = 1;
   browser.storage.local.get(function(item) {
     var styles = item.styles.length;
-    for (var b = 1; b <= styles; b++) {
+    for (var b = 0; b < styles; b++) {
       var blocks = objectLength(item.styles[b]);
-      $.extend(true, styles_status, { [b]: item.styles[b].disabled });
+      if (item.styles[b].disabled === "false") { status = "enabled"; } else { status = "disabled"; }
+      $.extend(true, styles_status, { [b]: status });
       block:
       for (var c = 1; c <= blocks; c++) {
         var urls = (objectLength(item.styles[b]["block_"+c]) - 1) / 2;

@@ -29,9 +29,9 @@ $(function() {
   $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });
   $(document).on('click', '.style > input, .url_list', function(e) { e.stopPropagation(); });
   $(document).on('click', '.check', function() {
-    var style_id = $(this).nextAll().eq(2).data('id');
+    var style_id = $(this).nextAll().eq(2).data('id'), isChecked = $(this).is(':checked');
       browser.storage.local.get(function(item) {
-        if ($(this).is(':checked')) {
+        if (isChecked) {
           item.styles[style_id].disabled = false;
           browser.storage.local.set(item).then(onDone, onError);
           browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);

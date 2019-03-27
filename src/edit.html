@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="/images/Styling.ico" id="favicon">
+    <title>Edit style</title>
+    <style>
+      @font-face { font-family: 'Roboto'; src: url('../Roboto-Light.ttf') format('truetype'); }
+      body { padding: 0; margin: 0; box-sizing: border-box; height: 100%; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; background-color: #EFEFEF; }
+      select { margin-left: 5px; width: 135px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: 118px 6px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
+      select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
+      button { padding: 2px 6px; text-align: center; }
+
+      #sidebar { width: 270px; height: 100vh; position: fixed; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 0.8em 1.1em; background-color: white; }
+      #sidebar #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; margin-top: 10px; }
+      #sidebar #style-name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
+      #sidebar summary { font-size: 1.17em; font-weight: bold; margin-bottom: 1em; cursor: pointer; -moz-user-select: none; }
+      #sidebar h3.placeholder { display: none; }
+      #sidebar section.small-screen { display: inline-block; }
+
+      #content { width: calc(100vw - 270px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1em 2em; }
+      #content div.block:first-of-type > span:first-of-type, div.block:first-of-type > button.raise_block, div.block:last-of-type > button.lower_block { display: none; }
+      #content div.block:only-child .remove_block { display: none; } 
+      #content div.block:last-of-type { margin-bottom: 25vh; }
+      #content div.code { width: 100%; height: 200px; box-shadow: 0 0 0 1px lightgrey; margin-top: 5px; }
+      #content div.code.ace_focus { box-shadow: 0 0 2px 2px lightblue; }
+      #content div.ace_hidden-cursors { display: none; }
+      #content section.target { display: flex; margin: 5px 0 3px 0; }
+      #content section.target:not(:first-of-type) > span { visibility: hidden; }
+      #content div.url-container { flex-grow: 1; display: flex; flex-wrap: wrap; }
+      #content input.url { padding: 2px 5px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; flex-grow: 1; margin-left: 2px; }
+      #content input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
+      @media only screen and (max-width: 840px) {
+        #sidebar { height: auto; width: 100vw; overflow: hidden; border-right: none; border-bottom: 1px dashed grey; padding: 0.5em 0; }
+        #sidebar details:not([open]) { margin-bottom: 2.5em; }
+        #sidebar summary { margin: 0 0 5px 0; position: absolute; left: 1em; }
+        #sidebar h3.placeholder { display: block; visibility: hidden; margin: 0; }
+        #sidebar > h1, #sidebar > br:first-of-type, #sidebar .hide-small-screen { display: none; }
+        #sidebar div.small-screen-top { width: calc(100vw - 2.2em); display: flex; flex-wrap: wrap; margin: 0.6em 1.1em; }
+        #sidebar div.small-screen-top > div { display: flex; flex-grow: 1; margin-right: 5px !important; }
+        #sidebar div.small-screen-top > div > #style-name { flex-grow: 1; margin-top: 0; }
+        #sidebar div.small-screen-top > #save { margin-left: 10px; }
+        #sidebar div.small-screen-top > #enabled { margin-bottom: auto !important }
+        #sidebar section.small-screen:nth-of-type(1), #sidebar section.small-screen:nth-of-type(3) { width: calc(35vw - 2.2em); float: left; margin: 0 1.1em; }
+        #sidebar section.small-screen:nth-of-type(2) { width: calc(30vw - 2.2em); float: left; margin: 0 1.1em; }
+        #content { top: 169px; left: 0; width: 100vw; position: fixed; overflow-x: scroll; }
+      }
+      @media only screen and (max-width: 760px) {
+        #sidebar section.small-screen:nth-of-type(1) { width: calc(100vw / 3); float: left; margin: 0 0 0 1.1em; }
+        #sidebar section.small-screen:nth-of-type(2) { width: calc(calc(100vw / 3) - 2.2em); float: left; margin: 0; }
+        #sidebar section.small-screen:nth-of-type(3) { width: calc(100vw / 3); float: left; margin: 0 1.1em 0 0; }
+      }
+    </style>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="beautify-css-1.8.9.min.js"></script>
+    <script src="ace-1.4.3/ace.js"></script>
+    <script src="ace-1.4.3/mode-css.js"></script>
+    <script src="ace-1.4.3/ext-language_tools.js"></script>
+  </head>
+  <body>
+    <div id="sidebar">
+      <h1 style="padding: 0; margin: 0; font-size: 1.6em; width: 100%;">Edit style</h1>
+      <div class="small-screen-top">
+        <div style="margin: 0; display: inline-block; padding: 0;"><input type="text" id="style-name" placeholder="Enter a name"></div>
+        <input type="checkbox" id="enabled" style="margin-bottom: 10px;"> Enabled
+        <br>
+        <button id="save">Save</button>
+        <button id="beautify">Beautify</button>
+        <button id="back">Back to manage</button>
+      </div>
+      <br>
+      <details open>
+        <summary>Options</summary>
+        <section class="small-screen">
+          <h3 class="placeholder" style="margin-bottom: 5px;">Options</h3>
+          Line count: <input type="number" id="line-count" class="options"><br style="margin-bottom: 5px;">
+          Tab size: <input type="number" id="tab-size" class="options"><br style="margin-bottom: 5px;">
+          Font size: <input type="number" id="font-size" class="options"><br style="margin-bottom: 7px;">
+        </section>
+        <section class="small-screen">
+          <h3 class="placeholder">Options</h3>
+          <input type="checkbox" id="autocomplete" class="options"> Autocomplete<br>
+          <input type="checkbox" id="error-marker" class="options"> Syntax validation<br>
+          <input type="checkbox" id="soft-tabs" class="options"> Use soft tabs<br>
+        </section>
+        <section class="small-screen">
+          <h3 class="placeholder">Options</h3>
+          <input type="checkbox" id="guide-indent" class="options"> Show indent guides<br>
+          <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br style="margin-bottom: 7px;">
+          Keybinding: 
+          <select style="width: 135px; background-position: 118px 6px;" id="keybinding" class="options">
+            <option value="default">Default</option>
+            <option value="vim">Vim</option>
+            <option value="emacs">Emacs</option>
+          </select>
+        </section>
+      </details>
+    </div>
+    <div id="content">
+      <div class="block" id="block_1">
+        <span><br><hr><br></span>
+        Code block <span>1</span><br>
+        <div class="code"></div>
+        <section class="target">
+          <span>Applies to: </span>
+          <select>
+            <option value="url">URL</option>
+            <option value="starting">URLs starting with</option>
+            <option value="domain">URLs on the domain</option>
+            <option value="everything">Everything</option>
+          </select>
+          <input class="url"><button class="add_target">Add</button><button class="remove_target">Remove</button><br>
+        </section>
+        <button class="add_block">Add new section</button>
+        <button class="remove_block">Remove section</button>
+        <button class="raise_block">&uarr;</button>
+        <button class="lower_block">&darr;</button>
+        <button class="clone_block">Clone</button>
+        <button class="beautify_block">Beautify</button>
+      </div>
+    </div>
+    <!--<script src="inject.js"></script>-->
+    <script src="edit.js"></script>
+  </body>
+</html>

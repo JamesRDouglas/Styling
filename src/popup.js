@@ -1,20 +1,13 @@
-browser.storage.local.get(function(item) { if (item.disabled == "true") { $('img').prop("src", "../images/StylingDisabled.png"); $('input[type=checkbox]').prop("checked", true); } else { $('img').prop("src", "../images/Styling.png");  $('input[type=checkbox]').prop("checked", false); } });
+browser.storage.local.get(function(item) {
+  if (item.disabled == "true") { $('img').prop("src", "../images/StylingDisabled.png"); $('input[type=checkbox]').prop("checked", true);
+  } else { $('img').prop("src", "../images/Styling.png");  $('input[type=checkbox]').prop("checked", false); }  
+});
 function onDone(item) { }
 function onError(error) { console.log(error); }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function sendMessageToTabs(tabs, message) { for (let tab of tabs) { if (message === "disable") { browser.tabs.sendMessage(tab.id, {message: "styles disabled"}).then(response => {  }).catch(onError); } else if (message === "enable") { browser.tabs.sendMessage(tab.id, {message: "styles enabled"}).then(response => {  }).catch(onError); } else if (message === "update") { browser.tabs.sendMessage(tab.id, {message: "styles updated"}).then(response => {  }).catch(onError); } } }
 function getDomain(url, subdomain) { subdomain = subdomain || false; url = url.replace(/(https?:\/\/)?(www.)?/i, ''); if (!subdomain) { url = url.split('.').slice(url.length - 2).join('.'); } if (url.indexOf('/') !== -1) { return url.split('/')[0]; } return url; }
-function addStylesToList(y, styles_status, applicable_styles) { 
-  var currentStatus = ""; 
-  if (styles_status[y] === "enabled") { currentStatus = " checked"; } 
-  if (applicable_styles[y]) { 
-    $('#applicable-styles').append('<div data-id="'+y+'"><input class="check" type="checkbox"'+currentStatus+'><span>'+applicable_styles[y]+'</span><a href="edit.html?style='+y+'" class="edit" title="Edit style"><i class="far fa-edit"></i></a><a href="#" class="delete" title="Not implemented"><i class="far fa-trash-alt"></i></a></div>'); 
-  } else { 
-    y++; 
-    addStylesToList(y, styles_status, applicable_styles); 
-  } 
-  y++; return y; 
-}
+function addStylesToList(y, styles_status, applicable_styles) { var currentStatus = ""; if (styles_status[y] === "enabled") { currentStatus = " checked"; } if (applicable_styles[y]) { $('#applicable-styles').append('<div data-id="'+y+'"><input class="check" type="checkbox"'+currentStatus+'><span>'+applicable_styles[y]+'</span><a href="edit.html?style='+y+'" class="edit" title="Edit style"><i class="far fa-edit"></i></a><a href="#" class="delete" title="Not implemented"><i class="far fa-trash-alt"></i></a></div>'); } else { y++; addStylesToList(y, styles_status, applicable_styles); } y++; return y; }
 function loadStyles(currentURL) {
   var applicable_styles = {}, styles_status = {}, y = 0;
   browser.storage.local.get(function(item) {
@@ -27,7 +20,7 @@ function loadStyles(currentURL) {
       for (var c = 1; c <= blocks; c++) {
         var urls = (objectLength(item.styles[b]["block_"+c]) - 1) / 2;
         for (var d = 1; d <= urls; d++) { 
-          if (item.styles[b].block_1["url_"+d] && ((item.styles[b]["block_"+c]["url_"+d+"_type"] === "url" && item.styles[b]["block_"+c]["url_"+d] === currentURL) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "starting" && currentURL.startsWith(item.styles[b]["block_"+c]["url_"+d])) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "domain" && item.styles[b]["block_"+c]["url_"+d] === getDomain(currentURL)) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "everything"))) {
+          if (item.styles[b].block_1["url_"+d] != undefined && ((item.styles[b]["block_"+c]["url_"+d+"_type"] == "url" && item.styles[b]["block_"+c]["url_"+d] == currentURL) || (item.styles[b]["block_"+c]["url_"+d+"_type"] == "starting" && currentURL.startsWith(item.styles[b]["block_"+c]["url_"+d])) || (item.styles[b]["block_"+c]["url_"+d+"_type"] == "domain" && item.styles[b]["block_"+c]["url_"+d] == getDomain(currentURL)) || (item.styles[b]["block_"+c]["url_"+d+"_type"] == "everything"))) {
             $.extend(true, applicable_styles, { [b]: item.styles[b].name });
             break block;
           }
@@ -50,13 +43,14 @@ $(function() {
   $('#domain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL));
   $('#subdomain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL, true));
   $(document).on('click', '.check', function() {  
+    alert('hi');
     var currentStyle = $(this).parent().data('id'); 
     if (currentStyle === undefined) { return false; } 
     browser.storage.local.get(function(item) { 
-      if ($(this).is(':checked')) { 
-        item.styles[currentStyle].disabled = "false"; 
-      } else { 
-        item.styles[currentStyle].disabled = "true"; 
+      if ($(this).is(':checked')) {
+        item.styles[currentStyle].disabled = "false";
+      } else {
+        item.styles[currentStyle].disabled = "true";
       }
       browser.storage.local.set({ styles: item.styles }).then(onDone, onError); });
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 

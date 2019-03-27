@@ -1,6 +1,6 @@
 function onChange(item) {}
 function onError(error) { console.log(`${error}`); }
-function sendMessageToTabs(tabs) { for (let tab of tabs) { browser.tabs.sendMessage(tab.id, { message: "styles updated" }).then(response => {}).catch(onError); } }
+function sendMessageToTabs(tabs, message) { for (let tab of tabs) { if (message === "disable") { browser.tabs.sendMessage(tab.id, {message: "styles disabled"}).then(response => {  }).catch(onError); } else if (message === "enable") { browser.tabs.sendMessage(tab.id, {message: "styles enabled"}).then(response => {  }).catch(onError); } else if (message === "update") { browser.tabs.sendMessage(tab.id, {message: "styles updated"}).then(response => {  }).catch(onError); } } }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function updateBlocks() { for (var a = 1; a <= $('.block').length; a++) { $('.block:nth-of-type('+a+')').prop('id', 'block_'+a).children('span:nth-of-type(2)').text(a); $('.block:nth-of-type('+a+')').find('div.code').prop('id', 'code_'+a); } $('div.code').each(function(){ aceinit.call(this); }); }
 function saveOptions() {
@@ -12,6 +12,7 @@ function saveOptions() {
   $('div.code').each(function(){ aceinit.call(this); });
 }
 function aceinit() {
+  ace.config.set('loadWorkerFromBlob', false);
   var e = ace.edit(this);
   ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/searchbox");
   e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, navigateWithinSoftTabs: true, theme: "ace/theme/crimson_editor", useSoftTabs: $('#soft-tabs').prop('checked'), minLines: $('#line-count').val(), maxLines: $('#line-count').val(), displayIndentGuides: $('#guide-indent').prop('checked'), showInvisibles: $('#show-invisible').prop('checked'), tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useWorker: $('#error-marker').prop('checked'), mode: "ace/mode/css" });
@@ -20,23 +21,26 @@ function aceinit() {
   return e;
 }
 $(function() {
-  var new_target = new URLSearchParams(window.location.search).get('new');
-  var new_type = new URLSearchParams(window.location.search).get('type');
-  var style_id = new URLSearchParams(window.location.search).get('style');
-  if (new_target && new_type && typeof new_target === "string" && typeof new_type === "string") { 
-    var newstyle_name, newstyle_id;
-    for (a = 1; a = a; a++) { if (styles_arr.indexOf(a) === -1) { newstyle_name = "styling_"+a; break; } }
-    $.extend(true, item, { [newstyle_name]: { name: "new style", disabled: "false", block_1: { code: "", url_1: [new_target], url_1_type: [new_type] }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", keybinding: "default" } } });
-    browser.storage.local.set(item).then(onChange, onError);
-    window.location = 'edit.html?style='+newstyle_id;
-  }
-  if (!style_id) { window.location = 'edit.html?style=1'; }
   browser.storage.local.get().then(function(item) { 
+    var options = item.options; new_target = new URLSearchParams(window.location.search).get('new'), new_type = new URLSearchParams(window.location.search).get('type'), style_id = new URLSearchParams(window.location.search).get('style');
+    if (new_target && new_type && typeof new_target === "string" && typeof new_type === "string") { 
+      var newstyle_name, newstyle_id;
+      for (a = 1; a = a; a++) { if (styles_arr.indexOf(a) === -1) { newstyle_name = "styling_"+a; break; } }
+      $.extend(true, item, { [newstyle_name]: { name: "new style", disabled: "false", block_1: { code: "", url_1: [new_target], url_1_type: [new_type] }, options } });
+      browser.storage.local.set(item).then(onChange, onError);
+      window.location = 'edit.html?style='+newstyle_id;
+    }
+    if (!style_id) { window.location = 'edit.html?style=1'; }
     if (item["styling_"+style_id] === undefined || typeof style_id === "number") {
       var style_name = "styling_"+style_id;
-      $.extend(true, item, { [style_name]: { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options: { tab_size: "2", font_size: "11", line_count: "15", autocomplete: "true", error_marker: "true", soft_tabs: "true", guide_indent: "false", show_invisible: "false", keybinding: "default" } } });
+      $.extend(true, item, { [style_name]: { name: "new style", disabled: "false", block_1: { code: "", url_1: "", url_1_type: "url" }, options } });
       browser.storage.local.set(item).then(onChange, onError);
       window.location = 'edit.html?style='+style_id;
+    }
+    if (!item["styling_"+style_id].options) {
+      var style_name = "styling_"+style_id;
+      $.extend(true, item, { [style_name]: { options } });
+      browser.storage.local.set(item).then(onChange, onError);
     }
     if (item.disabled === "true") { $('#enabled').prop('disabled', true); } else { $('#enabled').prop('disabled', false); }
     if (item["styling_"+style_id] != undefined) {
@@ -67,8 +71,8 @@ $(function() {
     }
     $('#enabled').click(function() { 
       var code = item, currentStyle = 'styling_'+style_id;
-      if ($('#enabled').is(':checked')) { $.extend(true, code, { [currentStyle]: { disabled: "false" } }); browser.storage.local.set(code).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
-      } else { $.extend(true, code, { [currentStyle]: { disabled: "true" } }); browser.storage.local.set(code).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError); } 
+      if ($('#enabled').is(':checked')) { $.extend(true, code, { [currentStyle]: { disabled: "false" } }); browser.storage.local.set(code).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"enabled"); }).catch(onError);
+      } else { $.extend(true, code, { [currentStyle]: { disabled: "true" } }); browser.storage.local.set(code).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"disabled"); }).catch(onError); } 
     });
   });
   updateBlocks();
@@ -77,7 +81,7 @@ $(function() {
       browser.storage.local.get().then(function(item) {
         var currentStyle = 'styling_'+style_id;
         delete item[currentStyle];
-        $.extend(true, item, { [currentStyle]: { name: $('#style-name').val(),  options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), line_count: $('#line-count').val(), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), soft_tabs: $('#soft-tabs').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), keybinding: $('#keybinding').val() } } });
+        $.extend(true, item, { [currentStyle]: { name: $('#style-name').val(), disabled: $('#enabled').prop('disabled'), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), line_count: $('#line-count').val(), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), soft_tabs: $('#soft-tabs').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), keybinding: $('#keybinding').val() } } });
         for (var c = 1; c <= $('div.block').length; c++) {
           var blockName = "block_"+c, urls = $('div.block:nth-of-type('+c+')').children('section').length;
           $.extend(true, item, { [currentStyle]: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } });
@@ -88,7 +92,7 @@ $(function() {
         }
         browser.storage.local.set(item).then(onChange, onError);
       });
-      browser.tabs.query({ currentWindow: true }).then(sendMessageToTabs).catch(onError);
+      browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
     } else { alert('Please enter a name'); return false; }
   });
   $('#beautify').click(function() { $('div.code').each(function(){ ace.edit(this).setValue(css_beautify(ace.edit(this).getValue(), { 'indent_size': 2, 'selector_separator_newline': false, 'space_around_selector_separator': true })); }); });
@@ -104,15 +108,6 @@ $(function() {
   $(document).on('change', 'select', function() { if ($(this).val() == "everything") { $(this).next('input.url').hide(); $(this).parent().addClass('current').parent().children('div.target:not(.current)').remove(); } else { $(this).next('input.url').show(); } });
   $(document).on('change', '.options', function() { saveOptions(); });
 });
-browser.runtime.onMessage.addListener(function(message) { if (message.message === "all styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "all styles enabled") { $('#enabled').prop('disabled', false); } });
-
-
-
-
-
-
-
-
-
+browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "styles enabled") { $('#enabled').prop('disabled', false); } });
 
 

@@ -1,33 +1,61 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
     <link rel="shortcut icon" href="/images/Styling.ico" id="favicon">
     <title>Manage styles</title>
     <style>
       @font-face { font-family: 'Roboto'; src: url('../Roboto-Light.ttf') format('truetype'); }
       body { padding: 0; margin: 0; box-sizing: border-box; height: 100%; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; background-color: #EFEFEF; }
+      select { margin-left: 5px; width: 135px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: 118px 6px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
+      select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       button { padding: 2px 6px; text-align: center; }
 
       #sidebar { width: 270px; height: 100vh; box-sizing: border-box; border-right: 1px dashed grey; position: fixed; left: 0; top: 0; background-color: white; padding: 0.8em 1.1em; }
       #sidebar h1 { padding: 0; margin: 0; font-size: 1.6em; width: 100%; }
-      #content { width: calc(100vw - 270px); height: 100vh; box-sizing: border-box; position: absolute; right: 0; top: 0; padding: 0; }
+      #sidebar summary { font-size: 1.17em; font-weight: bold; margin-bottom: 1em; cursor: pointer; -moz-user-select: none; }
+      #sidebar h3.placeholder { display: none; }
+      #sidebar section.small-screen { display: inline-block; }
 
-      .style { transition: all .2s; display: inline-grid; grid-template-columns: min-content 38% min-content min-content auto; grid-template-rows: auto; width: calc(calc(100vw - 270px) - 2em); padding: 1em; }
-      .style:nth-of-type(2n+1) { background-color: #e1e1e1; }
-      .style:nth-of-type(2n):last-child { border-bottom: 1px solid #e1e1e1; box-shadow: 0px 15px 10px -15px lightgray; }
-      .style:hover { box-shadow: 0 0 4px 1px gray !important; position: relative; cursor: pointer; }
-      .name { margin: 0 0.5em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+      #content { width: calc(100vw - 270px); height: 100vh; box-sizing: border-box; position: absolute; right: 0; top: 0; padding: 0; }
+      #content .style { transition: all .2s; display: inline-grid; grid-template-columns: min-content 38% min-content min-content auto; grid-template-rows: auto; width: calc(calc(100vw - 270px) - 2em); padding: 1em; }
+      #content .style:nth-of-type(2n+1) { background-color: #e1e1e1; }
+      #content .style:nth-of-type(2n):last-child { border-bottom: 1px solid #e1e1e1; box-shadow: 0px 15px 10px -15px lightgray; }
+      #content .style:hover { box-shadow: 0 0 4px 1px gray !important; position: relative; cursor: pointer; }
+      #content .name { margin: 0 0.5em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
     </style>
     <script src="jquery-3.3.1.min.js"></script>
   </head>
   <body>
     <div id="sidebar">
-      <h1>Installed Styles</h1>
-      <br>
-      <button id="write-new">Write new style</button>
-      <br>
-      <input type="checkbox" id="enabled"> Disable all styles
+      <h1>Installed Styles</h1><br>
+      <button id="write-new">Write new style</button><br>
+      <input type="checkbox" id="enabled"> Disable all styles<br><br>
+      <details open>
+        <summary>Default Style Options</summary>
+        <section class="small-screen">
+          <h3 class="placeholder" style="margin-bottom: 5px;">Options</h3>
+          Line count: <input type="number" id="line-count" class="options"><br style="margin-bottom: 5px;">
+          Tab size: <input type="number" id="tab-size" class="options"><br style="margin-bottom: 5px;">
+          Font size: <input type="number" id="font-size" class="options"><br style="margin-bottom: 7px;">
+        </section>
+        <section class="small-screen">
+          <h3 class="placeholder">Options</h3>
+          <input type="checkbox" id="autocomplete" class="options"> Autocomplete<br>
+          <input type="checkbox" id="error-marker" class="options" disabled title="This feature is not available right now"> Syntax validation<br>
+          <input type="checkbox" id="soft-tabs" class="options"> Use soft tabs<br>
+        </section>
+        <section class="small-screen">
+          <h3 class="placeholder">Options</h3>
+          <input type="checkbox" id="guide-indent" class="options"> Show indent guides<br>
+          <input type="checkbox" id="show-invisible" class="options"> Show invisible characters<br style="margin-bottom: 7px;">
+          Keybinding: 
+          <select style="width: 135px; background-position: 118px 6px;" id="keybinding" class="options">
+            <option value="default">Default</option>
+            <option value="vim">Vim</option>
+            <option value="emacs">Emacs</option>
+          </select>
+        </section>
+      </details>
     </div>
     <div id="content">
     </div>

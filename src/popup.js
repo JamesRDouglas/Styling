@@ -35,8 +35,8 @@ function loadStyles(currentURL) {
         }
       }
     }
-    for (x = 1; x <= active_styles.length; x = x) { 
-      if (x > active_styles.length) { break; }
+    for (x = 1; x <= objectLength(active_styles); x = x) { 
+      if (x > objectLength(active_styles)) { break; }
       if (item["styling_"+y]) { x++; }
       y = addStylesToList(y, styles_status, active_styles);
     }

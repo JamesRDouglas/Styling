@@ -58,10 +58,11 @@ $('#disable').change(function() {
 browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; loadStyles(currentURL); });
 $(function() {
   $('.check').click(function() { 
+    var currentStyle = 'styling_'+$(this).parent().data('id');
     browser.storage.local.get(function(item) {
-      var code = item, currentStyle = 'styling_'+$(this).parent().data('id');
-      if ($(this).is(':checked')) { $.extend(true, code, { [currentStyle]: { disabled: "false" } }); browser.storage.local.set(code).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
-      } else { $.extend(true, code, { [currentStyle]: { disabled: "true" } }); browser.storage.local.set(code).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } 
+      if (currentStyles === "styling_undefined") { return false; }
+      if ($(this).is(':checked')) { $.extend(true, item, { [currentStyle]: { disabled: "false" } }); browser.storage.local.set(item).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
+      } else { $.extend(true, item, { [currentStyle]: { disabled: "true" } }); browser.storage.local.set(item).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } 
     });
   });
   $('img, label').click(function() { $('#disable').click(); });

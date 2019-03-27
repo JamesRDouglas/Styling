@@ -52,18 +52,13 @@ $(function() {
   $('#url').prop('href', browser.extension.getURL("src/edit.html?new=url&target=")+currentURL);
   $('#domain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL));
   $('#subdomain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL, true));
-  $(document).on('click', '.check', function() {  
-    var currentStyle = $(this).parent().data('id'); 
+  $(document).on('change', '.check', function() { 
+    var currentStyle = $(this).parent().data('id'), value; 
     if (currentStyle === undefined) { return false; } 
-    browser.storage.local.get(function(item) { 
-      if ($(this).is(':checked')) { 
-        item.styles[currentStyle].disabled = "false"; 
-      } else { 
-        item.styles[currentStyle].disabled = "true"; 
-      }
-      browser.storage.local.set(item).then(onDone, onError); });
-      browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
-    });
+    if ($(this).is(':checked')) { value = "false"; } else { value = "true"; }
+    browser.storage.local.get(function(item) { item.styles[currentStyle].disabled = value; browser.storage.local.set(item).then(onDone, onError); });
+    browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
+  });
   $(document).on('click', '.edit', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
   $(document).on('click', '#url', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
   $(document).on('click', '#domain', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });

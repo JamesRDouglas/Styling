@@ -6,7 +6,7 @@ function saveOptions() { var style_id = new URLSearchParams(window.location.sear
 function aceinit() { ace.config.set('loadWorkerFromBlob', false); var e = ace.edit(this); ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/searchbox"); e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, navigateWithinSoftTabs: true, theme: "ace/theme/crimson_editor", useSoftTabs: $('#soft-tabs').prop('checked'), minLines: $('#line-count').val(), maxLines: $('#line-count').val(), displayIndentGuides: $('#guide-indent').prop('checked'), showInvisibles: $('#show-invisible').prop('checked'), tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useWorker: $('#error-marker').prop('checked'), mode: "ace/mode/css" }); if ($('#keybinding').val() !== "default") { e.setKeyboardHandler("ace/keyboard/"+$('#keybinding').val()); } e.resize(); return e; }
 $(function() {
   var style_id;
-  browser.storage.local.get().then(function(item) { 
+  browser.storage.local.get().then(function(item) {
     style_id = new URLSearchParams(window.location.search).get('style');
     var default_style = item.default, used_ids = [], styles_arr = [], style_type = new URLSearchParams(window.location.search).get('type'), style_target = new URLSearchParams(window.location.search).get('target');
     for (a = 0; a < item.styles.length; a++) { used_ids.push(item.styles[a].id); }
@@ -31,7 +31,7 @@ $(function() {
     for (b = 0; b < blocks; b++) {
       if (blocks > 1 && b > 0) { $('#content > .block:last-of-type > .add_block').click(); }
       var urls = item.styles[style_id].blocks[b].urls.length;
-      for (c = 0; c < urls; c++) { 
+      for (c = 0; c < urls; c++) {
         if (urls > 1 && c > 0) { $('body div.block:nth-of-type('+(b+1)+') section:last-of-type .add_target').click(); }
         if (item.styles[style_id].blocks[b].urls[c].address) { $('body .block:nth-of-type('+(b+1)+') section:nth-of-type('+(c+1)+') input.url').val(item.styles[style_id].blocks[b].urls[c].address); }
         if (item.styles[style_id].blocks[b].urls[c].type) { $('body .block:nth-of-type('+(b+1)+') section:nth-of-type('+(c+1)+') select').val(item.styles[style_id].blocks[b].urls[c].type); }
@@ -51,7 +51,7 @@ $(function() {
         for (c = 0; c < $('div.block').length; c++) {
           var urls = $('div.block:nth-of-type('+(c+1)+')').children('section').length, code = ace.edit("code_"+(c+1)).getValue().replace(/^|\s+$/g, '');
           item.styles[style_id].blocks.push({ code: code, urls: [] });
-          for (b = 0; b < urls; b++) { 
+          for (b = 0; b < urls; b++) {
             var address = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('input.url').val(), type = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('select').val();
             item.styles[style_id].blocks[c].urls.push({ address: address, type: type });
           }
@@ -68,11 +68,12 @@ $(function() {
   $(document).on('click', '.remove_block', function() { $(this).parent().remove(); updateBlocks(); });
   $(document).on('click', '.raise_block', function() { $(this).parent().insertBefore($(this).parent().prev()); updateBlocks(); });
   $(document).on('click', '.lower_block', function() { $(this).parent().insertAfter($(this).parent().next()); updateBlocks(); });
-  $(document).on('click', '.clone_block', function() { 
+  $(document).on('click', '.clone_block', function() {
     $(this).parent().find('.add_block').click();
-    $(this).parent().clone().children('section').insertAfter($(this).parent().children('.code')); 
-    ace.edit($(this).parent().next().find('code')).setValue(ace.edit($(this).parent().find('.code').getValue())); 
-    updateBlocks(); 
+    $(this).parent().next().find('section').remove();
+    $(this).parent().clone().children('section').insertAfter($(this).parent().next().children('.code'));
+    ace.edit($(this).parent().next().find('code')).setValue(ace.edit($(this).parent().find('.code').getValue()));
+    updateBlocks();
   });
   $(document).on('click', '.beautify_block', function() { ace.edit($(this).parent().find('div.code')[0]).setValue(css_beautify(ace.edit($(this).parent().find('div.code')[0]).getValue(), { 'indent_size': 2, 'selector_separator_newline': false, 'space_around_selector_separator': true })); });
   $(document).on('click', '.add_target', function() { $(this).parent().clone().find('select').val($(this).parent().find('select').val()).end().find('input.url').val('').end().insertAfter($(this).parent()); });
@@ -82,5 +83,3 @@ $(function() {
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "styles enabled") { $('#enabled').prop('disabled', false); } });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles updated") { browser.storage.local.get().then(function(item) { var style_id = new URLSearchParams(window.location.search).get('style'); if (item.styles[style_id].disabled === true) { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); } }); } });
-
-

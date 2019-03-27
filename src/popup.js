@@ -23,7 +23,7 @@ function loadStyles(currentURL) {
   browser.storage.local.get(function(item) {
     var styles = objectLength(item) - 2;
     for (var b = 1; b <= styles; b++) {
-      var styleTitle = "style_"+b+"_name", blocks = objectLength(item["styling_"+b]) - 2;
+      var styleTitle = "styling_"+b+"_name", blocks = objectLength(item["styling_"+b]) - 2;
       $.extend(true, styles_status, { [styleTitle]: item["styling_"+b].disabled });
       block:
       for (var c = 1; c <= blocks; c++) {

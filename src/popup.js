@@ -34,9 +34,9 @@ function loadStyles(currentURL) {
         }
       }
     }
-    for (x = 0; x < objectLength(applicable_styles); x = x) { 
-      if (applicable_styles[y]) { x++; }
-      y = addStylesToList(y, styles_status, applicable_styles); 
+    for (x = 0; x = x; x++) { 
+      y = addStylesToList(y, styles_status, applicable_styles);
+      if (y === objectLength(applicable_styles)) { break; }
     }
     if (objectLength(applicable_styles) === 0) { $('#applicable-styles').append('<i>No styles for this page</i>'); }
   });

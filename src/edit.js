@@ -72,7 +72,7 @@ $(function() {
     $(this).parent().find('.add_block').click();
     $(this).parent().next().find('section').remove();
     $(this).parent().clone().find('section').insertAfter($(this).parent().next().find('.code'));
-    var clonedText = ace.edit($(this).parent().next().find('.code')[0].id).getValue();
+    var clonedText = ace.edit($(this).parent().find('.code')[0].id).getValue();
     ace.edit($(this).parent().next().find('.code')[0].id).setValue(clonedText, -1);
     updateBlocks();
   });

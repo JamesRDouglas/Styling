@@ -19,7 +19,7 @@ $(function() {
     for (a = 0; a < styles; a = a) { if (a === styles) { break; } if (item.styles[b]) { a++; } b = checkStyleExists(b, item); }
     styles_arr = item.styles;
   });
-  $('#write-new').click(function() { for (a = 0; a = a; a++) { if (!styles_arr[a]) { window.location.href = "edit.html?style="+a; break; } } });
+  $('#write-new').click(function() { for (a = 0; a > -1; a++) { if (!styles_arr[a]) { window.location.href = "edit.html?style="+a; break; } } });
   $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });  
   $(document).on('click', '.style > input, .url_list', function(e) { e.stopPropagation(); });
   $(document).on('click', '.delete', function(e) { 

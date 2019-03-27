@@ -22,8 +22,9 @@ $(function() {
     if (item.default.options.soft_tabs === true) { $('#soft-tabs').prop("checked", true); }
     if (item.default.options.guide_indent === true) { $('#guide-indent').prop("checked", true); }
     if (item.default.options.show_invisible === true) { $('#show-invisible').prop("checked", true); }
+    if (item.styles[a].disabled === false) { var status = 'checked'; } else { var status = ''; }
     $('#keybinding').val(item.default.options.keybinding);
-    for (a = 0; a < item.styles.length; a = a) { if (item.styles[a]) { styles_arr.push(item.styles[a].id); $('#content').append('<div class="style" id="style_'+styles_arr[a]+'" data-id="'+styles_arr[a]+'"><input type="checkbox" class="check"><span class="name" title="'+item.styles[a].name+'">'+item.styles[a].name+'</span><button class="edit" data-id="'+styles_arr[a]+'">Edit</button><button class="delete" data-id="'+a+'">Delete</button><div class="url_list"></div></div>'); a++; } }
+    for (a = 0; a < item.styles.length; a = a) { if (item.styles[a]) { styles_arr.push(item.styles[a].id); $('#content').append('<div class="style" id="style_'+styles_arr[a]+'" data-id="'+styles_arr[a]+'"><input type="checkbox" class="check"'+status+'><span class="name" title="'+item.styles[a].name+'">'+item.styles[a].name+'</span><button class="edit" data-id="'+styles_arr[a]+'">Edit</button><button class="delete" data-id="'+a+'">Delete</button><div class="url_list"></div></div>'); a++; } }
   });
   $('#write-new').click(function() { window.location.href = "edit.html?style=new"; });
   $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });

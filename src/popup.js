@@ -1,7 +1,3 @@
-browser.storage.local.get(function(item) {
-  if (item.disabled == "true") { $('img').prop("src", "../images/StylingDisabled.png"); $('input[type=checkbox]').prop("checked", true);
-  } else { $('img').prop("src", "../images/Styling.png");  $('input[type=checkbox]').prop("checked", false); }  
-});
 function onDone(item) { }
 function onError(error) { console.log(error); }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
@@ -32,6 +28,7 @@ function loadStyles(currentURL) {
   });
 }
 var currentURL;
+browser.storage.local.get(function(item) { if (item.disabled == "true") { $('img').prop("src", "../images/StylingDisabled.png"); $('input[type=checkbox]').prop("checked", true); } else { $('img').prop("src", "../images/Styling.png");  $('input[type=checkbox]').prop("checked", false); } });
 $.getJSON('../manifest.json', function(data) { $('#version').text(data.version); });
 $('#disable').change(function() { if ($(this).is(':checked')) { $('img').prop("src", "../images/StylingDisabled.png"); browser.browserAction.setIcon({path: "../images/StylingDisabled.png"}); browser.storage.local.set({ disabled: "true" }).then(onDone, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"disable"); }).catch(onError); } else { $('img').prop("src", "../images/Styling.png"); browser.browserAction.setIcon({path: "../images/Styling.png"}); browser.storage.local.set({ disabled: "false" }).then(onDone, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"enable"); }).catch(onError); } });
 browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; loadStyles(currentURL); });
@@ -43,11 +40,14 @@ $(function() {
   $('#domain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL));
   $('#subdomain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL, true));
   $(document).on('click', '.check', function() {  
-    alert('hi');
     var currentStyle = $(this).parent().data('id'); 
     if (currentStyle === undefined) { return false; } 
     browser.storage.local.get(function(item) { 
-      if ($(this).is(':checked')) { item.styles[currentStyle].disabled = "false"; } else { item.styles[currentStyle].disabled = "true"; }
+      if ($(this).is(':checked')) { 
+        item.styles[currentStyle].disabled = "false"; 
+      } else { 
+        item.styles[currentStyle].disabled = "true"; 
+      }
       browser.storage.local.set({ styles: item.styles }).then(onDone, onError); });
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
     });

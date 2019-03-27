@@ -15,7 +15,7 @@ function addStylesToList(y, styles_status, applicable_styles) {
   y++; return y; 
 }
 function loadStyles(currentURL) {
-  var applicable_styles = {}, styles_status = {}, y = 0;
+  var applicable_styles = {}, styles_status = {}, y = 1;
   browser.storage.local.get(function(item) {
     var styles = item.styles.length;
     for (var b = 0; b < styles; b++) {

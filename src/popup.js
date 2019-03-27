@@ -43,15 +43,10 @@ $(function() {
   $('#domain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL));
   $('#subdomain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL, true));
   $(document).on('click', '.check', function() {  
-    alert('hi');
     var currentStyle = $(this).parent().data('id'); 
     if (currentStyle === undefined) { return false; } 
     browser.storage.local.get(function(item) { 
-      if ($(this).is(':checked')) {
-        item.styles[currentStyle].disabled = "false";
-      } else {
-        item.styles[currentStyle].disabled = "true";
-      }
+      item.styles[currentStyle].disabled = $(this).is(':checked').toString();
       browser.storage.local.set({ styles: item.styles }).then(onDone, onError); });
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
     });

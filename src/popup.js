@@ -39,12 +39,16 @@ $(function() {
     var currentStyle = 'styling_'+$(this).parent().data('id');
     if (currentStyle === "styling_undefined") { return false; }
     if ($(this).is(':checked')) { 
-      $.extend(true, item, { [currentStyle]: { disabled: "false" } }); 
-      browser.storage.local.set(item).then(onChange, onError); 
+      browser.storage.local.get(function(item) {
+        $.extend(true, item, { [currentStyle]: { disabled: "false" } }); 
+        browser.storage.local.set(item).then(onChange, onError); 
+      });
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
     } else { 
-      $.extend(true, item, { [currentStyle]: { disabled: "true" } }); 
-      browser.storage.local.set(item).then(onChange, onError); 
+      browser.storage.local.get(function(item) {
+        $.extend(true, item, { [currentStyle]: { disabled: "true" } }); 
+        browser.storage.local.set(item).then(onChange, onError); 
+      });
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
     } 
   });

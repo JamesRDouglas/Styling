@@ -4,7 +4,7 @@
     "author": "James Douglas",
     "description": "__MSG_description__",
     "manifest_version": 2,
-    "version": "0.10.43",
+    "version": "0.10.44",
     "icons": { "128": "images/Styling.png" },
     "options_ui": { "page": "src/options.html", "chrome_style": false },
     "default_locale": "en",

@@ -23,25 +23,19 @@ $(function() {
     if (item.default.options.guide_indent === true) { $('#guide-indent').prop("checked", true); }
     if (item.default.options.show_invisible === true) { $('#show-invisible').prop("checked", true); }
     $('#keybinding').val(item.default.options.keybinding);
-    for (a = 0; a < item.styles.length; a = a) { if (item.styles[a].disabled === false) { status = ' checked'; } else { status = ''; } if (item.styles[a]) { styles_arr.push(item.styles[a].id); $('#content').append('<div class="style" id="style_'+styles_arr[a]+'" data-id="'+styles_arr[a]+'"><input type="checkbox" class="check"'+status+'><span class="name" title="'+item.styles[a].name+'">'+item.styles[a].name+'</span><button class="edit" data-id="'+styles_arr[a]+'">Edit</button><button class="delete" data-id="'+a+'">Delete</button><div class="url_list"></div></div>'); a++; } }
+    for (a = 0; a < item.styles.length; a = a) {
+      if (item.styles[a].disabled === false) { status = ' checked'; } else { status = ''; }
+      if (item.styles[a]) {
+        styles_arr.push(item.styles[a].id);
+        $('#content').append('<div class="style" id="style_'+styles_arr[a]+'" data-id="'+styles_arr[a]+'"><input type="checkbox" class="check"'+status+'><span class="name" title="'+item.styles[a].name+'">'+item.styles[a].name+'</span><button class="edit" data-id="'+styles_arr[a]+'">Edit</button><button class="delete" data-id="'+a+'">Delete</button><div class="url_list"></div></div>');
+        a++;
+      }
+    }
   });
   $('#write-new').click(function() { window.location.href = "edit.html?style=new"; });
   $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });
   $(document).on('click', '.style > input, .url_list', function(e) { e.stopPropagation(); });
-  $(document).on('click', '.check', function() {
-    var style_id = $(this).nextAll().eq(2).data('id'), isChecked = $(this).is(':checked');
-      browser.storage.local.get(function(item) {
-        if (isChecked) {
-          item.styles[style_id].disabled = false;
-          browser.storage.local.set(item).then(onDone, onError);
-          browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
-        } else {
-          item.styles[style_id].disabled = true;
-          browser.storage.local.set(item).then(onDone, onError);
-          browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
-        }
-      });
-  });
+  $(document).on('click', '.check', function() { var style_id = $(this).nextAll().eq(2).data('id'), isChecked = $(this).is(':checked'); browser.storage.local.get(function(item) { if (isChecked) { item.styles[style_id].disabled = false; browser.storage.local.set(item).then(onDone, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } else { item.styles[style_id].disabled = true; browser.storage.local.set(item).then(onDone, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } }); });
   $(document).on('click', '.delete', function(e) { e.stopPropagation(); if (confirm('Are you sure you want to delete "'+$(this).parent().find('.name').prop("title")+'"?')) { $(this).parent().remove(); var style_id = $(this).data("id"); browser.storage.local.get(function(item) { item.styles.splice(style_id,1); browser.storage.local.set(item).then(onDone, onError); }); } });
   $(document).on('change', '.options', function() { saveOptions(); });
 });

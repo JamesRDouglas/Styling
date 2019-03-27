@@ -9,7 +9,7 @@ function sendMessageToTabs(tabs, message) { for (let tab of tabs) { if (message 
 function getDomain(url, subdomain) { subdomain = subdomain || false; url = url.replace(/(https?:\/\/)?(www.)?/i, ''); if (!subdomain) { url = url.split('.').slice(url.length - 2).join('.'); } if (url.indexOf('/') !== -1) { return url.split('/')[0]; } return url; }
 function addStylesToList(y, styles_status, active_styles) { 
   if (active_styles["styling_"+y+"_name"]) {
-    $('#active-styles').append('<div data-id="'+y+'"><input class="check" type="checkbox" checked="'+styles_status["style_"+y+"_name"]+'"><span>'+active_styles["style_"+y+"_name"]+'</span><a href="edit.html?style='+y+'" class="edit"><i class="far fa-edit"></i></a><a href="#" class="delete" title="Not implemented"><i class="far fa-trash-alt"></i></a></div>'); 
+    $('#active-styles').append('<div data-id="'+y+'"><input class="check" type="checkbox" checked="'+styles_status["styling_"+y+"_name"]+'"><span>'+active_styles["styling_"+y+"_name"]+'</span><a href="edit.html?style='+y+'" class="edit"><i class="far fa-edit"></i></a><a href="#" class="delete" title="Not implemented"><i class="far fa-trash-alt"></i></a></div>'); 
     y++;
   } else {
     y++;

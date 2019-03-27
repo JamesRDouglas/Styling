@@ -72,7 +72,7 @@ $(function() {
     $(this).parent().find('.add_block').click();
     $(this).parent().next().find('section').remove();
     $(this).parent().clone().find('section').insertAfter($(this).parent().next().find('.code'));
-    ace.edit($(this).parent().next().find('code').prop('id')).setValue(ace.edit($(this).parent().find('.code').prop('id')).getValue())
+    ace.edit($(this).parent().next().find('code').prop('id')).setValue(ace.edit($(this).parent().find('.code').prop('id')).getValue());
     updateBlocks();
   });
   $(document).on('click', '.beautify_block', function() { ace.edit($(this).parent().find('div.code')[0]).setValue(css_beautify(ace.edit($(this).parent().find('div.code')[0]).getValue(), { 'indent_size': 2, 'selector_separator_newline': false, 'space_around_selector_separator': true })); });

@@ -10,7 +10,7 @@ function loadStyles(currentURL) {
   browser.storage.local.get(function(item) {
     var styles = item.styles.length;
     for (var b = 0; b < styles; b++) {
-      var blocks = item.styles[b].length;
+      var blocks = objectLength(item.styles[b]);
       if (item.styles[b].disabled === false) { status = "enabled"; } else { status = "disabled"; }
       $.extend(true, styles_status, { [b]: status });
       block:
@@ -22,7 +22,9 @@ function loadStyles(currentURL) {
               $.extend(true, applicable_styles, { [b]: item.styles[b].name });
               break block;
             }
-          } else { item.styles[b].blocks[0] = item.default.blocks[0]; window.location.reload(); }
+          } else {
+            //item.styles[b].blocks[0].urls[d] = {}
+          }
         }
       }
     }

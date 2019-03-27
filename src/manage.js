@@ -1,10 +1,19 @@
-function onDone(item) {}
+function onDone(item) { }
 function onError(error) { console.log(`${error}`); }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function sendMessageToTabs(tabs, message) { for (let tab of tabs) { if (message === "disable") { browser.tabs.sendMessage(tab.id, {message: "styles disabled"}).then(response => {  }).catch(onError); } else if (message === "enable") { browser.tabs.sendMessage(tab.id, {message: "styles enabled"}).then(response => {  }).catch(onError); } else if (message === "update") { browser.tabs.sendMessage(tab.id, {message: "styles updated"}).then(response => {  }).catch(onError); } } }
-function checkStyleExists(b, item, styles_arr) { if (item["styling_"+b]) { styles_arr.push(b); $('#content').append('<div class="style" id="style_'+b+'" data-id="'+b+'"><input type="checkbox"><span class="name" title="'+item["styling_"+b].name+'">'+item["styling_"+b].name+'</span><button class="edit" data-id="'+b+'">Edit</button><button class="delete" data-id="'+b+'">Delete</button><div class="url_list"></div></div>'); b++; } else { b++; checkStyleExists(b, item, styles_arr); b++; } return b; }
+function checkStyleExists(b, item) { 
+  if (item.styles[b]) { 
+    $('#content').append('<div class="style" id="style_'+b+'" data-id="'+b+'"><input type="checkbox"><span class="name" title="'+item.styles[b].name+'">'+item.styles[b].name+'</span><button class="edit" data-id="'+b+'">Edit</button><button class="delete" data-id="'+b+'">Delete</button><div class="url_list"></div></div>'); 
+  } else { 
+    b++; 
+    checkStyleExists(b, item); 
+  } 
+  b++; 
+  return b; 
+}
 $(function() {
-  var styles_arr = [];
+  var styles_arr;
   browser.storage.local.get().then(function(item) { 
     $('#line-count').val(item.options.line_count);
     $('#tab-size').val(item.options.tab_size);
@@ -15,12 +24,24 @@ $(function() {
     if (item.options.guide_indent === "true") { $('#guide-indent').prop("checked", true); }
     if (item.options.show_invisible === "true") { $('#show-invisible').prop("checked", true); }
     $('#keybinding').val(item.options.keybinding);
-    var styles = objectLength(item) - 2, b = 1; 
-    for (a = 1; a <= styles; a = a) { if (a > styles) { break; } if (item["styling_"+b]) { a++; } b = checkStyleExists(b, item, styles_arr); }
+    var styles = item.styles.length, b = 0; 
+    for (a = 1; a <= styles; a = a) { if (a > styles) { break; } if (item.styles[b]) { a++; } b = checkStyleExists(b, item); }
+    styles_arr = item.styles;
   });
-  $('#write-new').click(function() { for (a = 1; a = a; a++) { if (styles_arr.indexOf(a) === -1) { window.location.href = "edit.html?style="+a; break; } } });
-  $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });
+  $('#write-new').click(function() { for (a = 0; a = a; a++) { if (!styles_arr[a]) { window.location.href = "edit.html?style="+a; break; } } });
+  $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });  
   $(document).on('click', '.style > input, .url_list', function(e) { e.stopPropagation(); });
-  $(document).on('click', '.delete', function(e) { if (confirm('Are you sure you want to delete "'+$(this).parent().find('.name').prop("title")+'"?')) { e.stopPropagation(); var currentStyle = "styling_"+$(this).data("id"); $(this).parent().remove(); browser.storage.local.remove(currentStyle).then(onDone, onError); } });
+  $(document).on('click', '.delete', function(e) { 
+    if (confirm('Are you sure you want to delete "'+$(this).parent().find('.name').prop("title")+'"?')) { 
+      e.stopPropagation(); 
+      $(this).parent().remove(); 
+      browser.storage.local.get(function(item) { 
+        delete item.styles[$(this).data("id")];
+        browser.storage.local.set(item).then(onDone, onError);
+      });
+    } 
+  });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "styles enabled") { $('#enabled').prop('disabled', false); } });
+
+

@@ -24,17 +24,17 @@ $(function() {
     if (item.styles[style_id].options.guide_indent === true) { $('#guide-indent').prop("checked", true); }
     if (item.styles[style_id].options.show_invisible === true) { $('#show-invisible').prop("checked", true); }
     $('#keybinding').val(item.styles[style_id].options.keybinding);
-    var blocks = objectLength(item.styles[style_id]) - 3;
+    var blocks = item.styles[style_id].blocks.length;
     for (var b = 1; b <= blocks; b++) {
       if (blocks > 1 && b > 1) { $('#content > .block:last-of-type > .add_block').click(); }
-      var urls = (objectLength(item.styles[style_id]["block_"+b]) - 1) / 2;
+      var urls = item.styles[style_id].blocks[b].urls.length;
       for (var c = 1; c <= urls; c++) { 
         if (urls > 1 && c > 1) { $('body div.block:nth-of-type('+b+') section:last-of-type .add_target').click(); }
-        if (item.styles[style_id]["block_"+b]["url_"+c]) { $('body .block:nth-of-type('+b+') section:nth-of-type('+c+') input.url').val(item.styles[style_id]["block_"+b]["url_"+c]); }
-        if (item.styles[style_id]["block_"+b]["url_"+c+"_type"]) { $('body .block:nth-of-type('+b+') section:nth-of-type('+c+') select').val(item.styles[style_id]["block_"+b]["url_"+c+"_type"]); }
-        if (item.styles[style_id]["block_"+b]["url_"+c+"_type"] == 'everything') { $('body .block:nth-of-type('+b+') section:nth-of-type('+c+') input.url').hide(); }
+        if (item.styles[style_id].blocks[b].urls[c].address) { $('body .block:nth-of-type('+b+') section:nth-of-type('+c+') input.url').val(item.styles[style_id].blocks[b].urls[c].address); }
+        if (item.styles[style_id].blocks[b].urls[c].type) { $('body .block:nth-of-type('+b+') section:nth-of-type('+c+') select').val(item.styles[style_id].blocks[b].urls[c].type); }
+        if (item.styles[style_id].blocks[b].urls[c].type === "everything") { $('body .block:nth-of-type('+b+') section:nth-of-type('+c+') input.url').hide(); }
       }
-      if (item.styles[style_id]["block_"+b].code) { ace.edit("code_"+b).setValue(item.styles[style_id]["block_"+b].code, -1); updateBlocks(); }
+      if (item.styles[style_id].blocks[b].code) { ace.edit("code_"+b).setValue(item.styles[style_id].blocks[b].code, -1); updateBlocks(); }
     }
     updateBlocks();
   });
@@ -44,11 +44,10 @@ $(function() {
       browser.storage.local.get().then(function(item) {
         item.styles[style_id] = { name: $('#style-name').val(), disabled: $('#enabled').prop('disabled').toString(), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), line_count: $('#line-count').val(), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), soft_tabs: $('#soft-tabs').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), keybinding: $('#keybinding').val() } };
         for (var c = 1; c <= $('div.block').length; c++) {
-          var blockName = "block_"+c, urls = $('div.block:nth-of-type('+c+')').children('section').length;
-          item.styles[style_id][blockName] = { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') };
+          var urls = $('div.block:nth-of-type('+c+')').children('section').length;
+          item.styles[style_id].blocks[c] = { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') };
           for (var b = 1; b <= urls; b++) { 
-            var objectUrl = 'url_'+b, objectUrlType = objectUrl+'_type';
-            item.styles[style_id][blockName][objectUrl] = $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), item.styles[style_id][blockName][objectUrlType] = $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val();
+            item.styles[style_id].blocks[b].urls[c].address = $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), item.styles[style_id].blocks[b].urls[c].type = $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val();
           }
         }
         browser.storage.local.set(item).then(onDone, onError);

@@ -15,11 +15,15 @@ function loadStyles(currentURL) {
       $.extend(true, styles_status, { [b]: status });
       block:
       for (var c = 1; c <= blocks; c++) {
-        var urls = (objectLength(item.styles[b]["block_"+c]) - 1) / 2;
+        var urls = item.styles[b].blocks[c].urls.length;
         for (var d = 1; d <= urls; d++) { 
-          if (item.styles[b].block_1["url_"+d] && ((item.styles[b]["block_"+c]["url_"+d+"_type"] === "url" && item.styles[b]["block_"+c]["url_"+d] === currentURL) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "starting" && currentURL.startsWith(item.styles[b]["block_"+c]["url_"+d])) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "domain" && item.styles[b]["block_"+c]["url_"+d] === getDomain(currentURL)) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "everything"))) {
-            $.extend(true, applicable_styles, { [b]: item.styles[b].name });
-            break block;
+          if (item.styles[b].blocks[0].urls[d]) {
+            if ((item.styles[b].blocks[c].urls[d].type === "url" && item.styles[b].blocks[c].urls[d].address === currentURL) || (item.styles[b].blocks[c].urls[d].type === "starting" && currentURL.startsWith(item.styles[b].blocks[c].urls[d].address)) || (item.styles[b].blocks[c].urls[d].address === "domain" && item.styles[b].blocks[c].urls[d].address === getDomain(currentURL)) || (item.styles[b].blocks[c].urls[d].type === "everything")) {
+              $.extend(true, applicable_styles, { [b]: item.styles[b].name });
+              break block;
+            }
+          } else {
+            //item.styles[b].blocks[0].urls[d] = {}
           }
         }
       }

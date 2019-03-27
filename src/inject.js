@@ -14,19 +14,21 @@ function updateStyles() {
     var styles = item.styles.length;
     for (var b = 0; b < styles; b++) {
       if (item.styles[b] && item.styles[b].disabled === false && item.disabled === false) {
-        var blocks = objectLength(item.styles[b]) - 2;
+        var blocks = item.styles[b].blocks.length;
         for (var c = 1; c <= blocks; c++) {
-          var urls = (objectLength(item.styles[b]["block_"+c]) - 1) / 2;
+          var urls = item.styles[b].blocks[c].urls.length;
           for (var d = 1; d <= urls; d++) { 
-            if (item.styles[b].block_1["url_"+d] && ((item.styles[b]["block_"+c]["url_"+d+"_type"] === "url" && item.styles[b]["block_"+c]["url_"+d] === window.location.href) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "starting" && window.location.href.startsWith(item.styles[b]["block_"+c]["url_"+d])) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "domain" && item.styles[b]["block_"+c]["url_"+d] === getDomain(window.location.href)) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "everything"))) {
-              var styleElement = document.createElement("style");
-              styleElement.setAttribute("id", "styling-"+b+"-"+c+"-"+d);
-              styleElement.setAttribute("data-name", item.styles[b].name);
-              styleElement.setAttribute("class", "styling");
-              styleElement.setAttribute("type", "text/css");
-              styleElement.appendChild(document.createTextNode(item.styles[b]["block_"+c].code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
-              applyStyles(styleElement);
-              break;
+            if (item.styles[b].blocks[0].urls[d]) {
+              if ((item.styles[b].blocks[c].urls[d].type === "url" && item.styles[b].blocks[c].urls[d].address === window.location.href) || (item.styles[b].blocks[c].urls[d].type === "starting" && window.location.href.startsWith(item.styles[b].blocks[c].urls[d].address)) || (item.styles[b].blocks[c].urls[d].type === "domain" && item.styles[b].blocks[c].urls[d].address === getDomain(window.location.href)) || (item.styles[b].blocks[c].urls[d].type === "everything")) {
+                var styleElement = document.createElement("style");
+                styleElement.setAttribute("id", "styling-"+b+"-"+c+"-"+d);
+                styleElement.setAttribute("data-name", item.styles[b].name);
+                styleElement.setAttribute("class", "styling");
+                styleElement.setAttribute("type", "text/css");
+                styleElement.appendChild(document.createTextNode(item.styles[b].blocks[c].code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
+                applyStyles(styleElement);
+                break;
+              }
             }
           }
         }

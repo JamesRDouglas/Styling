@@ -2,16 +2,7 @@ function onDone(item) { }
 function onError(error) { console.log(`${error}`); }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function sendMessageToTabs(tabs, message) { for (let tab of tabs) { if (message === "disable") { browser.tabs.sendMessage(tab.id, {message: "styles disabled"}).then(response => {  }).catch(onError); } else if (message === "enable") { browser.tabs.sendMessage(tab.id, {message: "styles enabled"}).then(response => {  }).catch(onError); } else if (message === "update") { browser.tabs.sendMessage(tab.id, {message: "styles updated"}).then(response => {  }).catch(onError); } } }
-function checkStyleExists(b, item) { 
-  if (item.styles[b]) { 
-    $('#content').append('<div class="style" id="style_'+b+'" data-id="'+b+'"><input type="checkbox"><span class="name" title="'+item.styles[b].name+'">'+item.styles[b].name+'</span><button class="edit" data-id="'+b+'">Edit</button><button class="delete" data-id="'+b+'">Delete</button><div class="url_list"></div></div>'); 
-  } else { 
-    b++; 
-    checkStyleExists(b, item); 
-  } 
-  b++; 
-  return b; 
-}
+function checkStyleExists(b, item) { if (item.styles[b]) { $('#content').append('<div class="style" id="style_'+b+'" data-id="'+b+'"><input type="checkbox"><span class="name" title="'+item.styles[b].name+'">'+item.styles[b].name+'</span><button class="edit" data-id="'+b+'">Edit</button><button class="delete" data-id="'+b+'">Delete</button><div class="url_list"></div></div>'); } else { b++; checkStyleExists(b, item); } b++; return b; }
 $(function() {
   var styles_arr;
   browser.storage.local.get().then(function(item) { 

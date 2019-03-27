@@ -9,10 +9,9 @@ function sendMessageToTabs(tabs, message) { for (let tab of tabs) { if (message 
 function getDomain(url, subdomain) { subdomain = subdomain || false; url = url.replace(/(https?:\/\/)?(www.)?/i, ''); if (!subdomain) { url = url.split('.').slice(url.length - 2).join('.'); } if (url.indexOf('/') !== -1) { return url.split('/')[0]; } return url; }
 function addStylesToList(y, styles_status, active_styles) {  if (active_styles["styling_"+y+"_name"]) { $('#active-styles').append('<div data-id="'+y+'"><input class="check" type="checkbox" checked="'+styles_status["styling_"+y+"_name"]+'"><span>'+active_styles["styling_"+y+"_name"]+'</span><a href="edit.html?style='+y+'" class="edit"><i class="far fa-edit"></i></a><a href="#" class="delete" title="Not implemented"><i class="far fa-trash-alt"></i></a></div>');  y++; } else { y++; addStylesToList(y, styles_status, active_styles); y++; } return y; }
 function loadStyles(currentURL) {
-  //var active_styles = [], styles_status = [], y = 1;
+  var active_styles = [], styles_status = [], y = 1;
   browser.storage.local.get(function(item) {
-    var bah = item;
-    /*var styles = objectLength(item) - 2;
+    var styles = objectLength(item) - 2;
     for (var b = 1; b <= styles; b++) {
       var styleTitle = "styling_"+b+"_name", blocks = objectLength(item["styling_"+b]) - 2;
       $.extend(true, styles_status, { [styleTitle]: item["styling_"+b].disabled });
@@ -25,13 +24,13 @@ function loadStyles(currentURL) {
             break block;
           }
         }
-      }*/
-    //}
-    //for (x = 1; x <= objectLength(active_styles); x = x) { if (x > objectLength(active_styles)) { break; } if (active_styles["styling_"+y+"_name"]) { x++; } y = addStylesToList(y, styles_status, active_styles); }
-    //if (objectLength(active_styles) === 0) { $('#active-styles').append('<i>No styles for this page</i>'); }
+      }
+    }
+    for (x = 1; x <= objectLength(active_styles); x = x) { if (x > objectLength(active_styles)) { break; } if (active_styles["styling_"+y+"_name"]) { x++; } y = addStylesToList(y, styles_status, active_styles); }
+    if (objectLength(active_styles) === 0) { $('#active-styles').append('<i>No styles for this page</i>'); }
   });
 }
-/*var currentURL;
+var currentURL;
 $.getJSON('../manifest.json', function(data) { $('#version').text(data.version); });
 $('#disable').change(function() { 
   if ($(this).is(':checked')) { 
@@ -48,16 +47,16 @@ $('#disable').change(function() {
     $('img').prop("src", "../images/Styling.png"); 
     browser.browserAction.setIcon({path: "../images/Styling.png"}); 
     browser.storage.local.get(function(item) {
-      $.extend(true, item, { disabled: "false" });
+      $.extend(true, item, { disabled: "true" });
       browser.storage.local.set(item).then(onChange, onError); 
     });
     browser.tabs.query({currentWindow: true}).then(function(tabs) { 
       sendMessageToTabs(tabs,"enable"); 
     }).catch(onError); 
   } 
-});*/
+});
 browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; loadStyles(currentURL); });
-/*$(function() {
+$(function() {
   $('.check').click(function() { 
     browser.storage.local.get(function(item) {
       var code = item, currentStyle = 'styling_'+$(this).parent().data('id');
@@ -79,5 +78,5 @@ browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { cu
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled" || message.message === "styles enabled") {  } });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "style updated") { $('#active-styles').empty(); loadStyles(); } });
-*/
+
 

@@ -46,7 +46,7 @@ $(function() {
     if ($('#style-name').val()) {
       browser.storage.local.get().then(function(item) {
         item.styles[style_id].name = $('#style-name').val();
-        item.styles[style_id].disabled = $('#enabled').prop('disabled').toString();
+        item.styles[style_id].disabled = $('#enabled').prop('disabled');
         item.styles[style_id].blocks = [];
         for (c = 0; c < $('div.block').length; c++) {
           var urls = $('div.block:nth-of-type('+(c+1)+')').children('section').length, code = ace.edit("code_"+(c+1)).getValue().replace(/^|\s+$/g, '');

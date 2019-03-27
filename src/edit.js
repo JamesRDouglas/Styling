@@ -6,8 +6,9 @@ function saveOptions() { var style_id = new URLSearchParams(window.location.sear
 function aceinit() { ace.config.set('loadWorkerFromBlob', false); var e = ace.edit(this); ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/searchbox"); e.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, navigateWithinSoftTabs: true, theme: "ace/theme/crimson_editor", useSoftTabs: $('#soft-tabs').prop('checked'), minLines: $('#line-count').val(), maxLines: $('#line-count').val(), displayIndentGuides: $('#guide-indent').prop('checked'), showInvisibles: $('#show-invisible').prop('checked'), tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useWorker: $('#error-marker').prop('checked'), mode: "ace/mode/css" }); if ($('#keybinding').val() !== "default") { e.setKeyboardHandler("ace/keyboard/"+$('#keybinding').val()); } e.resize(); return e; }
 $(function() {
   browser.storage.local.get().then(function(item) { 
-    var default_style = item.default, style_id = new URLSearchParams(window.location.search).get('style'), style_type = new URLSearchParams(window.location.search).get('type'), style_target = new URLSearchParams(window.location.search).get('target');
-    if (!style_id || style_id === "0") { window.location = 'edit.html?style=1'; }
+    var default_style = item.default, used_ids = [], style_id = new URLSearchParams(window.location.search).get('style'), style_type = new URLSearchParams(window.location.search).get('type'), style_target = new URLSearchParams(window.location.search).get('target');
+    for (a = 0; a < item.styles.length; a++) { used_ids.push(item.styles[a].id); }
+    if (!style_id || style_id === "0" || used_ids.indexOf(style_id) === -1) { window.location = 'edit.html?style=1'; }
     if (style_id === "new") { 
         item.styles.push(default_style);
         var styles_arr = [], newstyle_id, last_style = item.styles.length-1;

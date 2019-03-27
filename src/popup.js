@@ -32,38 +32,21 @@ function loadStyles(currentURL) {
 }
 var currentURL;
 $.getJSON('../manifest.json', function(data) { $('#version').text(data.version); });
-$('#disable').change(function() { 
-  if ($(this).is(':checked')) { 
-    $('img').prop("src", "../images/StylingDisabled.png"); 
-    browser.browserAction.setIcon({path: "../images/StylingDisabled.png"}); 
-    browser.storage.local.get(function(item) {
-      $.extend(true, item, { disabled: "true" });
-      browser.storage.local.set(item).then(onChange, onError); 
-    });
-    browser.tabs.query({currentWindow: true}).then(function(tabs) { 
-      sendMessageToTabs(tabs,"disable"); 
-    }).catch(onError); 
-  } else { 
-    $('img').prop("src", "../images/Styling.png"); 
-    browser.browserAction.setIcon({path: "../images/Styling.png"}); 
-    browser.storage.local.get(function(item) {
-      $.extend(true, item, { disabled: "true" });
-      browser.storage.local.set(item).then(onChange, onError); 
-    });
-    browser.tabs.query({currentWindow: true}).then(function(tabs) { 
-      sendMessageToTabs(tabs,"enable"); 
-    }).catch(onError); 
-  } 
-});
+$('#disable').change(function() { if ($(this).is(':checked')) { $('img').prop("src", "../images/StylingDisabled.png"); browser.browserAction.setIcon({path: "../images/StylingDisabled.png"}); browser.storage.local.set({ disabled: "true" }).then(onChange, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"disable"); }).catch(onError); } else { $('img').prop("src", "../images/Styling.png"); browser.browserAction.setIcon({path: "../images/Styling.png"}); browser.storage.local.set({ disabled: "false" }).then(onChange, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"enable"); }).catch(onError); } });
 browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; loadStyles(currentURL); });
 $(function() {
   $('.check').click(function() { 
     var currentStyle = 'styling_'+$(this).parent().data('id');
-    browser.storage.local.get(function(item) {
-      if (currentStyles === "styling_undefined") { return false; }
-      if ($(this).is(':checked')) { $.extend(true, item, { [currentStyle]: { disabled: "false" } }); browser.storage.local.set(item).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
-      } else { $.extend(true, item, { [currentStyle]: { disabled: "true" } }); browser.storage.local.set(item).then(onChange, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } 
-    });
+    if (currentStyle === "styling_undefined") { return false; }
+    if ($(this).is(':checked')) { 
+      $.extend(true, item, { [currentStyle]: { disabled: "false" } }); 
+      browser.storage.local.set(item).then(onChange, onError); 
+      browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
+    } else { 
+      $.extend(true, item, { [currentStyle]: { disabled: "true" } }); 
+      browser.storage.local.set(item).then(onChange, onError); 
+      browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
+    } 
   });
   $('img, label').click(function() { $('#disable').click(); });
   $('#manage').click(function() { browser.tabs.create({ url: "manage.html" }).then(onChange, onError); window.close(); });

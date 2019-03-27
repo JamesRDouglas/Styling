@@ -45,10 +45,10 @@ $(function() {
     if (item.styles[style_id].options.show_invisible === true) { $('#show-invisible').prop("checked", true); }
     $('#keybinding').val(item.styles[style_id].options.keybinding);
     var blocks = item.styles[style_id].blocks.length;
-    for (var b = 0; b < blocks; b++) {
+    for (b = 0; b < blocks; b++) {
       if (blocks > 1 && b > 0) { $('#content > .block:last-of-type > .add_block').click(); }
       var urls = item.styles[style_id].blocks[b].urls.length;
-      for (var c = 0; c < urls; c++) { 
+      for (c = 0; c < urls; c++) { 
         if (urls > 1 && c > 0) { $('body div.block:nth-of-type('+(b+1)+') section:last-of-type .add_target').click(); }
         if (item.styles[style_id].blocks[b].urls[c].address) { $('body .block:nth-of-type('+(b+1)+') section:nth-of-type('+(c+1)+') input.url').val(item.styles[style_id].blocks[b].urls[c].address); }
         if (item.styles[style_id].blocks[b].urls[c].type) { $('body .block:nth-of-type('+(b+1)+') section:nth-of-type('+(c+1)+') select').val(item.styles[style_id].blocks[b].urls[c].type); }
@@ -65,11 +65,11 @@ $(function() {
         item.styles[style_id].name = $('#style-name').val();
         item.styles[style_id].disabled = $('#enabled').prop('disabled').toString();
         item.styles[style_id].blocks = [];
-        for (var c = 0; c < $('div.block').length; c++) {
+        for (c = 0; c < $('div.block').length; c++) {
           var urls = $('div.block:nth-of-type('+(c+1)+')').children('section').length, code = ace.edit("code_"+(c+1)).getValue().replace(/^|\s+$/g, '');
           item.styles[style_id].blocks.push({ code: code });
           item.styles[style_id].blocks[c].urls = [];
-          for (var b = 0; b < urls; b++) { 
+          for (b = 0; b < urls; b++) { 
             var address = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('input.url').val(), type = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('select').val();
             item.styles[style_id].blocks[b].urls.push({ address: address, type: type });
           }

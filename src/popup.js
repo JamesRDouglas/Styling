@@ -2,7 +2,7 @@ browser.storage.local.get(function(item) {
   if (item.disabled == "true") { $('img').prop("src", "../images/StylingDisabled.png"); $('input[type=checkbox]').prop("checked", true);
   } else { $('img').prop("src", "../images/Styling.png");  $('input[type=checkbox]').prop("checked", false); }  
 });
-function onChange() { alert('random'); }
+function onChange() { }
 function onError(error) { console.log(error); }
 function objectLength(object) { var length = 0; for(var key in object) { if( object.hasOwnProperty(key) ) { ++length; } } return length; };
 function sendMessageToTabs(tabs, message) { for (let tab of tabs) { if (message === "disable") { browser.tabs.sendMessage(tab.id, {message: "styles disabled"}).then(response => {  }).catch(onError); } else if (message === "enable") { browser.tabs.sendMessage(tab.id, {message: "styles enabled"}).then(response => {  }).catch(onError); } else if (message === "update") { browser.tabs.sendMessage(tab.id, {message: "styles updated"}).then(response => {  }).catch(onError); } } }
@@ -46,15 +46,14 @@ $(function() {
     if (currentStyle === "styling_undefined") { return false; }
     if ($(this).is(':checked')) { 
       browser.storage.local.get().then(function(item) {
-        $.extend(true, item, { [currentStyle]: { disabled: "false" } });
-        browser.storage.local.set(item).then(onChange, onError);
-//                browser.storage.local.set({ styling_2: { disabled: "false" } }).then(onChange, onError);
+        $.extend(true, item[currentStyle], { disabled: "false" });
+        browser.storage.local.set({ [currentStyle]: item[currentStyle] }).then(onChange, onError);
       });
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
     } else { 
       browser.storage.local.get().then(function(item) {
-        $.extend(true, item, { [currentStyle]: { disabled: "true" } }); 
-        browser.storage.local.set(item).then(onChange, onError); 
+        $.extend(true, item[currentStyle], { disabled: "true" });
+        browser.storage.local.set({ [currentStyle]: item[currentStyle] }).then(onChange, onError);
       });
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
     } 

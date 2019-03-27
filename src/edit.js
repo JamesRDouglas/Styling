@@ -7,7 +7,8 @@ function aceinit() { ace.config.set('loadWorkerFromBlob', false); var e = ace.ed
 $(function() {
   var style_id;
   browser.storage.local.get().then(function(item) { 
-    var default_style = item.default, used_ids = [], style_id = new URLSearchParams(window.location.search).get('style'), style_type = new URLSearchParams(window.location.search).get('type'), style_target = new URLSearchParams(window.location.search).get('target');
+    style_id = new URLSearchParams(window.location.search).get('style');
+    var default_style = item.default, used_ids = [], style_type = new URLSearchParams(window.location.search).get('type'), style_target = new URLSearchParams(window.location.search).get('target');
     for (a = 0; a < item.styles.length; a++) { used_ids.push(item.styles[a].id); }
     if (!style_id || style_id === "0" || used_ids.indexOf(style_id) === -1) { window.location = 'edit.html?style=1'; }
     if (style_id === "new") { 

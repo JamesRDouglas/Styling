@@ -81,7 +81,7 @@ $(function() {
       browser.storage.local.get().then(function(item) {
         var currentStyle = 'styling_'+style_id;
         delete item[currentStyle];
-        $.extend(true, item, { [currentStyle]: { name: $('#style-name').val(), disabled: $('#enabled').prop('disabled'), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), line_count: $('#line-count').val(), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), soft_tabs: $('#soft-tabs').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), keybinding: $('#keybinding').val() } } });
+        $.extend(true, item, { [currentStyle]: { name: $('#style-name').val(), disabled: $('#enabled').prop('disabled').toString(), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), line_count: $('#line-count').val(), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), soft_tabs: $('#soft-tabs').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), keybinding: $('#keybinding').val() } } });
         for (var c = 1; c <= $('div.block').length; c++) {
           var blockName = "block_"+c, urls = $('div.block:nth-of-type('+c+')').children('section').length;
           $.extend(true, item, { [currentStyle]: { [blockName]: { code: ace.edit("code_"+c).getValue().replace(/^|\s+$/g, '') } } });

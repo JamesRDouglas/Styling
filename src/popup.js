@@ -34,7 +34,7 @@ function loadStyles(currentURL) {
         }
       }
     }
-    for (x = 0; x = x; x++) { 
+    for (x = 0; x > -1; x++) { 
       y = addStylesToList(y, styles_status, applicable_styles);
       if (y === objectLength(applicable_styles)) { break; }
     }

@@ -21,7 +21,7 @@ function updateStyles() {
     for (var a = 0; a < document.getElementsByClassName('styling').length; a++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[a]); }
     var styles = item.styles.length;
     for (var b = 0; b < styles; b++) {
-      if (item.styles[b] && item.styles[b].disabled === "false" && item.disabled === "false") {
+      if (item.styles[b] && item.styles[b].disabled === false && item.disabled === false) {
         var blocks = item.styles[b].blocks.length;
         for (var c = 0; c < blocks; c++) {
           var urls = item.styles[b].blocks[c].urls.length;

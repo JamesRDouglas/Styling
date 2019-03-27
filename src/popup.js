@@ -35,7 +35,13 @@ $.getJSON('../manifest.json', function(data) { $('#version').text(data.version);
 $('#disable').change(function() { if ($(this).is(':checked')) { $('img').prop("src", "../images/StylingDisabled.png"); browser.browserAction.setIcon({path: "../images/StylingDisabled.png"}); browser.storage.local.set({ disabled: "true" }).then(onChange, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"disable"); }).catch(onError); } else { $('img').prop("src", "../images/Styling.png"); browser.browserAction.setIcon({path: "../images/Styling.png"}); browser.storage.local.set({ disabled: "false" }).then(onChange, onError); browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"enable"); }).catch(onError); } });
 browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; loadStyles(currentURL); });
 $(function() {
-  $('.check').click(function() { 
+  $('img, label').click(function() { $('#disable').click(); });
+  $('#manage').click(function() { browser.tabs.create({ url: "manage.html" }).then(onChange, onError); window.close(); });
+  $('#details').click(function() { chrome.runtime.openOptionsPage(); window.close(); });
+  $('#url').prop('href', browser.extension.getURL("src/edit.html?new=url&target=")+currentURL);
+  $('#domain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL));
+  $('#subdomain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL, true));
+  $(document).on('click', '.check', function() { 
     var currentStyle = 'styling_'+$(this).parent().data('id');
     if (currentStyle === "styling_undefined") { return false; }
     if ($(this).is(':checked')) { 
@@ -53,13 +59,6 @@ $(function() {
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
     } 
   });
-  $('img, label').click(function() { $('#disable').click(); });
-  $('#manage').click(function() { browser.tabs.create({ url: "manage.html" }).then(onChange, onError); window.close(); });
-  $('#details').click(function() { chrome.runtime.openOptionsPage(); window.close(); });
-  $('#url').prop('href', browser.extension.getURL("src/edit.html?new=url&target=")+currentURL);
-  $('#domain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL));
-  $('#subdomain').prop('href', browser.extension.getURL("src/edit.html?new=domain&target=")+getDomain(currentURL, true));
-  $(document).on('click', '.check', function() { browser.tabs.query({currentWindow: true}).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); });
   $(document).on('click', '.edit', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
   $(document).on('click', '#url', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });
   $(document).on('click', '#domain', function() { browser.tabs.create({ url: $(this).prop('href') }); window.close(); return false; });

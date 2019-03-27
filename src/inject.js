@@ -6,18 +6,10 @@ function applyStyles(element) { if (document.body) { document.getElementsByTagNa
 function updateStyles() {
   browser.storage.local.get(function(item) {
     var default_style = item.default, styles_arr = [], newstyle_id;
-    //if (!item.disabled) { browser.storage.local.set({ disabled: false }).then(onDone, onError); }
+    if (!item.disabled) { browser.storage.local.set({ disabled: false }).then(onDone, onError); }
     for (a = 0; a < item.styles.length; a++) { styles_arr.push(item.styles[a].id); }
     if (styles_arr.indexOf(b)) { item.styles[(item.styles.length-1)].id = b; styles_arr = b; }
-    //if (!item.styles[0]) { item.styles[0] = default_style; browser.storage.local.set(item).then(onDone, onError); }
-
-    //if (item.styles[0].id !== "1" && styles_arr.indexOf("1") === -1) { 
-    //  item.styles[0] = default_style; item.styles[0].id = "1"; browser.storage.local.set(item).then(onDone, onError); 
-    //} else if (item.styles[0].id !== "1" && styles_arr.indexOf("1") !== -1) { 
-    //  for (b = 0; b > -1; b++) { if (!styles_arr.indexOf(b)) { item.styles[(item.styles.length-1)].id = b; newstyle_id = b; break; } }
-    //  item.styles[0] = default_style; item.styles[styles_arr.indexOf("1")].id = newstyle_id; item.styles[0].id = ""; browser.storage.local.set(item).then(onDone, onError); 
-    //}
-
+    if (!item.styles[0]) { if (item.styles.length < 1) { item.styles[0] = default_style; browser.storage.local.set(item).then(function() { window.location.reload(); }, onError); } else { item.styles = item.styles.filter(val => val); } }
     for (var a = 0; a < document.getElementsByClassName('styling').length; a++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[a]); }
     var styles = item.styles.length;
     for (var b = 0; b < styles; b++) {
@@ -25,7 +17,7 @@ function updateStyles() {
         var blocks = item.styles[b].blocks.length;
         for (var c = 0; c < blocks; c++) {
           var urls = item.styles[b].blocks[c].urls.length;
-          for (var d = 0; d < urls; d++) { 
+          for (var d = 0; d < urls; d++) {
             if (item.styles[b].blocks[0].urls[d]) {
               if ((item.styles[b].blocks[c].urls[d].type === "url" && item.styles[b].blocks[c].urls[d].address === window.location.href) || (item.styles[b].blocks[c].urls[d].type === "starting" && window.location.href.startsWith(item.styles[b].blocks[c].urls[d].address)) || (item.styles[b].blocks[c].urls[d].type === "domain" && item.styles[b].blocks[c].urls[d].address === getDomain(window.location.href)) || (item.styles[b].blocks[c].urls[d].type === "everything")) {
                 var styleElement = document.createElement("style");
@@ -44,7 +36,5 @@ function updateStyles() {
     }
   });
 }
-updateStyles(); 
+updateStyles();
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled" || message.message === "styles enabled" || message.message === "styles updated") { updateStyles(); } });
-
-

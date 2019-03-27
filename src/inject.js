@@ -6,17 +6,17 @@ function applyStyles(element) { if (document.body) { document.getElementsByTagNa
 function updateStyles() {
   browser.storage.local.get(function(item) {
     var default_style = item.default, styles_arr = [], newstyle_id;
-    if (!item.disabled) { browser.storage.local.set({ disabled: false }).then(onDone, onError); }
+    //if (!item.disabled) { browser.storage.local.set({ disabled: false }).then(onDone, onError); }
     for (a = 0; a < item.styles.length; a++) { styles_arr.push(item.styles[a].id); }
     if (styles_arr.indexOf(b)) { item.styles[(item.styles.length-1)].id = b; styles_arr = b; }
-    if (!item.styles[0]) { item.styles[0] = default_style; browser.storage.local.set(item).then(onDone, onError); }
+    //if (!item.styles[0]) { item.styles[0] = default_style; browser.storage.local.set(item).then(onDone, onError); }
 
-    if (item.styles[0].id !== "1" && styles_arr.indexOf("1") === -1) { 
-      item.styles[0] = default_style; item.styles[0].id = "1"; browser.storage.local.set(item).then(onDone, onError); 
-    } else if (item.styles[0].id !== "1" && styles_arr.indexOf("1") !== -1) { 
-      for (b = 0; b > -1; b++) { if (!styles_arr.indexOf(b)) { item.styles[(item.styles.length-1)].id = b; newstyle_id = b; break; } }
-      item.styles[0] = default_style; item.styles[styles_arr.indexOf("1")].id = newstyle_id; item.styles[0].id = ""; browser.storage.local.set(item).then(onDone, onError); 
-    }
+    //if (item.styles[0].id !== "1" && styles_arr.indexOf("1") === -1) { 
+    //  item.styles[0] = default_style; item.styles[0].id = "1"; browser.storage.local.set(item).then(onDone, onError); 
+    //} else if (item.styles[0].id !== "1" && styles_arr.indexOf("1") !== -1) { 
+    //  for (b = 0; b > -1; b++) { if (!styles_arr.indexOf(b)) { item.styles[(item.styles.length-1)].id = b; newstyle_id = b; break; } }
+    //  item.styles[0] = default_style; item.styles[styles_arr.indexOf("1")].id = newstyle_id; item.styles[0].id = ""; browser.storage.local.set(item).then(onDone, onError); 
+    //}
 
     for (var a = 0; a < document.getElementsByClassName('styling').length; a++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[a]); }
     var styles = item.styles.length;

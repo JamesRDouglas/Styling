@@ -11,7 +11,7 @@ function loadStyles(currentURL) {
     var styles = item.styles.length;
     for (var b = 0; b < styles; b++) {
       var blocks = item.styles[b].length;
-      if (item.styles[b].disabled === false) { status = "enabled"; } else { status = "disabled"; }
+      if (item.styles[b].disabled === "false") { status = "enabled"; } else { status = "disabled"; }
       $.extend(true, styles_status, { [b]: status });
       block:
       for (var c = 0; c < blocks; c++) {

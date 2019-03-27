@@ -15,13 +15,13 @@ function updateStyles() {
       item.styles[0] = default_style; item.styles[0].id = "1"; browser.storage.local.set(item).then(onDone, onError); 
     } else if (item.styles[0].id !== "1" && styles_arr.indexOf("1") !== -1) { 
       for (b = 0; b > -1; b++) { if (!styles_arr.indexOf(b)) { item.styles[(item.styles.length-1)].id = b; newstyle_id = b; break; } }
-      item.styles[0] = default_style; item.styles[styles_arr.indexOf("1")].id = newstyle_id; item.styles[0].id = "1"; browser.storage.local.set(item).then(onDone, onError); 
+      item.styles[0] = default_style; item.styles[styles_arr.indexOf("1")].id = newstyle_id; item.styles[0].id = ""; browser.storage.local.set(item).then(onDone, onError); 
     }
 
     for (var a = 0; a < document.getElementsByClassName('styling').length; a++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[a]); }
     var styles = item.styles.length;
     for (var b = 0; b < styles; b++) {
-      if (item.styles[b] && item.styles[b].disabled === false && item.disabled === false) {
+      if (item.styles[b] && item.styles[b].disabled === "false" && item.disabled === "false") {
         var blocks = item.styles[b].blocks.length;
         for (var c = 0; c < blocks; c++) {
           var urls = item.styles[b].blocks[c].urls.length;

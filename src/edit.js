@@ -41,12 +41,17 @@ $(function() {
   $('#save').click(function() {
     if ($('#style-name').val()) {
       browser.storage.local.get().then(function(item) {
-        item.styles[style_id] = { name: $('#style-name').val(), disabled: $('#enabled').prop('disabled').toString(), options: { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), line_count: $('#line-count').val(), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), soft_tabs: $('#soft-tabs').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), keybinding: $('#keybinding').val() } };
+        item.styles[style_id].name = $('#style-name').val();
+        item.styles[style_id].disabled = $('#enabled').prop('disabled').toString();
+        item.styles[style_id].options = { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), line_count: $('#line-count').val(), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), soft_tabs: $('#soft-tabs').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), keybinding: $('#keybinding').val() };
+        item.styles[style_id].blocks = [];
         for (var c = 0; c < $('div.block').length; c++) {
           var urls = $('div.block:nth-of-type('+c+')').children('section').length, num = c+1;
-          item.styles[style_id].blocks[c] = { code: ace.edit("code_"+num).getValue().replace(/^|\s+$/g, '') };
+          item.styles[style_id].blocks[c].code = ace.edit("code_"+num).getValue().replace(/^|\s+$/g, '');
+          item.styles[style_id].blocks[c].urls = [];
           for (var b = 0; b < urls; b++) { 
-            item.styles[style_id].blocks[b].urls[c].address = $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val(), item.styles[style_id].blocks[b].urls[c].type = $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val();
+            item.styles[style_id].blocks[b].urls[c].type = $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('select').val();
+            item.styles[style_id].blocks[b].urls[c].address = $('div.block:nth-of-type('+c+')').find('section:nth-of-type('+b+')').children('input.url').val();
           }
         }
         browser.storage.local.set(item).then(onDone, onError);

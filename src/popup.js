@@ -36,7 +36,7 @@ function loadStyles(currentURL) {
     }
     for (x = 0; x > -1; x++) { 
       y = addStylesToList(y, styles_status, applicable_styles);
-      if (y === objectLength(applicable_styles)) { break; }
+      if (y > objectLength(applicable_styles)) { break; }
     }
     if (objectLength(applicable_styles) === 0) { $('#applicable-styles').append('<i>No styles for this page</i>'); }
   });

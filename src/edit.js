@@ -61,11 +61,11 @@ $(function() {
       if ($('#enabled').is(':checked')) { 
         item.styles[style_id].disabled = "false"; 
         browser.storage.local.set(item).then(onDone, onError); 
-        browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"styles updated"); }).catch(onError); 
+        browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
       } else { 
         item.styles[style_id].disabled = "true"; 
         browser.storage.local.set(item).then(onDone, onError); 
-        browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"styles updated"); }).catch(onError); 
+        browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
       } 
     }) 
   });

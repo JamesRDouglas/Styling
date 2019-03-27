@@ -37,10 +37,10 @@ function loadStyles(currentURL) {
     }
     for (x = 1; x <= objectLength(active_styles); x = x) { 
       if (x > objectLength(active_styles)) { break; }
-      if (item["styling_"+y]) { x++; }
+      if (active_styles["styling_"+y+"_name"]) { x++; }
       y = addStylesToList(y, styles_status, active_styles);
     }
-    if (active_styles.length === 0) { $('#active-styles').append('<i>No styles for this page</i>'); }
+    if (objectLength(active_styles) === 0) { $('#active-styles').append('<i>No styles for this page</i>'); }
   });
 }
 var currentURL;

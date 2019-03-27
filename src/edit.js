@@ -56,19 +56,7 @@ $(function() {
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
     } else { alert('Please enter a name'); return false; }
   });
-  $('#enabled').click(function() { 
-    browser.storage.local.get(function(item) { 
-      if ($('#enabled').is(':checked')) { 
-        item.styles[style_id].disabled = "false"; 
-        browser.storage.local.set(item).then(onDone, onError); 
-        browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
-      } else { 
-        item.styles[style_id].disabled = "true"; 
-        browser.storage.local.set(item).then(onDone, onError); 
-        browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
-      } 
-    }) 
-  });
+  $('#enabled').click(function() { browser.storage.local.get(function(item) { if ($('#enabled').is(':checked')) { item.styles[style_id].disabled = "false"; browser.storage.local.set(item).then(onDone, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } else { item.styles[style_id].disabled = "true"; browser.storage.local.set(item).then(onDone, onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } }); });
   $('#beautify').click(function() { $('div.code').each(function(){ ace.edit(this).setValue(css_beautify(ace.edit(this).getValue(), { 'indent_size': 2, 'selector_separator_newline': false, 'space_around_selector_separator': true })); }); });
   $('#back').click(function() { window.location.replace("manage.html"); });
   $(document).on('click', '.add_block', function() { $(this).parent().clone().find('input').val('').end().find('section:not(:first-of-type)').remove().end().find('.code').empty().end().prop('id', '').insertAfter($(this).parent()); updateBlocks(); });

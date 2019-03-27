@@ -20,7 +20,7 @@ function loadStyles(currentURL) {
       for (var c = 1; c <= blocks; c++) {
         var urls = (objectLength(item.styles[b]["block_"+c]) - 1) / 2;
         for (var d = 1; d <= urls; d++) { 
-          if (item.styles[b].block_1["url_"+d] != undefined && ((item.styles[b]["block_"+c]["url_"+d+"_type"] == "url" && item.styles[b]["block_"+c]["url_"+d] == currentURL) || (item.styles[b]["block_"+c]["url_"+d+"_type"] == "starting" && currentURL.startsWith(item.styles[b]["block_"+c]["url_"+d])) || (item.styles[b]["block_"+c]["url_"+d+"_type"] == "domain" && item.styles[b]["block_"+c]["url_"+d] == getDomain(currentURL)) || (item.styles[b]["block_"+c]["url_"+d+"_type"] == "everything"))) {
+          if (item.styles[b].block_1["url_"+d] && ((item.styles[b]["block_"+c]["url_"+d+"_type"] === "url" && item.styles[b]["block_"+c]["url_"+d] === currentURL) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "starting" && currentURL.startsWith(item.styles[b]["block_"+c]["url_"+d])) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "domain" && item.styles[b]["block_"+c]["url_"+d] === getDomain(currentURL)) || (item.styles[b]["block_"+c]["url_"+d+"_type"] === "everything"))) {
             $.extend(true, applicable_styles, { [b]: item.styles[b].name });
             break block;
           }
@@ -47,7 +47,7 @@ $(function() {
     var currentStyle = $(this).parent().data('id'); 
     if (currentStyle === undefined) { return false; } 
     browser.storage.local.get(function(item) { 
-      item.styles[currentStyle].disabled = $(this).is(':checked').toString();
+      if ($(this).is(':checked')) { item.styles[currentStyle].disabled = "false"; } else { item.styles[currentStyle].disabled = "true"; }
       browser.storage.local.set({ styles: item.styles }).then(onDone, onError); });
       browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); 
     });

@@ -28,7 +28,7 @@ $(function() {
   $('#write-new').click(function() { window.location.href = "edit.html?style=new"; });
   $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });  
   $(document).on('click', '.style > input, .url_list', function(e) { e.stopPropagation(); });
-  $(document).on('click', '.delete', function(e) { if (confirm('Are you sure you want to delete "'+$(this).parent().find('.name').prop("title")+'"?')) { e.stopPropagation(); $(this).parent().remove(); var style_id = $(this).data("id"); browser.storage.local.get(function(item) { item.styles.splice(style_id,1); browser.storage.local.set(item).then(onDone, onError); }); } });
+  $(document).on('click', '.delete', function(e) { e.stopPropagation(); if (confirm('Are you sure you want to delete "'+$(this).parent().find('.name').prop("title")+'"?')) { $(this).parent().remove(); var style_id = $(this).data("id"); browser.storage.local.get(function(item) { item.styles.splice(style_id,1); browser.storage.local.set(item).then(onDone, onError); }); } });
   $(document).on('change', '.options', function() { saveOptions(); });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.message === "styles disabled") { $('#enabled').prop('disabled', true); } else if (message.message === "styles enabled") { $('#enabled').prop('disabled', false); } });

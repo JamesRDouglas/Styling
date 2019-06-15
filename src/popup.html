@@ -10,17 +10,19 @@
       label { -moz-user-select: none; user-select: none; }
       a { text-decoration-style: dashed; color: #0d0d57 !important; }
       ul { margin: 0; text-align: left; display: inline-block; margin: 0 auto; }
+      .unselectable { -moz-user-select: none; user-select: none; }
+      .small { border: 0; border-top: 1px solid lightgrey; }
+
       #applicable-styles .edit, #applicable-styles .delete { margin: 0 0 1px 0.4em; font-size: 0.9em; color: #7e7e7e !important; }
       #applicable-styles .edit:hover, #applicable-styles .delete:hover { cursor: pointer; color: #000 !important; }
       #applicable-styles > div { display: flex;justify-content: center;align-items: center; padding: 1px; }
       #applicable-styles > div > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
       #applicable-styles > div:nth-of-type(2n+1):not(:only-child) { background-color: #f3f3f3; }
-      .small { border: 0; border-top: 1px solid lightgrey; }
     </style>
     <link rel="stylesheet" type="text/css" href="fontawesome-5.7.2/css/all.min.css">
-    <script src="jquery-3.3.1.min.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
   </head>
-  <body style="width: 180px; padding: 10px; text-align: center; font-family: 'Roboto';">
+  <body style="width: 180px; padding: 10px; text-align: center; font-family: 'Roboto';" class="unselectable">
     <img src="../images/Styling.png" style="width: 100px; height: 100px;"><br>
     Styling version <span id="version"></span>
     <br><input type="checkbox" id="disable"><label>Disable all styles</label>

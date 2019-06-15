@@ -10,14 +10,29 @@
       select { margin-left: 5px; width: 135px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: center right 7px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
       select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       button { padding: 2px 6px; text-align: center; }
+      .unselectable { -moz-user-select: none; user-select: none; }
+      .hidden { display: none !important; }
 
-      #sidebar { width: 250px; height: 100vh; position: fixed; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 0.8em 1.1em; background-color: white; }
-      #sidebar #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; }
+      #sidebar { width: 250px; height: 100vh; position: fixed; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 0.8em 1.1em 0 1.1em; background-color: white; display: flex; flex-direction: column; }
+      #sidebar > div > h1 { padding: 0; margin: 0; font-size: 1.6em; width: 100%; }
+      #sidebar > div:not(:last-child) { margin-bottom: 1em; }
+      #sidebar #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; margin-bottom: 0.6em; }
       #sidebar #style-name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
-      #sidebar summary { font-size: 1.17em; font-weight: bold; margin-bottom: 0.3em; cursor: pointer; -moz-user-select: none; }
+      #sidebar #enabled { margin-bottom: 10px; margin-left: 10px; }
+      #sidebar > div > details > summary { font-size: 1.17em; font-weight: bold; margin-bottom: 0.3em; }
+      #sidebar > div:nth-of-type(3) { display: none; }
+      #sidebar summary { cursor: pointer; }
       #sidebar h3.placeholder { display: none; }
       #sidebar section.small-screen { display: inline-block; }
       #sidebar input[type="number"] { margin-left: 1em; width: 7em; }
+      #sidebar #hidden { position: absolute; top: 0; left: calc(100% + 0.3em); display: inline-block; border: 1px solid lightgrey; border-radius: 3px; background-color: white; padding: 2px 8px 2px 2px; white-space: nowrap; }
+      #sidebar #error-list { overflow-y: scroll; height: calc(100% - 2em); max-height: calc(100% - 3em); min-height: calc(100% - 3em); }
+      #sidebar #error-marker-container { position: relative; display: inline-block; cursor: pointer; }
+      #sidebar #keybinding { width: 120px; background-position: center right 7px; }
+      #sidebar .block-container { display: none; }
+      #sidebar .block-container > span { font-weight: bold; margin-left: 7px; font-size: 0.9em; }
+      #sidebar .block-container > .error-container > small { display: inline-block; width: 100%; border-top: 1px solid lightgrey; }
+      #sidebar .block-container > .error-container > small > i { height: 16px; width: 16px; display: inline-block; margin-bottom: -4px; }
 
       #content { width: calc(100vw - 250px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1em 2em; }
       #content div.block:first-of-type > span:first-of-type, div.block:first-of-type > button.raise_block, div.block:last-of-type > button.lower_block { display: none; }
@@ -32,73 +47,52 @@
       #content div.url-container { flex-grow: 1; display: flex; flex-wrap: wrap; }
       #content input.url { padding: 2px 5px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; flex-grow: 1; margin-left: 2px; }
       #content input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
-      @media only screen and (max-width: 840px) {
-        #sidebar { height: auto; width: 100vw; overflow: hidden; border-right: none; border-bottom: 1px dashed grey; padding: 0.5em 0; }
-        #sidebar details:not([open]) { margin-bottom: 2.5em; }
-        #sidebar summary { margin: 0 0 5px 0; position: absolute; left: 1em; }
-        #sidebar h3.placeholder { display: block; visibility: hidden; margin: 0; }
-        #sidebar > h1, #sidebar > br:first-of-type, #sidebar .hide-small-screen { display: none; }
-        #sidebar div.small-screen-top { width: calc(100vw - 2.2em); display: flex; flex-wrap: wrap; margin: 0.6em 1.1em; }
-        #sidebar div.small-screen-top > div { display: flex; flex-grow: 1; margin-right: 5px !important; }
-        #sidebar div.small-screen-top > div > #style-name { flex-grow: 1; margin-top: 0; }
-        #sidebar div.small-screen-top > #save { margin-left: 10px; }
-        #sidebar div.small-screen-top > #enabled { margin-bottom: auto !important }
-        #sidebar section.small-screen:nth-of-type(1), #sidebar section.small-screen:nth-of-type(3) { width: calc(35vw - 2.2em); float: left; margin: 0 1.1em; }
-        #sidebar section.small-screen:nth-of-type(2) { width: calc(30vw - 2.2em); float: left; margin: 0 1.1em; }
-        #content { top: 169px; left: 0; width: 100vw; position: fixed; overflow-x: scroll; }
-      }
-      @media only screen and (max-width: 760px) {
-        #sidebar section.small-screen:nth-of-type(1) { width: calc(100vw / 3); float: left; margin: 0 0 0 1.1em; }
-        #sidebar section.small-screen:nth-of-type(2) { width: calc(calc(100vw / 3) - 2.2em); float: left; margin: 0; }
-        #sidebar section.small-screen:nth-of-type(3) { width: calc(100vw / 3); float: left; margin: 0 1.1em 0 0; }
-      }
     </style>
-    <script src="jquery-3.3.1.min.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
     <script src="beautify-css.1.9.0.min.js"></script>
-    <script src="ace-1.4.3/ace.js"></script>
-    <script src="ace-1.4.3/mode-css.js"></script>
-    <script src="ace-1.4.3/ext-language_tools.js"></script>
+    <script src="ace-1.4.4/ace.js"></script>
+    <script src="ace-1.4.4/mode-css.js"></script>
+    <script src="ace-1.4.4/ext-language_tools.js"></script>
   </head>
   <body>
     <div id="sidebar">
-      <h1 style="padding: 0; margin: 0; font-size: 1.6em; width: 100%;">Edit style</h1>
-      <div class="small-screen-top">
-        <div style="margin: 0;  padding: 10px 0 2px 0; display: flex;">
+      <div>
+        <h1>Edit style</h1>
+        <div class="small-screen-top">
           <input type="text" id="style-name" placeholder="Enter a name">
           <button id="save">Save</button>
+          <input type="checkbox" id="enabled"> Enabled
+          <button id="beautify">Beautify all</button>
+          <button id="back">Back to manage</button>
         </div>
-        <input type="checkbox" id="enabled" style="margin-bottom: 10px;"> Enabled
-        <br>
-        <button id="beautify">Beautify all</button>
-        <button id="back">Back to manage</button>
       </div>
-      <br>
-      <details open>
-        <summary>Options</summary>
-        <section class="small-screen">
+      <div>
+        <details open>
+          <summary class="unselectable">Editor Options</summary>
           <h3 class="placeholder" style="margin-bottom: 5px;">Options</h3>
           Line count: <input type="number" id="line-count" class="options"><br style="margin-bottom: 5px;">
           Tab size: <input type="number" id="tab-size" class="options"><br style="margin-bottom: 5px;">
           Font size: <input type="number" id="font-size" class="options"><br style="margin-bottom: 7px;">
-        </section>
-        <section class="small-screen">
-          <h3 class="placeholder">Options</h3>
-          <input type="checkbox" id="autocomplete" class="options"> Autocomplete<br>
-          <input type="checkbox" id="error-marker" class="options"> Syntax validation<br>
-          <input type="checkbox" id="soft-tabs" class="options"> Use soft tabs<br>
-        </section>
-        <section class="small-screen">
-          <h3 class="placeholder">Options</h3>
-          <input type="checkbox" id="guide-indent" class="options"> Show indent guides<br>
-          <input type="checkbox" id="show-invisible" class="options"> Show invisibles<br style="margin-bottom: 7px;">
+          <label class="unselectable"><input type="checkbox" id="autocomplete" class="options"> Autocomplete</label><br>
+          <label class="unselectable"><input type="checkbox" id="error-marker" class="options"> Syntax validation</label><br>
+          <label class="unselectable"><input type="checkbox" id="soft-tabs" class="options"> Use soft tabs</label><br>
+          <label class="unselectable"><input type="checkbox" id="guide-indent" class="options"> Show indent guides</label><br>
+          <label class="unselectable"><input type="checkbox" id="show-invisible" class="options"> Show invisibles</label><br style="margin-bottom: 7px;">
           Keybinding:
-          <select style="width: 120px; background-position: center right 7px;" id="keybinding" class="options">
-            <option value="default">Default</option>
-            <option value="vim">Vim</option>
+          <select id="keybinding" class="options">
+            <option value="default" selected>Default</option>
             <option value="emacs">Emacs</option>
+            <option value="vim">Vim</option>
+            <option value="sublime">Sublime</option>
           </select>
-        </section>
-      </details>
+        </details>
+      </div>
+      <div style="overflow: hidden;">
+        <details style="height: 100%; overflow: hidden; position: relative;" open>
+          <summary class="unselectable">Detected Errors</summary>
+          <div id="error-list"></div>
+        </details>
+      </div>
     </div>
     <div id="content">
       <div class="block" id="block_1">

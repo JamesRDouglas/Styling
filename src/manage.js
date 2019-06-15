@@ -3,15 +3,16 @@ function onError(error) { console.log(error); }
 function sendMessageToTabs(tabs, message) { for (let tab of tabs) { if (message === "disable") { browser.tabs.sendMessage(tab.id, {message: "styles disabled"}).then(response => {  }).catch(onError); } else if (message === "enable") { browser.tabs.sendMessage(tab.id, {message: "styles enabled"}).then(response => {  }).catch(onError); } else if (message === "update") { browser.tabs.sendMessage(tab.id, {message: "styles updated"}).then(response => {  }).catch(onError); } } }
 function saveOptions() {
   browser.storage.local.get().then(function(item) {
-    item.default.options = { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), line_count: $('#line-count').val(), autocomplete: $('#autocomplete').prop('checked'), error_marker: $('#error-marker').prop('checked'), soft_tabs: $('#soft-tabs').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), keybinding: $('#keybinding').val() };
+    item.default.options = { tab_size: $('#tab-size').val(), font_size: $('#font-size').val(), line_count: $('#line-count').val(), autocomplete: $('#autocomplete').prop('checked'), error_marker: { enabled: $('#error-marker').prop('checked'), errors: $('#error-marker').next('#hidden').find('#errors').prop('checked'), warnings: $('#error-marker').next('#hidden').find('#warnings').prop('checked'), notes: $('#error-marker').next('#hidden').find('#notes').prop('checked'), }, soft_tabs: $('#soft-tabs').prop('checked'), guide_indent: $('#guide-indent').prop('checked'), show_invisible: $('#show-invisible').prop('checked'), keybinding: $('#keybinding').val() };
     browser.storage.local.set(item).then(onDone, onError);
   });
 }
 $(function() {
   var styles_arr = [], status;
   browser.storage.local.get().then(function(item) {
-    if (!item.default || !item.default.name || !item.default.disabled || !item.default.blocks) { item.default = { name: "new style", id: "1", disabled: false, blocks: [ { code: "", urls: [ { address: "", type: "" } ] } ] }; }
-    if (!item.default.options) { item.default.options = { tab_size: "2", font_size: "11", line_count: "15", autocomplete: true, error_marker: true, soft_tabs: true, guide_indent: false, show_invisible: false, keybinding: "default" }; browser.storage.local.set(item).then(onDone, onError); default_style = item.default; }
+    if (!item.default || !item.default.name || !item.default.id || !item.default.disabled || !item.default.blocks) { item.default = { name: "new style", id: "1", disabled: false, blocks: [ { code: "", urls: [ { address: "", type: "" } ] } ] }; }
+    if (!item.default.options || !item.default.options.tab_size || !item.default.options.font_size || !item.default.options.line_count || !item.default.options.autocomplete || !item.default.options.error_marker || !item.default.options.soft_tabs || !item.default.options.guide_indent || !item.default.options.show_invisible || !item.default.options.keybinding) { item.default.options = { tab_size: "2", font_size: "11", line_count: "15", autocomplete: true, error_marker: true, soft_tabs: true, guide_indent: false, show_invisible: false, keybinding: "default" }; browser.storage.local.set(item).then(onDone, onError); default_style = item.default; }
+    if (!item.styles) { item.styles = []; browser.storage.local.set(item).then(onDone, onError); }
     if (!item.styles[0]) { item.styles[0] = default_style; browser.storage.local.set(item).then(onDone, onError); }
     if (item.styles[0].id !== "1") { item.styles[0].id = "1"; browser.storage.local.set(item).then(onDone, onError); }
     $('#line-count').val(item.default.options.line_count);
@@ -38,13 +39,7 @@ fix injection for sidebars and other windows
 make ui better for differently sized screens
 fix potential holes in stored data
 warn user before leaving unsaved changes
-fix keybinding option
 fix changing of url type
 add importing/exporting
 add live preview?
-
-environment todo:
-
-use github
-upload automation
 */

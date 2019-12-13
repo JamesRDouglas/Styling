@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <style>
       @font-face { font-family: 'Roboto'; src: url('../Roboto-Light.ttf') format('truetype'); }
-      body { font-size: 14px; }
+      body { font-size: 14px; width: 180px; padding: 10px; text-align: center; font-family: 'Roboto'; }
       button { padding: 2px 8px; }
       img, input, label { cursor: pointer; }
       label { -moz-user-select: none; user-select: none; }
@@ -13,23 +13,23 @@
       .unselectable { -moz-user-select: none; user-select: none; }
       .small { border: 0; border-top: 1px solid lightgrey; }
 
-      #applicable-styles .edit, #applicable-styles .delete { margin: 0 0 1px 0.4em; font-size: 0.9em; color: #7e7e7e !important; }
-      #applicable-styles .edit:hover, #applicable-styles .delete:hover { cursor: pointer; color: #000 !important; }
+      #applicable-styles .fa-edit, #applicable-styles .fa-trash-alt { text-decoration: none; margin: 0 0 1px 0.4em; font-size: 0.9em; color: #7e7e7e !important; }
+      #applicable-styles .fa-edit:hover, #applicable-styles .fa-trash-alt:hover { text-decoration: none; cursor: pointer; color: #000 !important; }
       #applicable-styles > div { display: flex;justify-content: center;align-items: center; padding: 1px; }
       #applicable-styles > div > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
       #applicable-styles > div:nth-of-type(2n+1):not(:only-child) { background-color: #f3f3f3; }
     </style>
-    <link rel="stylesheet" type="text/css" href="fontawesome-5.7.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="Fork-Awesome-1.1.7/css/fork-awesome.min.css">
     <script src="jquery-3.4.1.min.js"></script>
   </head>
-  <body style="width: 180px; padding: 10px; text-align: center; font-family: 'Roboto';" class="unselectable">
+  <body class="unselectable">
     <img src="../images/Styling.png" style="width: 100px; height: 100px;"><br>
     Styling version <span id="version"></span>
     <br><input type="checkbox" id="disable"><label>Disable all styles</label>
     <br><hr class="small"><div id="applicable-styles"></div><hr class="small">
     Write style for this:<br>
-    <a href="#" id="url">URL</a> / <a href="#" id="domain">domain</a> / <a href="#" id="subdomain">subdomain</a>
-    <br style="margin-bottom: 7px; border: 0; border-top: 1px solid grey;">
+    <a href="/src/edit.html" id="url">URL</a> / <a href="/src/edit.html" id="domain">domain</a> / <a href="/src/edit.html" id="subdomain">subdomain</a>
+    <br style="margin-bottom: 7px;">
     <button id="manage">Manage</button>
     <button id="details">Details</button>
     <!--<script src="inject.js"></script>-->

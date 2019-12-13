@@ -12,6 +12,7 @@
       button { padding: 2px 6px; text-align: center; }
       .unselectable { -moz-user-select: none; user-select: none; }
       .hidden { display: none !important; }
+      .unsaved { box-shadow: 0 0 1px 2px gold; position: relative; cursor: pointer; }
 
       #sidebar { width: 250px; height: 100vh; position: fixed; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 0.8em 1.1em 0 1.1em; background-color: white; display: flex; flex-direction: column; }
       #sidebar > div > h1 { padding: 0; margin: 0; font-size: 1.6em; width: 100%; }
@@ -20,7 +21,6 @@
       #sidebar #style-name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       #sidebar #enabled { margin-bottom: 10px; margin-left: 10px; }
       #sidebar > div > details > summary { font-size: 1.17em; font-weight: bold; margin-bottom: 0.3em; }
-      #sidebar > div:nth-of-type(3) { display: none; }
       #sidebar summary { cursor: pointer; }
       #sidebar h3.placeholder { display: none; }
       #sidebar section.small-screen { display: inline-block; }
@@ -44,15 +44,15 @@
       #content div.ace_hidden-cursors { display: none; }
       #content section.target { display: flex; margin: 5px 0 3px 0; }
       #content section.target:not(:first-of-type) > span { visibility: hidden; }
-      #content div.url-container { flex-grow: 1; display: flex; flex-wrap: wrap; }
-      #content input.url { padding: 2px 5px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; flex-grow: 1; margin-left: 2px; }
+      #content section.target > :not(.url) { flex: 0 0 auto; }
+      #content input.url { flex: 1 1 auto; padding: 2px 5px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; margin-left: 2px; }
       #content input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
     </style>
     <script src="jquery-3.4.1.min.js"></script>
-    <script src="beautify-css.1.9.0.min.js"></script>
-    <script src="ace-1.4.4/ace.js"></script>
-    <script src="ace-1.4.4/mode-css.js"></script>
-    <script src="ace-1.4.4/ext-language_tools.js"></script>
+    <script src="beautify-css.1.10.2.min.js"></script>
+    <script src="ace-1.4.7/ace.js"></script>
+    <script src="ace-1.4.7/mode-css.js"></script>
+    <script src="ace-1.4.7/ext-language_tools.js"></script>
   </head>
   <body>
     <div id="sidebar">
@@ -66,7 +66,7 @@
           <button id="back">Back to manage</button>
         </div>
       </div>
-      <div>
+      <div id="options-container">
         <details open>
           <summary class="unselectable">Editor Options</summary>
           <h3 class="placeholder" style="margin-bottom: 5px;">Options</h3>
@@ -87,10 +87,10 @@
           </select>
         </details>
       </div>
-      <div style="overflow: hidden;">
-        <details style="height: 100%; overflow: hidden; position: relative;" open>
+      <div id="errors-container" style="overflow: hidden;">
+        <details style="height: 100%; overflow: hidden; position: relative;">
           <summary class="unselectable">Detected Errors</summary>
-          <div id="error-list"></div>
+          <div id="errors"></div>
         </details>
       </div>
     </div>

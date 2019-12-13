@@ -19,6 +19,7 @@
       #sidebar h3.placeholder { display: none; }
       #sidebar section.small-screen { display: inline-block; }
       #sidebar #write-new { margin-bottom: 3px; }
+      #sidebar #default-options { display: none; }
       #sidebar input[type="number"] { width: 7em; }
 
       #content { width: calc(100vw - 250px); height: 100vh; box-sizing: border-box; position: absolute; right: 0; top: 0; padding: 0; }
@@ -35,8 +36,24 @@
       <h1>Installed Styles</h1><br>
       <button id="write-new">Write new style</button><br>
       <input type="checkbox" id="enabled"> Disable all styles<br><br>
-      <details>
+      <details id="default-options" open>
         <summary class="unselectable">Default Options</summary>
+        <h3 class="placeholder" style="margin-bottom: 5px;">Options</h3>
+        Line count: <input type="number" id="line-count" class="options"><br style="margin-bottom: 5px;">
+        Tab size: <input type="number" id="tab-size" class="options"><br style="margin-bottom: 5px;">
+        Font size: <input type="number" id="font-size" class="options"><br style="margin-bottom: 7px;">
+        <label class="unselectable"><input type="checkbox" id="autocomplete" class="options"> Autocomplete</label><br>
+        <label class="unselectable"><input type="checkbox" id="error-marker" class="options"> Syntax validation</label><br>
+        <label class="unselectable"><input type="checkbox" id="soft-tabs" class="options"> Use soft tabs</label><br>
+        <label class="unselectable"><input type="checkbox" id="guide-indent" class="options"> Show indent guides</label><br>
+        <label class="unselectable"><input type="checkbox" id="show-invisible" class="options"> Show invisibles</label><br style="margin-bottom: 7px;">
+        Keybinding:
+        <select id="keybinding" class="options">
+          <option value="default" selected>Default</option>
+          <option value="emacs">Emacs</option>
+          <option value="vim">Vim</option>
+          <option value="sublime">Sublime</option>
+        </select>
       </details>
     </div>
     <div id="content" class="unselectable">

@@ -87,5 +87,5 @@ $(function() {
   $(document).on('change', 'select', function() { if ($(this).val() == "everything") { $(this).next('input.url').hide(); $(this).parent().addClass('current').parent().children('div.target:not(.current)').remove(); } else { $(this).next('input.url').show(); } });
   $(document).on('change', '.options', function() { saveOptions(style_index); updateErrors(); });
 });
-browser.runtime.onMessage.addListener(function(message) { if (message.action === "disable") { $('#favicon').attr('href','/images/StylingDisabled.ico'); } else if (message.message === "enable") { $('#favicon').attr('href','/images/Styling.ico'); } });
+browser.runtime.onMessage.addListener(function(message) { if (message.action === "disable") { $('#favicon').attr('href','/images/StylingDisabled.png'); } else if (message.action === "enable") { $('#favicon').attr('href','/images/Styling.png'); } });
 browser.runtime.onMessage.addListener(function(message) { if (message.action === "update") { browser.storage.local.get().then(function(item) { $('#enabled').prop('checked', item.styles[style_index].enabled); }); } });

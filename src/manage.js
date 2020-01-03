@@ -37,7 +37,7 @@ $(function() {
   $(document).on('click', '.delete', function(e) { e.stopPropagation(); if (confirm('Are you sure you want to delete "'+$(this).parent().find('.name').prop("title")+'"?')) { var style_id = $(this).parent().data("id"), element = $(this).parent(); browser.storage.local.get(function(item) { item.styles.splice(style_id,1); browser.storage.local.set(item).then(function() { element.remove(); if ($('#content').is(':empty')) { noStylesDetected(); } }, onError); }); } });
   $(document).on('change', '.options', function() { saveOptions(); });
 });
-browser.runtime.onMessage.addListener(function(message) { if (message.action === "disable") { $('#enabled').prop('disabled', true); $('#favicon').attr('href','/images/StylingDisabled.ico'); } else if (message.action === "enable") { $('#enabled').prop('disabled', false); $('#favicon').attr('href','/images/Styling.ico'); } });
+browser.runtime.onMessage.addListener(function(message) { if (message.action === "disable") { $('#enabled').prop('disabled', true); $('#favicon').attr('href','/images/StylingDisabled.png'); } else if (message.action === "enable") { $('#enabled').prop('disabled', false); $('#favicon').attr('href','/images/Styling.png'); } });
 browser.runtime.onMessage.addListener(function(message) { if (message.action === "update") { loadOptions(); loadContent(); } });
 //todo:
 /*

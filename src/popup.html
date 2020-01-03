@@ -11,13 +11,16 @@
       a { text-decoration-style: dashed; color: #0d0d57 !important; }
       ul { margin: 0; text-align: left; display: inline-block; margin: 0 auto; }
       .unselectable { -moz-user-select: none; user-select: none; }
-      .small { border: 0; border-top: 1px solid lightgrey; }
 
-      #applicable-styles .fa-edit, #applicable-styles .fa-trash-o { text-decoration: none; margin: 0 0 1px 0.4em; font-size: 0.9em; color: #7e7e7e !important; }
-      #applicable-styles .fa-edit:hover, #applicable-styles .fa-trash-o:hover { text-decoration: none; cursor: pointer; color: #000 !important; }
-      #applicable-styles > div { display: flex;justify-content: center;align-items: center; padding: 1px; }
-      #applicable-styles > div > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-      #applicable-styles > div:nth-of-type(2n+1):not(:only-child) { background-color: #f3f3f3; }
+      #applicable-styles { border: 0px solid lightgrey; border-width: 1px 0 1px 0; margin: 10px 0; }
+      #applicable-styles .fa-pencil, #applicable-styles .fa-trash-o { cursor: pointer; text-decoration: none; margin: 0 0 1px 0.4em; font-size: 0.9em; color: #7e7e7e !important; }
+      #applicable-styles .fa-pencil:hover { color: black !important; }
+      #applicable-styles .fa-trash-o:hover { color: #c10000 !important; }
+      #applicable-styles > div { display: flex;justify-content: center;align-items: center; padding: 3px; }
+      #applicable-styles > div > input[type="checkbox"] { flex: 0 0 auto; }
+      #applicable-styles > div > span { flex: 0 1 auto; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+      #applicable-styles > div > a { flex: 0 0 auto; }
+      #applicable-styles > div:nth-of-type(even) { background-color: #f3f3f3; }
     </style>
     <link rel="stylesheet" type="text/css" href="Fork-Awesome-1.1.7/css/fork-awesome.min.css">
     <script src="jquery-3.4.1.min.js"></script>
@@ -25,8 +28,8 @@
   <body class="unselectable">
     <img src="../images/Styling.png" style="width: 100px; height: 100px;"><br>
     Styling version <span id="version"></span>
-    <br><input type="checkbox" id="disable"><label>Disable all styles</label>
-    <br><hr class="small"><div id="applicable-styles"></div><hr class="small">
+    <br><input type="checkbox" id="disabled"><label>Disable all styles</label>
+    <div id="applicable-styles"></div>
     Write style for this:<br>
     <a href="#" id="url">URL</a> / <a href="#" id="domain">domain</a> / <a href="#" id="subdomain">subdomain</a>
     <br style="margin-bottom: 7px;">

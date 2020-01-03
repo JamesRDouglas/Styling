@@ -10,7 +10,7 @@ function checkForChanges(style) {
   browser.storage.local.get(function(item) {
     currentItem = item;
     currentItem.styles[style].name = $('#style-name').val();
-    currentItem.styles[style].disabled = $('#enabled').prop('disabled');
+    currentItem.styles[style].enabled = $('#enabled').is(':checked');
     currentItem.styles[style].blocks = [];
     for (b = 0; b < $('div.block').length; b++) {
       var urls = $('div.block:nth-of-type('+(b+1)+')').children('section').length, code = ace.edit("code_"+(b+1)).getValue().replace(/^|\s+$/g, '');
@@ -24,8 +24,8 @@ function checkForChanges(style) {
   });
 }
 function aceinit() { ace.config.set('loadWorkerFromBlob', false); var editor = ace.edit(this); ace.require("ace/ext/keybinding_menu", "ace/ext/language_tools", "ace/ext/searchbox"); editor.setOptions({ maxLines: Infinity, fixedWidthGutter: true, printMargin: false, navigateWithinSoftTabs: true, theme: "ace/theme/crimson_editor", minLines: $('#line-count').val(), maxLines: $('#line-count').val(), tabSize: Number($('#tab-size').val()), fontSize: Number($('#font-size').val()), enableBasicAutocompletion: $('#autocomplete').prop('checked'), enableLiveAutocompletion: $('#autocomplete').prop('checked'), useSoftTabs: $('#soft-tabs').prop('checked'), displayIndentGuides: $('#guide-indent').prop('checked'), showInvisibles: $('#show-invisible').prop('checked'), useWorker: $('#error-marker').prop('checked'), mode: "ace/mode/css" }); if ($('#keybinding').val() === "default") { var keyboardBindings = ""; } else { var keyboardBindings = "ace/keyboard/"+$('#keybinding').val(); } editor.setKeyboardHandler(keyboardBindings); editor.resize(); editor.getSession().on('changeAnnotation', function() { updateErrors(); }); return editor; }
+var style_id, style_index;
 $(function() {
-  var style_id, style_index;
   browser.storage.local.get().then(function(item) {
     if (item.default !== undefined && item.styles !== undefined) {
       style_id = Number(new URLSearchParams(window.location.search).get('style'));
@@ -40,12 +40,12 @@ $(function() {
           $('#line-count').val(item.styles[style_index].options.line_count);
           $('#tab-size').val(item.styles[style_index].options.tab_size);
           $('#font-size').val(item.styles[style_index].options.font_size);
-          if (item.styles[style_index].disabled === true) { $('#enabled').prop('checked', false); } else { $('#enabled').prop('checked', true); }
-          if (item.styles[style_index].options.autocomplete === true) { $('#autocomplete').prop('checked', true); }
-          if (item.styles[style_index].options.error_marker.enabled === true) { $('#error-marker').prop('checked', true); }
-          if (item.styles[style_index].options.soft_tabs === true) { $('#soft-tabs').prop("checked", true); }
-          if (item.styles[style_index].options.guide_indent === true) { $('#guide-indent').prop("checked", true); }
-          if (item.styles[style_index].options.show_invisible === true) { $('#show-invisible').prop("checked", true); }
+          $('#enabled').prop('checked', item.styles[style_index].enabled);
+          $('#autocomplete').prop('checked', item.styles[style_index].options.autocomplete);
+          $('#error-marker').prop('checked', item.styles[style_index].options.error_marker.enabled);
+          $('#soft-tabs').prop("checked", item.styles[style_index].options.soft_tabs);
+          $('#guide-indent').prop("checked", item.styles[style_index].options.guide_indent);
+          $('#show-invisible').prop("checked", item.styles[style_index].options.show_invisible);
           $('#keybinding').val(item.styles[style_index].options.keybinding);
           var blocks = item.styles[style_index].blocks.length;
           for (b = 0; b < blocks; b++) {
@@ -61,13 +61,8 @@ $(function() {
             if (item.styles[style_index].blocks[b].code) { ace.edit("code_"+(b+1)).setValue(item.styles[style_index].blocks[b].code, -1); updateBlocks(false); }
           }
           updateBlocks(false);
-          $('#options-container, #errors-container, #content > .block').fadeIn();
           var editors = [];
-          for (b = 0; b < $('.code').length; b++) {
-            editors[b] = ace.edit($('.code')[b]);
-            editors[b].getSession().on('change', function() { checkForChanges(style_index); });
-            if (b === 0) { editors[b].focus(); }
-          }
+          for (b = 0; b < $('.code').length; b++) { editors[b] = ace.edit($('.code')[b]); editors[b].getSession().on('change', function() { checkForChanges(style_index); }); if (b === 0) { editors[b].focus(); } }
           $(document).on('change paste keyup', '.url, select:not(.options)', function() { if (!$('#save').hasClass('unsaved')) { $('#save').addClass('unsaved'); } });
           $(document).on('click', '.add_block, .remove_block, .raise_block, .lower_block, .clone_block, .beautify_block, .add_target, .remove_target', function() { if (!$('#save').hasClass('unsaved')) { $('#save').addClass('unsaved'); } });
         } else { noStyleDetected(style_id); }
@@ -76,30 +71,8 @@ $(function() {
   });
   updateBlocks(false);
   window.onbeforeunload = function() { if ($('#save').hasClass('unsaved')) { return 'Are you sure you want to navigate away from this page?'; } };
-  $('#save').click(function() {
-    if ($('#style-name').val()) {
-      browser.storage.local.get().then(function(item) {
-        item.styles[style_index].name = $('#style-name').val();
-        item.styles[style_index].disabled = $('#enabled').prop('disabled');
-        item.styles[style_index].blocks = [];
-        for (c = 0; c < $('div.block').length; c++) {
-          var urls = $('div.block:nth-of-type('+(c+1)+')').children('section').length, code = ace.edit("code_"+(c+1)).getValue().replace(/^|\s+$/g, '');
-          item.styles[style_index].blocks.push({ code: code, urls: [] });
-          for (b = 0; b < urls; b++) {
-            var address = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('input.url').val(), type = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('select').val();
-            item.styles[style_index].blocks[c].urls.push({ address: address, type: type });
-          }
-        }
-        browser.storage.local.set(item).then(function() {
-          $('.unsaved').removeClass('unsaved');
-        }, onError);
-      });
-      browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError);
-    } else {
-      alert('Please enter a name'); return false;
-    }
-  });
-  $('#enabled').click(function() { browser.storage.local.get(function(item) { if ($('#enabled').is(':checked')) { item.styles[style_index].disabled = false; browser.storage.local.set(item).catch(onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } else { item.styles[style_index].disabled = true; browser.storage.local.set(item).catch(onError); browser.tabs.query({ currentWindow: true }).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } }); });
+  $('#save').click(function() { if ($('#style-name').val()) { browser.storage.local.get().then(function(item) { item.styles[style_index].name = $('#style-name').val(); item.styles[style_index].blocks = []; for (c = 0; c < $('div.block').length; c++) { var urls = $('div.block:nth-of-type('+(c+1)+')').children('section').length, code = ace.edit("code_"+(c+1)).getValue().replace(/^|\s+$/g, ''); item.styles[style_index].blocks.push({ code: code, urls: [] }); for (b = 0; b < urls; b++) { var address = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('input.url').val(), type = $('div.block:nth-of-type('+(c+1)+')').find('section:nth-of-type('+(b+1)+')').children('select').val(); item.styles[style_index].blocks[c].urls.push({ address: address, type: type }); } } browser.storage.local.set(item).then(function() { $('.unsaved').removeClass('unsaved'); }, onError); }); browser.tabs.query({}).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); } else { alert('Please enter a name'); return false; } });
+  $('#enabled').click(function() { browser.storage.local.get(function(item) { item.styles[style_index].enabled = $('#enabled').is(':checked'); browser.storage.local.set(item).catch(onError); browser.tabs.query({}).then(function(tabs) { sendMessageToTabs(tabs,"update"); }).catch(onError); }); });
   $('#beautify').click(function() { $('div.code').each(function(){ ace.edit(this).setValue(css_beautify(ace.edit(this).getValue(), { 'indent_size': 2, 'selector_separator_newline': false, 'space_around_selector_separator': true })); }); });
   $('#back').click(function() { window.location.replace("manage.html"); });
   $('#text').click(function() { if ($('#hidden').hasClass('hidden')) { $('#hidden').removeClass('hidden'); $('#error-marker-container').addClass('opened'); } else { $('#hidden').addClass('hidden'); $('#error-marker-container').removeClass('opened'); } });
@@ -115,13 +88,4 @@ $(function() {
   $(document).on('change', '.options', function() { saveOptions(style_index); updateErrors(); });
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.action === "disable") { $('#favicon').attr('href','/images/StylingDisabled.ico'); } else if (message.message === "enable") { $('#favicon').attr('href','/images/Styling.ico'); } });
-browser.runtime.onMessage.addListener(function(message) { if (message.action === "update") {
-  browser.storage.local.get().then(function(item) {
-    if (item.styles[style_id].disabled === true) {
-      $('#enabled').prop('checked', false);
-    } else {
-      $('#enabled').prop('checked', true);
-    }
-  });
- }
-});
+browser.runtime.onMessage.addListener(function(message) { if (message.action === "update") { browser.storage.local.get().then(function(item) { $('#enabled').prop('checked', item.styles[style_index].enabled); }); } });

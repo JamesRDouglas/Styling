@@ -1,14 +1,13 @@
 function onError(error) { console.log(error); }
 function insertAfter(newNode, referenceNode) { referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling); }
 function getDomain(url, subdomain) { subdomain = subdomain || false; url = url.replace(/(https?:\/\/)?(www.)?/i, ''); if (subdomain === true) { url = url.split('.').slice(url.length - 2).join('.'); } if (url.indexOf('/') !== -1) { return url.split('/')[0]; } return url; }
-function applyStyles(element) { if (document.body) { document.getElementsByTagName('html')[0].appendChild(element); } else { setTimeout(function() { applyStyles(element); }, 10); } }
 function updateStyles() {
   browser.storage.local.get(function(item) {
-    if (item.default !== undefined && item.default.name !== undefined && item.default.disabled !== undefined && item.default.blocks !== undefined && item.default.options !== undefined && item.styles !== undefined && item.styles[0] !== undefined) {
+    if (item.default !== undefined && item.default.name !== undefined && item.default.enabled !== undefined && item.default.blocks !== undefined && item.default.options !== undefined && item.styles !== undefined && item.styles[0] !== undefined) {
       for (var o = 0; o < document.getElementsByClassName('styling').length; o++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[o]); }
       if (item.disabled === false) {
         for (var s = 0; s < item.styles.length; s++) {
-          if (item.styles[s] && item.styles[s].disabled === false) {
+          if (item.styles[s] && item.styles[s].enabled === true) {
             for (var b = 0; b < item.styles[s].blocks.length; b++) {
               if (item.styles[s].blocks[b]) {
                 for (var u = 0; u < item.styles[s].blocks[b].urls.length; u++) {
@@ -20,12 +19,12 @@ function updateStyles() {
                       (item.styles[s].blocks[b].urls[u].type === "everything")
                     ) {
                       var styleElement = document.createElement("style");
-                      styleElement.setAttribute("id", "styling-"+s+"-"+b+"-"+u);
+                      styleElement.setAttribute("id", "styling-"+item.styles[s].id+"-"+(b+1));
                       styleElement.setAttribute("data-name", item.styles[s].name);
                       styleElement.setAttribute("class", "styling");
                       styleElement.setAttribute("type", "text/css");
                       styleElement.appendChild(document.createTextNode(item.styles[s].blocks[b].code.replace(/(\r\n\t|\n|\r\t)/gm,"")));
-                      applyStyles(styleElement);
+                      document.documentElement.appendChild(styleElement);
                       break;
                     }
                   }

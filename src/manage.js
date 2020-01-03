@@ -6,21 +6,19 @@ function generateNewStyle() { browser.storage.local.get(function(item) { var cur
 $(function() {
   var styles_arr = [], status;
   browser.storage.local.get().then(function(item) {
-    if (typeof item.default !== "undefined" && typeof item.default.name !== "undefined" && typeof item.default.disabled !== "undefined" && typeof item.default.blocks !== "undefined" && typeof item.default.options !== "undefined" && typeof item.styles !== "undefined" && typeof item.styles[0] !== "undefined") {
+    if (item.default !== undefined && item.default.name !== undefined && item.default.disabled !== undefined && item.default.blocks !== undefined && item.default.options !== undefined && item.styles !== undefined && item.styles[0] !== undefined) {
       $('#line-count').val(item.default.options.line_count);
       $('#tab-size').val(item.default.options.tab_size);
       $('#font-size').val(item.default.options.font_size);
       if (item.default.options.autocomplete === true) { $('#autocomplete').prop("checked", true); }
-      if (item.default.options.error_marker === true) { $('#error-marker').prop("checked", true); }
+      if (item.default.options.error_marker.enabled === true) { $('#error-marker').prop("checked", true); }
       if (item.default.options.soft_tabs === true) { $('#soft-tabs').prop("checked", true); }
       if (item.default.options.guide_indent === true) { $('#guide-indent').prop("checked", true); }
       if (item.default.options.show_invisible === true) { $('#show-invisible').prop("checked", true); }
       $('#keybinding').val(item.default.options.keybinding);
       $('#sidebar #default-options').fadeIn('slow');
       for (a = 0; a < item.styles.length; a = a) { if (item.styles[a].disabled === false) { status = ' checked'; } else { status = ''; } if (item.styles[a]) { styles_arr.push(item.styles[a].id); $('#content').append('<div class="style" id="style_'+styles_arr[a]+'" data-id="'+styles_arr[a]+'"><input type="checkbox" class="check"'+status+'><span class="name" title="'+item.styles[a].name+'">'+item.styles[a].name+'</span><button class="edit" data-id="'+styles_arr[a]+'">Edit</button><button class="delete" data-id="'+a+'">Delete</button><div class="url_list"></div></div>'); a++; } }
-    } else {
-      noStylesDetected();
-    }
+    } else { noStylesDetected(); }
   });
   $('#write-new').click(function() { generateNewStyle(); });
   $(document).on('click', '.style', function() { window.location.href = "edit.html?style="+$(this).data("id"); });

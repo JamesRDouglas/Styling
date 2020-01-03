@@ -13,8 +13,8 @@
       .unselectable { -moz-user-select: none; user-select: none; }
       .small { border: 0; border-top: 1px solid lightgrey; }
 
-      #applicable-styles .fa-edit, #applicable-styles .fa-trash-alt { text-decoration: none; margin: 0 0 1px 0.4em; font-size: 0.9em; color: #7e7e7e !important; }
-      #applicable-styles .fa-edit:hover, #applicable-styles .fa-trash-alt:hover { text-decoration: none; cursor: pointer; color: #000 !important; }
+      #applicable-styles .fa-edit, #applicable-styles .fa-trash-o { text-decoration: none; margin: 0 0 1px 0.4em; font-size: 0.9em; color: #7e7e7e !important; }
+      #applicable-styles .fa-edit:hover, #applicable-styles .fa-trash-o:hover { text-decoration: none; cursor: pointer; color: #000 !important; }
       #applicable-styles > div { display: flex;justify-content: center;align-items: center; padding: 1px; }
       #applicable-styles > div > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
       #applicable-styles > div:nth-of-type(2n+1):not(:only-child) { background-color: #f3f3f3; }
@@ -28,7 +28,7 @@
     <br><input type="checkbox" id="disable"><label>Disable all styles</label>
     <br><hr class="small"><div id="applicable-styles"></div><hr class="small">
     Write style for this:<br>
-    <a href="/src/edit.html" id="url">URL</a> / <a href="/src/edit.html" id="domain">domain</a> / <a href="/src/edit.html" id="subdomain">subdomain</a>
+    <a href="#" id="url">URL</a> / <a href="#" id="domain">domain</a> / <a href="#" id="subdomain">subdomain</a>
     <br style="margin-bottom: 7px;">
     <button id="manage">Manage</button>
     <button id="details">Details</button>

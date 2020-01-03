@@ -4,7 +4,7 @@ function getDomain(url, subdomain) { subdomain = subdomain || false; url = url.r
 function applyStyles(element) { if (document.body) { document.getElementsByTagName('html')[0].appendChild(element); } else { setTimeout(function() { applyStyles(element); }, 10); } }
 function updateStyles() {
   browser.storage.local.get(function(item) {
-    if (typeof item.default !== "undefined" && typeof item.default.name !== "undefined" && typeof item.default.disabled !== "undefined" && typeof item.default.blocks !== "undefined" && typeof item.default.options !== "undefined" && typeof item.styles !== "undefined" && typeof item.styles[0] !== "undefined") {
+    if (item.default !== undefined && item.default.name !== undefined && item.default.disabled !== undefined && item.default.blocks !== undefined && item.default.options !== undefined && item.styles !== undefined && item.styles[0] !== undefined) {
       for (var o = 0; o < document.getElementsByClassName('styling').length; o++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[o]); }
       if (item.disabled === false) {
         for (var s = 0; s < item.styles.length; s++) {

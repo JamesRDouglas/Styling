@@ -39,13 +39,3 @@ $(function() {
 });
 browser.runtime.onMessage.addListener(function(message) { if (message.action === "disable") { $('#enabled').prop('disabled', true); $('#favicon').attr('href','/images/StylingDisabled.png'); } else if (message.action === "enable") { $('#enabled').prop('disabled', false); $('#favicon').attr('href','/images/Styling.png'); } });
 browser.runtime.onMessage.addListener(function(message) { if (message.action === "update") { loadOptions(); loadContent(); } });
-//todo:
-/*
-fix injection for sidebars and other windows
-make ui better for differently sized screens
-fix changing of url type
-fix second and above url's not applying sometimes
-add importing/exporting
-add live preview?
-add ui interface for syntax validation options
-*/

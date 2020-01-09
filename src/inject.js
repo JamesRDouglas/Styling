@@ -1,7 +1,6 @@
 function onError(error) { console.log(error); }
-function insertAfter(newNode, referenceNode) { referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling); }
 function getDomain(url, subdomain) { subdomain = subdomain || false; url = url.replace(/(https?:\/\/)?(www.)?/i, ''); if (subdomain === true) { url = url.split('.').slice(url.length - 2).join('.'); } if (url.indexOf('/') !== -1) { return url.split('/')[0]; } return url; }
-function updateStyles() {
+function applyStyles() {
   browser.storage.local.get(function(item) {
     if (item.default !== undefined && item.default.name !== undefined && item.default.enabled !== undefined && item.default.blocks !== undefined && item.default.options !== undefined && item.styles !== undefined && item.styles[0] !== undefined) {
       for (var o = 0; o < document.getElementsByClassName('styling').length; o++) { document.getElementsByTagName("html")[0].removeChild(document.getElementsByClassName('styling')[o]); }
@@ -37,5 +36,7 @@ function updateStyles() {
     }
   });
 }
-updateStyles();
-browser.runtime.onMessage.addListener(function(message) { if (message.action === "disable" || message.action === "enable" || message.action === "update") { updateStyles(); } });
+applyStyles();
+$(function() {
+  browser.runtime.onMessage.addListener(function(message) { if (message.action === "disable" || message.action === "enable" || message.action === "update") { applyStyles(); } });
+});

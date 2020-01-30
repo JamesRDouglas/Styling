@@ -25,11 +25,10 @@
       #sidebar > #options-container { margin-bottom: 1em; flex: 0 0 auto; }
       #sidebar > #options-container input[type="number"] { margin-left: 1em; width: 7em; }
       #sidebar > #options-container #keybinding { width: 120px; background-position: center right 7px; }
-      #sidebar > #errors-container { flex: 1 0 0; overflow: hidden; }
+      #sidebar > #errors-container { flex: 1 0 0; overflow: hidden; display: none; }
       #sidebar > #errors-container #errors { overflow: auto; height: calc(100% - 2em); }
       #sidebar > #errors-container #error-list { overflow-y: scroll; height: calc(100% - 2em); max-height: calc(100% - 3em); min-height: calc(100% - 3em); }
       #sidebar > #errors-container #error-marker-container { position: relative; display: inline-block; cursor: pointer; }
-      #sidebar > #errors-container .block-container { display: none; }
       #sidebar > #errors-container .block-container > .error-block { position: sticky; top: 0; background: white; border-bottom: 1px solid lightgray; }
       #sidebar > #errors-container .block-container > .error-block > span { font-weight: bold; margin-left: 7px; font-size: 0.9em; }
       #sidebar > #errors-container .block-container > .error-container > small { display: inline-block; width: 100%; padding: 2px 0; box-sizing: border-box; }
@@ -43,7 +42,7 @@
       #content div.block section:only-of-type button.remove_target { color: #adadad; opacity: 0.5; pointer-events: none; }
       #content div.block:last-of-type { margin-bottom: 25vh; }
       #content div.code { width: 100%; height: 200px; box-shadow: 0 0 0 1px lightgrey; margin-top: 5px; }
-      #content div.code.ace_focus { box-shadow: 0 0 2px 2px lightblue; }
+      #content div.code.ace_focus { box-shadow: 0 0 0 2px lightblue; }
       #content div.ace_hidden-cursors { display: none; }
       #content section.target { display: flex; margin: 5px 0 3px 0; }
       #content section.target:not(:first-of-type) > span { visibility: hidden; }
@@ -85,7 +84,7 @@
           <option value="sublime">Sublime</option>
         </select>
       </details>
-      <details id="errors-container">
+      <details id="errors-container" open>
         <summary class="unselectable">Detected Errors</summary>
         <div id="errors"></div>
       </details>

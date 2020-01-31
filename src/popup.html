@@ -3,7 +3,10 @@
   <head>
     <meta charset="utf-8">
     <style>
-      @font-face { font-family: 'Roboto'; src: url('../Roboto-Light.ttf') format('truetype'); }
+      @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-Medium.ttf') format('truetype'); font-weight: bold; }
+      @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-Light.ttf') format('truetype'); }
+      @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-LightItalic.ttf') format('truetype'); font-style: italic; }
+
       body { font-size: 14px; width: 180px; padding: 10px; text-align: center; font-family: 'Roboto'; margin: 8px 0 0 0; }
       button { padding: 2px 8px; }
       img, input, label { cursor: pointer; }
@@ -12,11 +15,12 @@
       ul { margin: 0; text-align: left; display: inline-block; margin: 0 auto; }
       .unselectable { -moz-user-select: none; user-select: none; }
 
-      #applicable-styles { border: 0px solid lightgrey; border-width: 1px 0 1px 0; margin: 10px 0; }
-      #applicable-styles .fa-pencil, #applicable-styles .fa-trash-o { cursor: pointer; text-decoration: none; margin: 0 0 1px 0.4em; font-size: 0.9em; color: #7e7e7e !important; }
+      #applicable-styles { border: 0px solid lightgrey; border-width: 1px 0 1px 0; margin: 7px 0; }
+      #applicable-styles .fa-pencil, #applicable-styles .fa-trash-o { cursor: pointer; text-decoration: none; margin: 0 0 1px 0.4em; font-size: 13px; color: #7e7e7e !important; }
       #applicable-styles .fa-pencil:hover { color: black !important; }
       #applicable-styles .fa-trash-o:hover { color: #c10000 !important; }
-      #applicable-styles > div { display: flex;justify-content: center;align-items: center; padding: 3px; }
+      #applicable-styles > div { display: flex; justify-content: center; align-items: center; padding: 4px; }
+      #applicable-styles > div > i { display: inline-block; padding: 4px; }
       #applicable-styles > div > input[type="checkbox"] { flex: 0 0 auto; }
       #applicable-styles > div > span { flex: 0 1 auto; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
       #applicable-styles > div > a { flex: 0 0 auto; }
@@ -27,8 +31,8 @@
   </head>
   <body class="unselectable">
     <img src="../images/Styling.png" style="width: 100px; height: 100px;"><br>
-    Styling version <span id="version"></span>
-    <br><input type="checkbox" id="disabled"><label>Disable all styles</label>
+    <strong id="version"></strong><br style="margin-bottom: 7px;">
+    <input type="checkbox" id="disabled"><label>Disable all styles</label>
     <div id="applicable-styles"></div>
     Write style for this:<br>
     <a href="#" id="url">URL</a> / <a href="#" id="domain">domain</a> / <a href="#" id="subdomain">subdomain</a>

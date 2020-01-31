@@ -34,7 +34,7 @@ function listStyles(currentURL) {
   });
 }
 browser.storage.local.get(function(item) { if (item.disabled === true) { $('img').prop("src", "../images/StylingDisabled.png"); $('input[type=checkbox]').prop("checked", true); } else { $('img').prop("src", "../images/Styling.png");  $('input[type=checkbox]').prop("checked", false); } });
-$.getJSON('../manifest.json', function(data) { $('#version').text(data.version); });
+$.getJSON('../manifest.json', function(data) { $('#version').text('v'+data.version); });
 $(function() {
   browser.tabs.query({currentWindow: true, active: true}).then(function(tabs) { currentURL = tabs[0].url; listStyles(currentURL); });
   $('img, label').click(function() { $('#disabled').click(); });

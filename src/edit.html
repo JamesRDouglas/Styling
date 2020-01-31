@@ -5,8 +5,11 @@
     <link rel="shortcut icon" href="/images/Styling.png" id="favicon">
     <title>Edit style</title>
     <style>
-      @font-face { font-family: 'Roboto'; src: url('../Roboto-Light.ttf') format('truetype'); }
-      body { padding: 0; margin: 0; box-sizing: border-box; height: 100vh; width: 100vw; font-family: 'Roboto'; font-size: 0.9em; background-color: #efefef; overflow: hidden; }
+      @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-Medium.ttf') format('truetype'); font-weight: bold; }
+      @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-Light.ttf') format('truetype'); }
+      @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-LightItalic.ttf') format('truetype'); font-style: italic; }
+
+      body { padding: 0; margin: 0; box-sizing: border-box; height: 100vh; width: 100vw; font-family: 'Roboto'; font-size: 14px; background-color: #efefef; overflow: hidden; }
       select { margin-left: 5px; width: 135px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: center right 7px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
       select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       button { padding: 2px 6px; text-align: center; }
@@ -15,32 +18,36 @@
       .hidden { display: none !important; }
       .unsaved { box-shadow: 0 0 1px 2px gold; position: relative; cursor: pointer; }
 
-      #sidebar { width: 250px; height: 100vh; position: absolute; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 12px 18px 0 18px; background-color: white; display: flex; flex-direction: column; overflow: hidden; }
-      #sidebar h1 { padding: 0; margin: 0; font-size: 1.6em; width: 100%; }
-      #sidebar summary { font-size: 1.17em; font-weight: bold; margin-bottom: 0.3em; cursor: pointer; }
-      #sidebar > #info-container { margin-bottom: 1em; flex: 0 0 auto; }
-      #sidebar > #info-container #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; margin-bottom: 0.6em; }
-      #sidebar > #info-container #style-name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
-      #sidebar > #info-container #enabled { margin-bottom: 10px; margin-left: 10px; }
-      #sidebar > #options-container { margin-bottom: 1em; flex: 0 0 auto; }
-      #sidebar > #options-container input[type="number"] { margin-left: 1em; width: 7em; }
-      #sidebar > #options-container #keybinding { width: 120px; background-position: center right 7px; }
-      #sidebar > #errors-container { flex: 1 0 0; overflow: hidden; display: none; }
-      #sidebar > #errors-container #errors { overflow: auto; height: calc(100% - 2em); }
-      #sidebar > #errors-container #error-list { overflow-y: scroll; height: calc(100% - 2em); max-height: calc(100% - 3em); min-height: calc(100% - 3em); }
-      #sidebar > #errors-container #error-marker-container { position: relative; display: inline-block; cursor: pointer; }
-      #sidebar > #errors-container .block-container > .error-block { position: sticky; top: 0; background: white; border-bottom: 1px solid lightgray; }
-      #sidebar > #errors-container .block-container > .error-block > span { font-weight: bold; margin-left: 7px; font-size: 0.9em; }
-      #sidebar > #errors-container .block-container > .error-container > small { display: inline-block; width: 100%; padding: 2px 0; box-sizing: border-box; }
-      #sidebar > #errors-container .block-container > .error-container > small:not(:first-child) { border-top: 1px solid lightgrey; }
-      #sidebar > #errors-container .block-container > .error-container > small > i { height: 16px; width: 16px; display: inline-block; margin-bottom: -4px; }
-      #sidebar > #errors-container .block-container > .error-container > small > span { background: #efefef; width: 100%; display: inline-block; overflow: scroll; white-space: nowrap; border: 1px solid #d7d7d7; padding: 2px; border-radius: 2px; box-sizing: border-box; }
+      #sidebar { width: 260px; height: 100vh; position: absolute; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 12px 18px 0 18px; background-color: white; display: flex; flex-direction: column; overflow: hidden; }
+      #sidebar h1 { padding: 0; margin: 0; font-size: 24px; }
+      #sidebar summary { font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 7px; }
 
-      #content { width: calc(100vw - 250px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1em 2em; overflow: auto; }
-      #content div.block:first-of-type > span:first-of-type, div.block:first-of-type > button.raise_block, div.block:last-of-type > button.lower_block { display: none; }
+      #sidebar #info-container { margin-bottom: 1rem; flex: 0 0 auto; }
+      #sidebar #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; margin: 10px 0 6px 0; }
+      #sidebar #style-name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
+      #sidebar #enabled { margin-bottom: 10px; margin-left: 10px; }
+
+      #sidebar #options-container { margin-bottom: 1rem; flex: 0 0 auto; }
+      #sidebar .grid-container { display: grid; grid-template-columns: auto auto; grid-row-gap: 2px; grid-column-gap: 1em; align-items: center; margin-bottom: 7px; }
+      #sidebar .grid-container > input[type="number"] { width: 100%; box-sizing: border-box; }
+      #sidebar #keybinding { width: 120px; background-position: center right 7px; }
+
+      #sidebar #errors-container { flex: 1 0 0; overflow: hidden; display: none; }
+      #sidebar #errors { overflow: auto; height: calc(100% - 2em); }
+      #sidebar .code-block-errors > .code-block-name { position: sticky; top: 0; background: white; border-bottom: 1px solid #808080; }
+      #sidebar .code-block-errors > .code-block-name > strong { margin-left: 7px; font-size: 13px; }
+      #sidebar .code-block-errors > .error-list > .error { display: inline-block; width: 100%; padding: 4px 4px 0 4px; box-sizing: border-box; }
+      #sidebar .code-block-errors > .error-list > .error:last-child { padding-bottom: 4px; }
+      #sidebar .code-block-errors > .error-list > .error > .error-info { background: #efefef; width: 100%; overflow: scroll; white-space: nowrap; border: 1px solid #d7d7d7; padding: 2px; border-radius: 3px 3px 0 0; box-sizing: border-box; font-size: 12px; }
+      #sidebar .code-block-errors > .error-list > .error > .error-info > i { height: 16px; width: 16px; display: inline-block; margin-bottom: -4px; }
+      #sidebar .code-block-errors > .error-list > .error > .error-description { display: -webkit-box; -webkit-line-clamp: 9; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; border: 1px solid lightgray; padding: 2px 3px 4px 3px; font-size: 12px; border-top: 0; line-height: 14px; }
+      #sidebar .code-block-errors > .error-list > .error > .error-description:last-child { border-radius: 0 0 3px 3px; }
+
+      #content { width: calc(100vw - 260px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1rem 2rem; overflow: auto; }
+      #content div.block:first-of-type > span:first-of-type, #content div.block:first-of-type > button.raise_block, #content div.block:last-of-type > button.lower_block { display: none; }
       #content div.block:only-child .remove_block { color: #adadad; opacity: 0.5; pointer-events: none; }
-      #content div.block section:only-of-type button.remove_target { color: #adadad; opacity: 0.5; pointer-events: none; }
       #content div.block:last-of-type { margin-bottom: 25vh; }
+      #content section:only-of-type button.remove_target { color: #adadad; opacity: 0.5; pointer-events: none; }
       #content div.code { width: 100%; height: 200px; box-shadow: 0 0 0 1px lightgrey; margin-top: 5px; }
       #content div.code.ace_focus { box-shadow: 0 0 0 2px lightblue; }
       #content div.ace_hidden-cursors { display: none; }
@@ -60,17 +67,19 @@
     <div id="sidebar">
       <div id="info-container">
         <h1>Edit style</h1>
-        <input type="text" id="style-name" placeholder="Enter a name">
+        <input type="text" id="style-name" placeholder="Enter a name"><br>
         <button id="save">Save</button>
-        <input type="checkbox" id="enabled"> Enabled
+        <input type="checkbox" id="enabled"> Enabled<br>
         <button id="beautify">Beautify all</button>
         <button id="back">Back to manage</button>
       </div>
       <details id="options-container" open>
         <summary class="unselectable">Editor Options</summary>
-        Line count: <input type="number" id="line-count" class="options"><br style="margin-bottom: 5px;">
-        Tab size: <input type="number" id="tab-size" class="options"><br style="margin-bottom: 5px;">
-        Font size: <input type="number" id="font-size" class="options"><br style="margin-bottom: 7px;">
+        <div class="grid-container">
+          <span>Line count:</span><input type="number" id="line-count" class="options">
+          <span>Tab size:</span><input type="number" id="tab-size" class="options">
+          <span>Font size:</span><input type="number" id="font-size" class="options">
+        </div>
         <label class="unselectable"><input type="checkbox" id="autocomplete" class="options"> Autocomplete</label><br>
         <label class="unselectable"><input type="checkbox" id="error-marker" class="options"> Syntax validation</label><br>
         <label class="unselectable"><input type="checkbox" id="soft-tabs" class="options"> Use soft tabs</label><br>

@@ -18,7 +18,7 @@
       .hidden { display: none !important; }
       .unsaved { box-shadow: 0 0 1px 2px gold; position: relative; cursor: pointer; }
 
-      #sidebar { width: 260px; height: 100vh; position: absolute; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 12px 18px 0 18px; background-color: white; display: flex; flex-direction: column; overflow: hidden; }
+      #sidebar { width: 250px; height: 100vh; position: absolute; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 12px 18px 0 18px; background-color: white; display: flex; flex-direction: column; overflow: hidden; }
       #sidebar h1 { padding: 0; margin: 0; font-size: 24px; }
       #sidebar summary { font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 7px; }
 
@@ -30,7 +30,9 @@
       #sidebar #options-container { margin-bottom: 1rem; flex: 0 0 auto; }
       #sidebar .grid-container { display: grid; grid-template-columns: auto auto; grid-row-gap: 2px; grid-column-gap: 1em; align-items: center; margin-bottom: 7px; }
       #sidebar .grid-container > input[type="number"] { width: 100%; box-sizing: border-box; }
-      #sidebar #keybinding { width: 120px; background-position: center right 7px; }
+      #sidebar .flex-container { display: flex; align-items: center; }
+      #sidebar .flex-container span { flex: 0 0 auto; }
+      #sidebar .flex-container #keybinding { flex: 1 1 0; margin-left: 1em; }
 
       #sidebar #errors-container { flex: 1 0 0; overflow: hidden; display: none; }
       #sidebar #errors { overflow: auto; height: calc(100% - 2em); }
@@ -43,7 +45,7 @@
       #sidebar .code-block-errors > .error-list > .error > .error-description { display: -webkit-box; -webkit-line-clamp: 9; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; border: 1px solid lightgray; padding: 2px 3px 4px 3px; font-size: 12px; border-top: 0; line-height: 14px; }
       #sidebar .code-block-errors > .error-list > .error > .error-description:last-child { border-radius: 0 0 3px 3px; }
 
-      #content { width: calc(100vw - 260px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1rem 2rem; overflow: auto; }
+      #content { width: calc(100vw - 250px); height: 100%; box-sizing: border-box; position: absolute; top: 0; right: 0; padding: 1rem 2rem; overflow: auto; }
       #content div.block:first-of-type > span:first-of-type, #content div.block:first-of-type > button.raise_block, #content div.block:last-of-type > button.lower_block { display: none; }
       #content div.block:only-child .remove_block { color: #adadad; opacity: 0.5; pointer-events: none; }
       #content div.block:last-of-type { margin-bottom: 25vh; }
@@ -53,7 +55,7 @@
       #content div.ace_hidden-cursors { display: none; }
       #content section.target { display: flex; margin: 5px 0 3px 0; }
       #content section.target:not(:first-of-type) > span { visibility: hidden; }
-      #content section.target > :not(.url) { flex: 0 0 auto; }
+      #content section.target > :not(.url) { flex: 0 0 auto; align-self: center; }
       #content input.url { flex: 1 1 auto; padding: 2px 5px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; margin-left: 2px; }
       #content input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
     </style>
@@ -85,13 +87,15 @@
         <label class="unselectable"><input type="checkbox" id="soft-tabs" class="options"> Use soft tabs</label><br>
         <label class="unselectable"><input type="checkbox" id="guide-indent" class="options"> Show indent guides</label><br>
         <label class="unselectable"><input type="checkbox" id="show-invisible" class="options"> Show invisibles</label><br style="margin-bottom: 7px;">
-        Keybinding:
-        <select id="keybinding" class="options">
-          <option value="default" selected>Default</option>
-          <option value="emacs">Emacs</option>
-          <option value="sublime">Sublime</option>
-          <option value="vim">Vim</option>
-        </select>
+        <div class="flex-container">
+          <span>Keybinding:</span>
+          <select id="keybinding" class="options">
+            <option value="default" selected="">Default</option>
+            <option value="emacs">Emacs</option>
+            <option value="sublime">Sublime</option>
+            <option value="vim">Vim</option>
+          </select>
+        </div>
       </details>
       <details id="errors-container" open>
         <summary class="unselectable">Detected Errors</summary>

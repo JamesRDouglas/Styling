@@ -10,9 +10,11 @@
       @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-LightItalic.ttf') format('truetype'); font-style: italic; }
 
       body { padding: 0; margin: 0; box-sizing: border-box; height: 100%; width: 100vw; font-family: 'Roboto'; font-size: 14px; background-color: #EFEFEF; }
-      select { margin-left: 5px; width: 135px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: center right 7px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
-      select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
+      select { margin-left: 4px; width: 135px; height: 20px; border: 0; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: center right 7px; cursor: pointer; box-shadow: 0 0 0 1px lightgrey; }
+      select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 2px lightblue; }
       button { padding: 2px 6px; text-align: center; }
+      input[type="number"] { border: 0; padding: 4px; box-shadow: 0 0 0 1px lightgray inset; }
+      input[type="number"]:focus { outline: 0; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       .unselectable { -moz-user-select: none; user-select: none; }
       .hidden { display: none; }
 

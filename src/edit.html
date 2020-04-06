@@ -10,21 +10,22 @@
       @font-face { font-family: 'Roboto'; src: url('../fonts/Roboto-LightItalic.ttf') format('truetype'); font-style: italic; }
 
       body { padding: 0; margin: 0; box-sizing: border-box; height: 100vh; width: 100vw; font-family: 'Roboto'; font-size: 14px; background-color: #efefef; overflow: hidden; }
-      select { margin-left: 5px; width: 135px; height: 2em; border: 1px solid lightgrey; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: center right 7px; cursor: pointer; border: none; box-shadow: 0 0 0 1px lightgrey inset; }
-      select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
+      select { margin-left: 4px; width: 135px; height: 20px; border: 0; border-radius: 3px; background: url("../images/arrow.png") no-repeat right white; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-size: 10px; background-position: center right 7px; cursor: pointer; box-shadow: 0 0 0 1px lightgrey; }
+      select:focus { outline: 0; color: rgba(0,0,0,0); text-shadow: 0 0 0 #000; box-shadow: 0 0 0 2px lightblue; }
       button { padding: 2px 6px; text-align: center; }
       hr { border: 1px solid #6a6a6a; margin: 0 21px; }
+      input[type="text"], input[type="number"] { border: 0; padding: 4px; box-shadow: 0 0 0 1px lightgray inset; }
+      input[type="text"]:focus, input[type="number"]:focus { outline: 0; box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
       .unselectable { -moz-user-select: none; user-select: none; }
       .hidden { display: none !important; }
-      .unsaved { box-shadow: 0 0 1px 2px gold; position: relative; cursor: pointer; }
+      .unsaved { box-shadow: 0 0 3px 2px gold; position: relative; cursor: pointer; }
 
       #sidebar { width: 250px; height: 100vh; position: absolute; left: 0; top: 0; box-sizing: border-box; border-right: 1px dashed grey; padding: 12px 18px 0 18px; background-color: white; display: flex; flex-direction: column; overflow: hidden; }
       #sidebar h1 { padding: 0; margin: 0; font-size: 24px; }
       #sidebar summary { font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 7px; }
 
       #sidebar #info-container { margin-bottom: 1rem; flex: 0 0 auto; }
-      #sidebar #style-name { width: 100%; padding: 4px; box-shadow: 0 0 0 1px lightgrey inset; border: 0; box-sizing: border-box; margin: 10px 0 6px 0; }
-      #sidebar #style-name:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
+      #sidebar #style-name { width: 100%; margin: 10px 0 6px 0; }
       #sidebar #enabled { margin-bottom: 10px; margin-left: 10px; }
 
       #sidebar #options-container { margin-bottom: 1rem; flex: 0 0 auto; }
@@ -53,8 +54,7 @@
       #content section.target { display: flex; margin: 5px 0 3px 0; }
       #content section.target:not(:first-of-type) > span { visibility: hidden; }
       #content section.target > :not(.url) { flex: 0 0 auto; align-self: center; }
-      #content input.url { flex: 1 1 auto; padding: 2px 5px; box-sizing: border-box; box-shadow: 0 0 0 1px lightgrey inset; border: 0; margin-left: 2px; }
-      #content input.url:focus { box-shadow: 0 0 0 1px lightblue inset, 0 0 0 1px lightblue; }
+      #content input.url { flex: 1 1 auto; margin: 0 2px 0 4px; }
     </style>
     <script src="jquery-3.4.1.min.js"></script>
     <script src="beautify-css.1.11.0.min.js"></script>
@@ -112,7 +112,7 @@
             <option value="domain">URLs on the domain</option>
             <option value="everything">Everything</option>
           </select>
-          <input class="url"><button class="add_target">Add</button><button class="remove_target">Remove</button><br>
+          <input type="text" class="url"><button class="add_target">Add</button><button class="remove_target">Remove</button><br>
         </section>
         <button class="add_block">Add new section</button>
         <button class="remove_block">Remove section</button>
